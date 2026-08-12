@@ -36,7 +36,7 @@ export const DIALOG_CANCEL_BUTTON_CLASS =
 
 /** Standard dialog primary confirm button. */
 export const DIALOG_PRIMARY_BUTTON_CLASS =
-  'h-[32px] min-w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]';
+  'h-[32px] min-w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]';
 
 /** Standard outline action button (toolbar refresh, card actions, etc.). */
 export const OUTLINE_ACTION_BUTTON_CLASS =
@@ -56,7 +56,7 @@ export const SEARCH_COMBO_INPUT_CLASS =
 
 /** Integrated search combo submit button. */
 export const SEARCH_COMBO_BUTTON_CLASS =
-  'shrink-0 bg-[#18181a] px-[20px] text-[14px] font-normal text-white transition-colors hover:bg-[#303030] disabled:pointer-events-none disabled:opacity-50';
+  'shrink-0 bg-[#2563EB] px-[20px] text-[14px] font-normal text-white transition-colors hover:bg-[#1D4ED8] disabled:pointer-events-none disabled:opacity-50';
 
 /** Format a backend timestamp in the active UI locale, or `-` when empty/invalid. */
 export function formatDateTime(value?: string): string {

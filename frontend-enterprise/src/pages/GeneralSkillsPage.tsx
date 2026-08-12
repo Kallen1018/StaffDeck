@@ -110,7 +110,7 @@ const FIELD_LABEL_CLASS = 'text-[13px] font-medium text-[#18181a]';
 const RETURN_BUTTON_CLASS =
   'h-8 gap-1 rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-5 text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6]! hover:bg-white! hover:text-[#18181a]! aria-expanded:border-[#cbd3e6]! aria-expanded:bg-white! aria-expanded:text-[#18181a]!';
 const PRIMARY_BUTTON_CLASS =
-  'h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]';
+  'h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]';
 const DELETE_BUTTON_CLASS =
   'h-8 gap-1 rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-5 text-[12px] font-normal text-[#d20b0b] hover:border-[#f3b6b6]! hover:bg-[#fce7e7]! hover:text-[#d20b0b]! aria-expanded:border-[#f3b6b6]! aria-expanded:bg-[#fce7e7]! aria-expanded:text-[#d20b0b]!';
 const EDITOR_ACTION_OUTLINE_CLASS = RETURN_BUTTON_CLASS;
@@ -162,7 +162,7 @@ const SKILL_TRACE_ITEM_CLASS =
   'grid min-w-0 grid-cols-[12px_minmax(0,1fr)] gap-[10px]';
 const SKILL_TRACE_ITEM_BODY_CLASS = 'min-w-0 max-w-full';
 const SKILL_TRACE_DOT_CLASS =
-  'mt-[9px] size-[7px] shrink-0 rounded-full bg-[#18181a]';
+  'mt-[9px] size-[7px] shrink-0 rounded-full bg-[#2563EB] ';
 const SKILL_TRACE_TITLE_CLASS =
   'text-[13px] font-semibold text-[#18181a]';
 const SKILL_TRACE_MESSAGE_CLASS =
@@ -781,7 +781,7 @@ export default function GeneralSkillsPage({ embedded = false, currentUser, onLog
             </UIButton>
             {canManageCurrentScope && (
               <DropdownMenu>
-                <DropdownMenuTrigger data-guide-target="skills-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#18181a] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#303030]">
+                <DropdownMenuTrigger data-guide-target="skills-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
                   <IconAdd className="size-[14px]" />
                   新增
                   <IconChevronDown className="size-[12px]" />
@@ -1015,7 +1015,7 @@ function ClawHubDialog({
           <UIButton
             disabled={loading}
             onClick={onSubmit}
-            className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+            className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
           >
             新增
           </UIButton>
@@ -2980,7 +2980,7 @@ function GeneralSkillEditorPage({ mode, currentUser, onLogout }: { mode: 'new' |
             </UIButton>
             <UIButton
               onClick={runCreateEntry}
-              className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+              className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
             >
               新建
             </UIButton>
@@ -3016,7 +3016,7 @@ function GeneralSkillEditorPage({ mode, currentUser, onLogout }: { mode: 'new' |
             </UIButton>
             <UIButton
               onClick={() => void confirmImportPrepareSave()}
-              className="h-[32px] rounded-[10px] bg-[#18181a] px-[14px] text-[14px] font-normal text-white hover:bg-[#303030]"
+              className="h-[32px] rounded-[10px] bg-[#2563EB] px-[14px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
             >
               保存并发布
             </UIButton>
@@ -3064,7 +3064,7 @@ function GeneralSkillEditorPage({ mode, currentUser, onLogout }: { mode: 'new' |
             </UIButton>
             <UIButton
               onClick={renameFolderTarget ? runRenameFolder : runRenameFile}
-              className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+              className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
             >
               重命名
             </UIButton>

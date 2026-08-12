@@ -11,11 +11,11 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import galleryImage from "@/assets/onboarding-gallery.png";
 import profileImage from "@/assets/onboarding-profile.png";
 
-export const ONBOARDING_SEEN_KEY = "staffdeck_onboarding_guide_seen";
+export const ONBOARDING_SEEN_KEY = "mindstaff_onboarding_guide_seen";
 
 /** Custom event that lets any part of the app re-open the onboarding guide. */
-export const OPEN_ONBOARDING_EVENT = "staffdeck-open-onboarding";
-export const OPEN_QUICK_START_EVENT = "staffdeck-open-quick-start";
+export const OPEN_ONBOARDING_EVENT = "mindstaff-open-onboarding";
+export const OPEN_QUICK_START_EVENT = "mindstaff-open-quick-start";
 
 type GuideCard = {
   icon: ReactNode;
@@ -38,7 +38,7 @@ const CARD_BADGE_CLASS =
 const STEPS: GuideStep[] = [
   {
     image: galleryImage,
-    eyebrow: "欢迎使用 StaffDeck",
+    eyebrow: "欢迎使用 MindStaff",
     titleLines: ["数字员工", "全流程构建与管理平台"],
     description:
       "像招聘、培养、管理真人员工一样，构建你的数字员工团队。把重复的事情交给数字员工，让自己专注更重要的工作。",
@@ -242,7 +242,7 @@ export default function OnboardingGuide() {
               <button
                 type="button"
                 onClick={goNext}
-                className="flex w-[134px] items-center justify-center rounded-[10px] bg-[#18181a] px-[32px] py-[8px] text-[14px] text-white transition-colors hover:bg-[#303030]"
+                className="flex w-[134px] items-center justify-center rounded-[10px] bg-[#2563EB] px-[32px] py-[8px] text-[14px] text-white transition-colors hover:bg-[#1D4ED8]"
               >
                 {isLast ? "开始使用" : "下一步"}
               </button>

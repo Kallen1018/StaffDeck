@@ -2,25 +2,15 @@ import { useState, type KeyboardEvent } from 'react';
 
 import { api, TENANT_ID } from '../api/client';
 import { setEnterpriseAuthSession, type EnterpriseAuthSession } from '../auth';
-import AppHeader from '../components/AppHeader';
-import BrandLogo from '../components/BrandLogo';
 import IconFieldClear from '../assets/icons/field-clear.svg?react';
 import IconFieldEye from '../assets/icons/field-eye.svg?react';
 import IconFieldEyeOn from '../assets/icons/field-eye-on.svg?react';
-import loginPreview from '../assets/staffdeck/login-preview.png';
 
 export type LoginPageProps = {
   onLogin: (session: EnterpriseAuthSession) => void;
 };
 
-/**
- * Signed-out landing / login page. Mirrors Figma node 68:201 (`Login_light`):
- * a full-bleed hero with the StaffDeck wordmark and a product-preview placeholder
- * anchored to the bottom. Clicking "登录" slides the credentials form (node 68:1563)
- * down into view in place of the call-to-action button.
- */
 export default function LoginPage({ onLogin }: LoginPageProps) {
-  const [showForm, setShowForm] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -61,120 +51,109 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
     'flex h-[44px] w-full items-center gap-[8px] rounded-[10px] border bg-white px-[16px] transition-colors';
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-white">
-      <AppHeader
-        className="h-[60px] shrink-0 px-[32px]"
-        left={<BrandLogo markSize={28} />}
-        right={null}
-      />
-
-      <main className="flex flex-1 flex-col items-center px-[32px]">
-        <div className="flex flex-col items-center pt-[60px]">
-          <span className="flex items-center justify-center rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-[#f6f6f6] px-[20px] py-[6px] text-[14px] text-[#464c5e]">
-            我们来做什么？
-          </span>
-          <h1 className="mt-[6px] text-center text-[54px] font-semibold leading-[80px] tracking-[1.08px] text-[#18181a]">
-            StaffDeck
+    <main className="flex min-h-screen bg-white max-[760px]:flex-col">
+      <section
+        className="flex min-h-screen w-2/3 flex-col items-center justify-between bg-[#f7f8fa] px-[clamp(32px,8vw,128px)] py-[48px] text-center max-[760px]:min-h-0 max-[760px]:w-full max-[760px]:gap-[72px] max-[760px]:py-[32px]"
+        style={{ background: 'linear-gradient(154deg, rgba(7, 7, 9, .082) 30%, #006be64d 48%, rgba(7, 7, 9, .082) 64%)' }}
+      >
+        <div className="text-[18px] font-semibold tracking-[0.2px] text-[#18181a]">MindStaff</div>
+        <div className="max-w-[500px]">
+          <p className="mb-[16px] text-[14px] font-medium uppercase tracking-[2px] text-[#2563eb]">Enterprise AI Workforce</p>
+          <h1 className="text-[clamp(36px,4.5vw,64px)] font-semibold leading-[1.12] tracking-[-0.5px] text-[#18181a]">
+            数字员工
             <br />
-            数字员工运营平台
+            运营平台
           </h1>
+          <p className="mt-[24px] max-w-[420px] text-[16px] leading-[1.8] text-[#646a73]">
+            统一配置、管理和运营企业数字员工，让每一次协作都更高效。
+          </p>
+        </div>
+        <p className="text-[12px] text-[#8f959e]">MindStaff · 企业智能运营工作台</p>
+      </section>
 
-          {!showForm ? (
-            <button
-              type="button"
-              onClick={() => setShowForm(true)}
-              className="mt-[24px] flex items-center justify-center rounded-[10px] bg-[#18181a] px-[36px] py-[10px] text-[16px] font-normal text-white transition-colors hover:bg-[#18181a]/90"
+      <section className="flex min-h-screen w-1/3 items-center justify-center px-[32px] py-[48px] max-[760px]:min-h-0 max-[760px]:w-full max-[760px]:items-start max-[760px]:py-[16px]">
+        <div className="w-full max-w-[380px]">
+          <div className="mb-[32px]">
+            <h2 className="text-[28px] font-semibold text-[#18181a]">登录</h2>
+            <p className="mt-[8px] text-[14px] text-[#757f9c]">登录后进入 MindStaff 管理端</p>
+          </div>
+          <form
+            className="flex w-full flex-col"
+            onSubmit={(event) => {
+              event.preventDefault();
+              void login();
+            }}
+          >
+            <div
+              className={`${inputBaseClass} ${usernameError ? 'border-[#f54a45]' : username ? 'border-[#18181a]' : 'border-[#e3e7f1]'}`}
             >
-              登录
-            </button>
-          ) : (
-            <form
-              className="mt-[24px] flex w-[320px] flex-col duration-300 ease-out animate-in fade-in slide-in-from-top-4"
-              onSubmit={(event) => {
-                event.preventDefault();
-                void login();
-              }}
-            >
-              <div
-                className={`${inputBaseClass} ${usernameError ? 'border-[#f54a45]' : username ? 'border-[#18181a]' : 'border-[#e3e7f1]'}`}
-              >
-                <input
-                  value={username}
-                  autoComplete="username"
-                  placeholder="请输入账号（首次使用请输入admin）"
-                  aria-label="账号"
-                  onChange={(event) => {
-                    setUsername(event.target.value);
-                    if (usernameError) setUsernameError('');
-                  }}
-                  onKeyDown={onFieldKeyDown}
-                  className="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[#18181a] outline-none placeholder:text-[#757f9c]"
-                />
-                {username && (
-                  <button
-                    type="button"
-                    aria-label="清空账号"
-                    onClick={() => {
-                      setUsername('');
-                      setUsernameError('');
-                    }}
-                    className="grid size-[18px] shrink-0 place-items-center text-[#667085] outline-none transition-colors hover:text-[#464c5e]"
-                  >
-                    <IconFieldClear className="size-[18px]" />
-                  </button>
-                )}
-              </div>
-
-              <div
-                className={`mt-[24px] ${inputBaseClass} ${passwordError ? 'border-[#f54a45]' : password ? 'border-[#18181a]' : 'border-[#e3e7f1]'}`}
-              >
-                <input
-                  value={password}
-                  type={showPassword ? 'text' : 'password'}
-                  autoComplete="current-password"
-                  placeholder="请输入密码（首次使用请输入admin）"
-                  aria-label="密码"
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                    if (passwordError) setPasswordError('');
-                  }}
-                  onKeyDown={onFieldKeyDown}
-                  className="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[#18181a] outline-none placeholder:text-[#757f9c]"
-                />
+              <input
+                value={username}
+                autoComplete="username"
+                placeholder="请输入账号（首次使用请输入admin）"
+                aria-label="账号"
+                onChange={(event) => {
+                  setUsername(event.target.value);
+                  if (usernameError) setUsernameError('');
+                }}
+                onKeyDown={onFieldKeyDown}
+                className="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[#18181a] outline-none placeholder:text-[#757f9c]"
+              />
+              {username && (
                 <button
                   type="button"
-                  aria-label={showPassword ? '隐藏密码' : '显示密码'}
-                  onClick={() => setShowPassword((prev) => !prev)}
-                  className="grid size-[18px] shrink-0 place-items-center text-[#677185] outline-none transition-colors hover:text-[#464c5e]"
+                  aria-label="清空账号"
+                  onClick={() => {
+                    setUsername('');
+                    setUsernameError('');
+                  }}
+                  className="grid size-[18px] shrink-0 place-items-center text-[#667085] outline-none transition-colors hover:text-[#464c5e]"
                 >
-                  {showPassword ? (
-                    <IconFieldEyeOn className="size-[18px]" />
-                  ) : (
-                    <IconFieldEye className="size-[18px]" />
-                  )}
+                  <IconFieldClear className="size-[18px]" />
                 </button>
-              </div>
+              )}
+            </div>
 
+            <div
+              className={`mt-[24px] ${inputBaseClass} ${passwordError ? 'border-[#f54a45]' : password ? 'border-[#18181a]' : 'border-[#e3e7f1]'}`}
+            >
+              <input
+                value={password}
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="current-password"
+                placeholder="请输入密码（首次使用请输入admin）"
+                aria-label="密码"
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                  if (passwordError) setPasswordError('');
+                }}
+                onKeyDown={onFieldKeyDown}
+                className="min-w-0 flex-1 border-0 bg-transparent text-[14px] text-[#18181a] outline-none placeholder:text-[#757f9c]"
+              />
               <button
-                type="submit"
-                disabled={loading}
-                className="mt-[24px] flex h-[40px] w-[120px] items-center justify-center self-center rounded-[10px] bg-[#18181a] text-[16px] font-normal text-white transition-colors hover:bg-[#18181a]/90 disabled:cursor-not-allowed disabled:opacity-60"
+                type="button"
+                aria-label={showPassword ? '隐藏密码' : '显示密码'}
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="grid size-[18px] shrink-0 place-items-center text-[#677185] outline-none transition-colors hover:text-[#464c5e]"
               >
-                {loading ? '登录中…' : '登录'}
+                {showPassword ? (
+                  <IconFieldEyeOn className="size-[18px]" />
+                ) : (
+                  <IconFieldEye className="size-[18px]" />
+                )}
               </button>
-            </form>
-          )}
-        </div>
+            </div>
 
-        <div className="mt-[32px] flex w-full justify-center">
-          <img
-            src={loginPreview}
-            alt="StaffDeck 产品预览"
-            className="h-auto w-full max-w-[1200px] select-none object-contain"
-            draggable={false}
-          />
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-[28px] flex h-[44px] w-full items-center justify-center rounded-[10px] bg-[#2563EB] text-[16px] font-medium text-white transition-colors hover:bg-[#1d4ed8] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? '登录中…' : '登录'}
+            </button>
+          </form>
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }

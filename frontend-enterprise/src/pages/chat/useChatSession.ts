@@ -73,7 +73,6 @@ import {
   hasAssistantCarrierForTurn,
   hasAssistantMessageForTurn,
   hasRenderableStreamingText,
-  formatTracePayload,
   hasRecoverableEventProgress,
   hasServerMessageForTurn,
   isDraftConversationKey,
@@ -145,8 +144,8 @@ const SCHEDULE_WEEKDAY_LABELS = ['周一', '周二', '周三', '周四', '周五
 const ENTERPRISE_SIDEBAR_STORAGE_KEY = 'ultrarag_enterprise_sidebar_expanded';
 const MISSING_MODEL_CONFIG_PATTERN = /missing_model_config|missing model config|没有默认模型配置|没有可用模型|模型配置不存在|模型未配置/i;
 const MODEL_CONFIGS_UPDATED_EVENT = 'ultrarag-enterprise-model-configs-updated';
-const ONBOARDING_SEEN_KEY = 'staffdeck_onboarding_guide_seen';
-const QUICK_START_SEEN_KEY = 'staffdeck_quick_start_guide_seen';
+const ONBOARDING_SEEN_KEY = 'mindstaff_onboarding_guide_seen';
+const QUICK_START_SEEN_KEY = 'mindstaff_quick_start_guide_seen';
 
 function isMissingModelConfigurationError(value: unknown): boolean {
   if (value instanceof ApiError) {
@@ -367,9 +366,7 @@ export function useChatSession(options: UseChatSessionOptions = {}) {
     show_skill_trace: true,
     show_tool_trace: true,
     reflection_max_rounds: 1,
-    agent_loop_max_actions: 32,
-    sandbox_network_mode: 'all',
-    sandbox_allowed_domains: [],
+    agent_loop_max_actions: 6,
     updated_at: '',
   });
   const chatMessagesRef = useRef<HTMLDivElement>(null);
@@ -1921,7 +1918,6 @@ export function useChatSession(options: UseChatSessionOptions = {}) {
       || item.event === 'task_frame_finished'
       || item.event === 'harness_action_created'
       || item.event === 'harness_tool_completed'
-      || item.event === 'harness_step_timeout'
     ) {
       const line = harnessEventTraceLine(item.event, item.data);
       if (line) upsertVisibleTraceLine(line);
@@ -2018,15 +2014,11 @@ export function useChatSession(options: UseChatSessionOptions = {}) {
     if (item.event === 'tool_result') {
       const tool = normalizeTraceTool(item.data);
       if (tool) {
-        const output = formatTracePayload(tool.content);
         upsertVisibleTraceLine({
           id: `tool_${tool.toolCallId || tool.rawToolName || tool.toolId}`,
           kind: 'tool',
           text: `${tool.isError ? '工具调用失败' : '调用工具'} ${tool.toolName}`,
           detail: toolTraceDetail(tool),
-          output: output || undefined,
-          outputLanguage: output ? 'json' : undefined,
-          outputTitle: output ? '查看工具结果' : undefined,
           state: tool.isError ? 'failed' : 'completed',
           icon: 'tool',
         });

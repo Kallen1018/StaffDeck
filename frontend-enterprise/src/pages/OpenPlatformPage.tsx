@@ -555,7 +555,7 @@ export default function OpenPlatformPage({
         className="mb-[24px]"
         onLogout={onLogout}
         userName={currentUser?.username}
-        title="开放广场平台"
+        title="数字广场"
       />
       <div className="mx-auto grid w-full grid-cols-1 gap-[12px] sm:grid-cols-2 xl:min-h-0 xl:flex-1 xl:grid-cols-5 xl:grid-rows-1">
         {platformStats.map((platform) => {
@@ -585,7 +585,7 @@ export default function OpenPlatformPage({
                         height={59}
                         fit="contain"
                         objectPosition="center bottom"
-                        className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden!"
+                        className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden! block!"
                       />
                     )}
                     name={item.title}

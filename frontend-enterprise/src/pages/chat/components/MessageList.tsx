@@ -18,7 +18,7 @@ import {
   traceLineAllowed,
   traceSummary,
 } from '../chatHelpers';
-import { staffdeckDisplayText } from '@/employee';
+import { mindstaffDisplayText } from '@/employee';
 import type { UseChatSession } from '../useChatSession';
 import ChatEmptyState from './ChatEmptyState';
 import MessageBubble, { type MessageRender } from './MessageBubble';
@@ -102,7 +102,7 @@ export default function MessageList({ chat }: { chat: UseChatSession }) {
             !manuallyCollapsed
             && (expandedTraceIds.includes(traceTurnId) || defaultExpanded),
           );
-          const rawVisibleContent = staffdeckDisplayText(
+          const rawVisibleContent = mindstaffDisplayText(
             item.role === 'assistant' ? stripTrailingCitationSummary(item.content) : item.content,
           );
           const visibleContent = normalizeMessageText(rawVisibleContent) ? rawVisibleContent : '';

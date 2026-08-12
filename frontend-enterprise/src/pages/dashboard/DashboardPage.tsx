@@ -16,7 +16,7 @@ import AppHeader from '../../components/AppHeader';
 import EmployeeAvatar from '../../components/EmployeeAvatar';
 import EmployeeAvatarEditor from '../../components/EmployeeAvatarEditor';
 import EmployeeProfileEditor from '../../components/EmployeeProfileEditor';
-import StaffdeckIcon from '../../components/StaffdeckIcon';
+import MindStaffIcon from '../../components/MindStaffIcon';
 import ScheduledTasksTab from './ScheduledTasksTab';
 import MemoriesTab from './MemoriesTab';
 import ConversationLogsTab from './ConversationLogsTab';
@@ -30,7 +30,7 @@ import {
   employeeDisplayName,
   employeeProfile,
   preferredEmployeeAgent,
-  staffdeckDisplayText,
+  mindstaffDisplayText,
 } from '../../employee';
 import type {
   AgentProfileRead,
@@ -45,6 +45,7 @@ import type {
   SkillRead,
   ToolRead,
 } from '../../types';
+import './dashboard.css';
 
 const ENTERPRISE_AGENT_STORAGE_KEY = 'ultrarag_enterprise_agent_scope';
 
@@ -175,12 +176,12 @@ export default function DashboardPage({
   // Avoid flashing the 开放广场 / empty state before the agents API resolves,
   // which would otherwise briefly render before the employee profile appears.
   if (!loaded && agents.length === 0) {
-    return <div className="page dashboard-page" />;
+    return <div className="page dashboard-page dashboard-scope" />;
   }
 
   if (!selectedAgent && !isAdmin) {
     return (
-      <div className="page dashboard-page">
+      <div className="page dashboard-page dashboard-scope">
         <div className="empty-workspace-card p-[24px]">
           <h3 className="m-0 text-[20px] font-semibold text-foreground">还没有数字员工</h3>
           <p className="mt-[8px] text-[14px] text-muted-foreground">
@@ -197,7 +198,7 @@ export default function DashboardPage({
 
   if (!selectedAgent || selectedAgent.is_overall) {
     return (
-      <div className="page dashboard-page">
+      <div className="page dashboard-page dashboard-scope">
         <div className="page-title">
           <h3>开放广场</h3>
         </div>
@@ -216,16 +217,16 @@ export default function DashboardPage({
           </div>
         </section>
         <div className="org-dashboard-grid">
-          <DashboardStat title="SOP" value={skills.length} icon={<StaffdeckIcon name="filter" />} />
-          <DashboardStat title="技能" value={generalSkills.length} icon={<StaffdeckIcon name="spark" />} />
-          <DashboardStat title="知识库" value={visibleKnowledgeBases.length} icon={<StaffdeckIcon name="file" />} />
-          <DashboardStat title="可用工具" value={tools.filter((item) => item.enabled).length} icon={<StaffdeckIcon name="tool" />} />
-          <DashboardStat title="SOP 调用" value={totalCalls} icon={<StaffdeckIcon name="chat" />} />
-          <DashboardStat title="好评" value={positiveFeedback || feedbackSummary?.up_count || 0} icon={<StaffdeckIcon name="chat" />} />
-          <DashboardStat title="差评" value={negativeFeedback || feedbackSummary?.down_count || 0} icon={<StaffdeckIcon name="chat" />} />
+          <DashboardStat title="SOP" value={skills.length} icon={<MindStaffIcon name="filter" />} />
+          <DashboardStat title="技能" value={generalSkills.length} icon={<MindStaffIcon name="spark" />} />
+          <DashboardStat title="知识库" value={visibleKnowledgeBases.length} icon={<MindStaffIcon name="file" />} />
+          <DashboardStat title="可用工具" value={tools.filter((item) => item.enabled).length} icon={<MindStaffIcon name="tool" />} />
+          <DashboardStat title="SOP 调用" value={totalCalls} icon={<MindStaffIcon name="chat" />} />
+          <DashboardStat title="好评" value={positiveFeedback || feedbackSummary?.up_count || 0} icon={<MindStaffIcon name="chat" />} />
+          <DashboardStat title="差评" value={negativeFeedback || feedbackSummary?.down_count || 0} icon={<MindStaffIcon name="chat" />} />
           <div className="org-dashboard-card">
             <div className="ui-card-body p-[24px]">
-              <span className="org-dashboard-icon"><StaffdeckIcon name="model" /></span>
+              <span className="org-dashboard-icon"><MindStaffIcon name="model" /></span>
               <span className="text-[13px] text-muted-foreground">默认模型</span>
               <span className="text-[15px] text-foreground">{defaultModel ? `${defaultModel.name} / ${defaultModel.model}` : '未配置'}</span>
             </div>
@@ -254,7 +255,7 @@ export default function DashboardPage({
     ? selectedAgent.metadata.system_prompt_summary
     : '';
   const systemSummary = compactSummary(
-    staffdeckDisplayText(selectedAgent.persona_prompt || systemPromptSummary || selectedAgent.description || `${employee.roleName}，负责接收任务、调用知识库、执行 SOP 并沉淀对话质量反馈。`),
+    mindstaffDisplayText(selectedAgent.persona_prompt || systemPromptSummary || selectedAgent.description || `${employee.roleName}，负责接收任务、调用知识库、执行 SOP 并沉淀对话质量反馈。`),
     132,
   );
 
@@ -272,7 +273,7 @@ export default function DashboardPage({
   );
 
   return (
-    <div className="min-h-full w-full min-w-0 max-w-full box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]">
+    <div className="dashboard-page dashboard-scope min-h-full w-full min-w-0 max-w-full box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]">
       <AppHeader
         onLogout={onLogout}
         userName={currentUser?.username}
@@ -402,7 +403,7 @@ export default function DashboardPage({
 
 function DashboardStat({ title, value, icon }: { title: string; value: number; icon: ReactNode }) {
   return (
-    <div className="org-dashboard-card">
+    <div className="org-dashboard-card dashboard-stat-card">
       <div className="ui-card-body p-[24px]">
         <span className="org-dashboard-icon">{icon}</span>
         <span className="text-[13px] text-muted-foreground">{title}</span>
@@ -427,7 +428,7 @@ function isEmptyDefaultKnowledgeBase(item: KnowledgeBaseRead): boolean {
 
 function MetricTile({ label, value }: { label: string; value: number }) {
   return (
-    <div className="employee-metric-tile">
+    <div className="employee-metric-tile dashboard-hero-metric">
       <span>{label}</span>
       <strong>{value}</strong>
     </div>
@@ -461,13 +462,13 @@ function EmployeeProfileTabs({ activeKey = 'work' }: { activeKey?: ProfileTabKey
     >
       <TabsList
         aria-label="个人档案分区"
-        className="h-[35px]! w-[504px] max-w-full gap-2 rounded-none bg-transparent p-0"
+        className="dashboard-profile-tabs h-[35px]! w-[504px] max-w-full gap-2 rounded-none bg-transparent p-0"
       >
         {PROFILE_TABS.map(({ key, label, Icon }) => (
           <TabsTrigger
             key={key}
             value={key}
-            className="h-[35px] flex-1 gap-[7px] rounded-t-lg rounded-b-none border-0 text-[14px] font-bold text-[#8b94aa] hover:text-[#202226] data-[state=active]:bg-white data-[state=active]:text-[#202226] data-[state=active]:shadow-[0_-12px_28px_rgba(21,26,38,0.04)] in-data-[theme=dark]:text-[#8f98aa] in-data-[theme=dark]:hover:text-[#f0f2f6] in-data-[theme=dark]:data-[state=active]:bg-[#202126] in-data-[theme=dark]:data-[state=active]:text-[#c5ccd8] in-data-[theme=dark]:data-[state=active]:shadow-none"
+            className="dashboard-profile-tab h-[35px] flex-1 gap-[7px] rounded-t-lg rounded-b-none border-0 text-[14px] font-bold text-[#8b94aa] hover:text-[#202226] data-[state=active]:bg-white data-[state=active]:text-[#202226] data-[state=active]:shadow-[0_-12px_28px_rgba(21,26,38,0.04)] in-data-[theme=dark]:text-[#8f98aa] in-data-[theme=dark]:hover:text-[#f0f2f6] in-data-[theme=dark]:data-[state=active]:bg-[#202126] in-data-[theme=dark]:data-[state=active]:text-[#c5ccd8] in-data-[theme=dark]:data-[state=active]:shadow-none"
           >
             <Icon />
             {label}
@@ -480,7 +481,7 @@ function EmployeeProfileTabs({ activeKey = 'work' }: { activeKey?: ProfileTabKey
 
 function HeroMetric({ label, value }: { label: string; value: number }) {
   return (
-    <div className="flex flex-1 items-end gap-1 rounded-[10px] bg-[#f6f6f6] px-5 py-2">
+    <div className="dashboard-hero-metric flex flex-1 items-end gap-1 rounded-[10px] bg-[#f6f6f6] px-5 py-2">
       <strong className="text-[14px] leading-none font-medium text-[#18181a]">{value}</strong>
       <span className="text-[12px] leading-none text-[#464c5e]">{label}</span>
     </div>

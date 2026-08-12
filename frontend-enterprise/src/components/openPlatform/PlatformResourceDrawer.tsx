@@ -179,7 +179,7 @@ export default function PlatformResourceDrawer({
           <button
             type="button"
             onClick={onUse}
-            className="inline-flex h-[34px] items-center justify-center rounded-[10px] bg-[#18181a] px-[20px] text-[12px] text-white transition-colors hover:bg-[#2a2a2e]"
+            className="inline-flex h-[34px] items-center justify-center rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] text-white transition-colors hover:bg-[#2a2a2e]"
           >
             {useLabel}
           </button>

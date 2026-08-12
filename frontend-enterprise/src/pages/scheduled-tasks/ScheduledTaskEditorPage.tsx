@@ -191,7 +191,7 @@ function ScheduledTaskEditorPage({
         <Button
           onClick={() => void save()}
           disabled={saving}
-          className="h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]"
+          className="h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]"
         >
           保存
         </Button>

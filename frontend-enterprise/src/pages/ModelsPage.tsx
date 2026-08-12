@@ -480,7 +480,7 @@ export default function ModelsPage({
         <UIButton
           data-guide-target="models-create"
           onClick={createBlank}
-          className="h-[34px] gap-[4px] rounded-[10px] bg-[#18181a] px-[20px] text-[12px] font-normal text-white hover:bg-[#303030]"
+          className="h-[34px] gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white hover:bg-[#1D4ED8]"
         >
           <IconAdd className="size-[14px]" />
           新建模型
@@ -672,7 +672,7 @@ export default function ModelsPage({
             <UIButton
               disabled={saving}
               onClick={() => void save()}
-              className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+              className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
             >
               {saving && <LoaderCircle className="size-[14px] animate-spin" />}
               {saveStage === 'testing' ? '测试并保存中' : saving ? '保存中' : '保存'}

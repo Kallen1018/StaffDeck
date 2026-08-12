@@ -1,4 +1,4 @@
-import StaffdeckIcon from '@/components/StaffdeckIcon';
+import MindStaffIcon from '@/components/MindStaffIcon';
 import IconThumbUp from '@/assets/icons/thumb-up.svg?react';
 import IconThumbDown from '@/assets/icons/thumb-down.svg?react';
 import { cn } from '@/lib/utils';
@@ -117,7 +117,7 @@ export default function MessageBubble({ chat, item, render }: MessageBubbleProps
               title="删除排队消息"
               onClick={() => removeQueuedTurn(item.turnId || '')}
             >
-              <StaffdeckIcon name="trash" size={14} />
+              <MindStaffIcon name="trash" size={14} />
             </button>
           )}
           {statusOnly ? (
@@ -141,7 +141,7 @@ export default function MessageBubble({ chat, item, render }: MessageBubbleProps
               <div className={CHAT_PLAIN_ANSWER_CLASS}>
                 {scheduledTaskPrompt && (
                   <span className={CHAT_MESSAGE_MODE_CHIP_CLASS}>
-                    <StaffdeckIcon name="clock" size={13} />
+                    <MindStaffIcon name="clock" size={13} />
                     定时任务
                   </span>
                 )}
@@ -158,7 +158,7 @@ export default function MessageBubble({ chat, item, render }: MessageBubbleProps
                     <img className={CHAT_ATTACHMENT_IMG_CLASS} src={attachment.data_url} alt={attachment.filename} />
                   ) : (
                     <span className={CHAT_ATTACHMENT_FILE_ICON_CLASS}>
-                      <StaffdeckIcon name={attachment.kind === 'pdf' ? 'file' : 'folder'} size={18} />
+                      <MindStaffIcon name={attachment.kind === 'pdf' ? 'file' : 'folder'} size={18} />
                     </span>
                   )}
                   <span className={CHAT_ATTACHMENT_COPY_CLASS}>
@@ -184,7 +184,7 @@ export default function MessageBubble({ chat, item, render }: MessageBubbleProps
           {item.role === 'assistant' && citations.length > 0 && (
             <div className={CHAT_CITATIONS_CLASS} aria-label="知识引用">
               <div className={CHAT_CITATION_HEADING_CLASS}>
-                <StaffdeckIcon name="file" size={14} />
+                <MindStaffIcon name="file" size={14} />
                 <span>知识来源</span>
               </div>
               <div className={CHAT_CITATION_LIST_CLASS}>
@@ -240,7 +240,7 @@ export default function MessageBubble({ chat, item, render }: MessageBubbleProps
       {queuedMessage && (
         <div className={CHAT_QUEUED_STATUS_ROW_CLASS}>
           <span className={CHAT_QUEUED_STATUS_CLASS} role="status">
-            <StaffdeckIcon name="clock" size={12} />
+            <MindStaffIcon name="clock" size={12} />
             排队中
           </span>
         </div>

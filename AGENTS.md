@@ -4,6 +4,13 @@
 
 StaffDeck combines a Python 3.11+ FastAPI service with a React/TypeScript console. Backend application code lives in `backend/app/`; entry points such as `backend/single_port_app.py` support the desktop and single-port runtime. Backend tests are in `backend/tests/`, and the supported conversation runtime is Harness v2. Frontend code is in `frontend-enterprise/src/`, with static assets in `frontend-enterprise/public/` and colocated `*.test.ts` or `*.test.tsx` files. Use `scripts/` for development lifecycle tooling and `packaging/` for platform release assets.
 
+## Design System Instructions
+For any frontend, styling, layout, or component task in this repository:
+
+- First read `design/CODEX_DESIGN_RULES.md` before making UI decisions.
+- Treat `design/design-system.html` as the visual specification preview and `design/css/tokens.css` as the source of truth for design tokens.
+- Use the token values and style patterns from `design/css/app.css` and `design/css/pages.css` when implementing pages, navigation, cards, forms, and states.
+
 ## Build, Test, and Development Commands
 
 - `python3 -m venv backend/.venv && backend/.venv/bin/python -m pip install -e "backend[dev]"` installs backend and test dependencies.

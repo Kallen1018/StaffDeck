@@ -68,7 +68,7 @@ export default function EmployeeCard({
   const galleryPublished = isGalleryEmployee(employee);
   const online = employee.status === 'active';
 
-  // Show raw API values on the card (bypass the SD1 term relabeling in staffdeckDisplayText).
+  // Show raw API values on the card (bypass the SD1 term relabeling in mindstaffDisplayText).
   const rawRoleName = (employee.metadata?.role_name as string | undefined) || profile.roleName;
   const displayName = employee.is_overall ? '开放广场' : employeeDisplayNameWithCreator(employee);
   const displayDescription = employee.description || '暂无描述';
@@ -104,15 +104,15 @@ export default function EmployeeCard({
       <div className="flex rounded-[18px] h-[68px] box-border gap-[10px] bg-[#f6f6f6] p-[8px] mt-[34px]" >
 
         {/* Avatar illustration — absolutely positioned so its head pokes above the gray band */}
-        <div className='w-[80px] relative'>
+        <div className='w-[70px] relative'>
           <div className='absolute inset-0 flex items-end justify-center'>
             <EmployeeAvatar
               agent={employee}
-              width={80}
+              width={70}
               height={94}
               fit="contain"
               objectPosition="center bottom"
-              className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden!"
+              className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden! block!"
             />
           </div>
           

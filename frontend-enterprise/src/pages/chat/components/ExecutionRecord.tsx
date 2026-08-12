@@ -1,14 +1,14 @@
 import type { ComponentType, SVGProps } from 'react';
 
 import CodeBlock from '@/components/CodeBlock';
-import StaffdeckIcon from '@/components/StaffdeckIcon';
-import IconCotAdvance from '@/assets/staffdeck/cot-icons/advance.svg?react';
-import IconCotExecute from '@/assets/staffdeck/cot-icons/execute.svg?react';
-import IconCotGenerated from '@/assets/staffdeck/cot-icons/generated.svg?react';
-import IconCotJudge from '@/assets/staffdeck/cot-icons/judge.svg?react';
-import IconCotLoading from '@/assets/staffdeck/cot-icons/loading.svg?react';
-import IconCotSelect from '@/assets/staffdeck/cot-icons/select.svg?react';
-import IconCotTool from '@/assets/staffdeck/cot-icons/tool.svg?react';
+import MindStaffIcon from '@/components/MindStaffIcon';
+import IconCotAdvance from '@/assets/mindstaff/cot-icons/advance.svg?react';
+import IconCotExecute from '@/assets/mindstaff/cot-icons/execute.svg?react';
+import IconCotGenerated from '@/assets/mindstaff/cot-icons/generated.svg?react';
+import IconCotJudge from '@/assets/mindstaff/cot-icons/judge.svg?react';
+import IconCotLoading from '@/assets/mindstaff/cot-icons/loading.svg?react';
+import IconCotSelect from '@/assets/mindstaff/cot-icons/select.svg?react';
+import IconCotTool from '@/assets/mindstaff/cot-icons/tool.svg?react';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/i18n';
 
@@ -84,7 +84,7 @@ export default function ExecutionRecord({
         <CotTraceIcon name={traceSummaryIconName(summary)} />
         <span className={cn(summary.state === 'running' && CHAT_TRACE_FLOW_TEXT_CLASS)}>{t(summary.text)}</span>
         {details.length > 0 && (
-          <StaffdeckIcon
+          <MindStaffIcon
             name="arrow"
             size={14}
             className={cn(CHAT_TRACE_CHEVRON_CLASS, expanded && CHAT_TRACE_CHEVRON_EXPANDED_CLASS)}

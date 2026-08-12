@@ -7,7 +7,7 @@ export const SECTION_CARD_TITLE_CLASS = 'text-[14px] font-medium text-[#18181a]'
 export const RETURN_BUTTON_CLASS =
   'h-8 gap-1 rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-5 text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6]! hover:bg-white! hover:text-[#18181a]! focus-visible:border-[#cbd3e6]! focus-visible:ring-0 aria-expanded:border-[#cbd3e6]! aria-expanded:bg-white! aria-expanded:text-[#18181a]! data-[state=open]:border-[#cbd3e6]! data-[state=open]:bg-white! data-[state=open]:text-[#18181a]!';
 export const PRIMARY_BUTTON_CLASS =
-  'h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]';
+  'h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]';
 
 // Page layout — flex column so header + actions stay auto-sized and workbench fills the rest
 export const DISTILL_PAGE_CLASS =

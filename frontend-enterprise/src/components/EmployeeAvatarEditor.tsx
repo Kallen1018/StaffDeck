@@ -203,7 +203,7 @@ export default function EmployeeAvatarEditor({
           <Button
             disabled={saving}
             onClick={() => void save()}
-            className="h-8 w-[92px] rounded-[10px] bg-[#18181a] px-3 text-sm font-normal text-white hover:bg-[#303030]"
+            className="h-8 w-[92px] rounded-[10px] bg-[#2563EB] px-3 text-sm font-normal text-white hover:bg-[#1D4ED8]"
           >
             保存头像
           </Button>

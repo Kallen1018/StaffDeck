@@ -1,11 +1,11 @@
 <div align="center">
 
-<img src="packaging/assets/staffdeck_banner_cn.png" alt="StaffDeck 标志"  />
+<img src="packaging/assets/mindstaff_banner_cn.png" alt="MindStaff 标志"  />
 
 <p align="center">
-  <a href="https://staffdeck.openbmb.cn/"><img src="https://img.shields.io/badge/Website-staffdeck.openbmb.cn-FF6B35?style=flat-square&logo=googlechrome&logoColor=white" alt="Official Website"/></a>
+  <a href="https://mindstaff.openbmb.cn/"><img src="https://img.shields.io/badge/Website-mindstaff.openbmb.cn-FF6B35?style=flat-square&logo=googlechrome&logoColor=white" alt="Official Website"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_3.0-blue.svg?style=flat-square" alt="License"/></a>
-  <a href="https://github.com/OpenBMB/StaffDeck/stargazers"><img src="https://img.shields.io/github/stars/OpenBMB/StaffDeck?style=flat-square" alt="Stars"/></a>
+  <a href="https://github.com/OpenBMB/MindStaff/stargazers"><img src="https://img.shields.io/github/stars/OpenBMB/MindStaff?style=flat-square" alt="Stars"/></a>
   <br/>
   <a href="#-联系我们"><img src="https://img.shields.io/badge/Discord-社群-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"/></a>
   &nbsp;
@@ -23,11 +23,11 @@
 
 ## 更新日志
 
-  - **2026-07-15**：StaffDeck正式开源！欢迎大家使用反馈与Star支持。
+  - **2026-07-15**：MindStaff正式开源！欢迎大家使用反馈与Star支持。
 
-# 💡 关于StaffDeck
+# 💡 关于MindStaff
 
-StaffDeck是一套面向企业的数字员工构建与管理平台，帮助专业员工将工作经验、业务流程和判断标准固化为可以持续工作的数字员工，接手重复性任务，并将个人能力沉淀为可复用、可迭代、可追溯的组织资产。StaffDeck由[面壁智能](https://modelbest.cn/)，[东北大学-面壁智能数据智能联合实验室](https://neuir.github.io/)，[清华大学THUNLP实验室](https://nlp.csai.tsinghua.edu.cn/)，[OpenBMB](https://www.openbmb.cn/home)与[AI9Stars](https://github.com/AI9Stars)联合研发，面向希望将 AI 从个人效率工具升级为组织生产力的企业与机构。
+MindStaff是一套面向企业的数字员工构建与管理平台，帮助专业员工将工作经验、业务流程和判断标准固化为可以持续工作的数字员工，接手重复性任务，并将个人能力沉淀为可复用、可迭代、可追溯的组织资产。MindStaff由[面壁智能](https://modelbest.cn/)，[东北大学-面壁智能数据智能联合实验室](https://neuir.github.io/)，[清华大学THUNLP实验室](https://nlp.csai.tsinghua.edu.cn/)，[OpenBMB](https://www.openbmb.cn/home)与[AI9Stars](https://github.com/AI9Stars)联合研发，面向希望将 AI 从个人效率工具升级为组织生产力的企业与机构。
 
 ## 核心亮点
 
@@ -38,23 +38,23 @@ StaffDeck是一套面向企业的数字员工构建与管理平台，帮助专�
 
 ## 客户端下载
 
-访问 [StaffDeck 官方网站](https://staffdeck.openbmb.cn/)，或直接下载最新桌面客户端：
+访问 [MindStaff 官方网站](https://mindstaff.openbmb.cn/)，或直接下载最新桌面客户端：
 
 | 平台 | 架构 | 下载 |
 | --- | --- | --- |
-| macOS | Apple Silicon（arm64） | [下载 `.dmg`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-macos-arm64.dmg) |
-| macOS | Intel（x86_64） | [下载 `.dmg`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-macos-x86_64.dmg) |
-| Windows | x64 | [下载安装程序 `.exe`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-windows-x64-setup.exe) |
-| Linux | x86_64（Debian/Ubuntu） | [下载 `.deb`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-linux-x86_64.deb) |
+| macOS | Apple Silicon（arm64） | [下载 `.dmg`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-macos-arm64.dmg) |
+| macOS | Intel（x86_64） | [下载 `.dmg`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-macos-x86_64.dmg) |
+| Windows | x64 | [下载安装程序 `.exe`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-windows-x64-setup.exe) |
+| Linux | x86_64（Debian/Ubuntu） | [下载 `.deb`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-linux-x86_64.deb) |
 
 Linux 安装包默认只监听本机 `127.0.0.1`。安装后可以在终端配置监听模式和
 端口，无头服务器也适用：
 
 ```bash
-staffdeck setup
-staffdeck setup --mode local --port 5173
-staffdeck setup --mode lan --port 5173
-staffdeck setup --mode public --port 5173 --public-url https://staff.example.com
+mindstaff setup
+mindstaff setup --mode local --port 5173
+mindstaff setup --mode lan --port 5173
+mindstaff setup --mode public --port 5173 --public-url https://staff.example.com
 ```
 
 `local` 只允许本机访问；`lan` 和 `public` 监听 `0.0.0.0`。`--port` 用来
@@ -66,11 +66,11 @@ URL。配置按用户保存，并在下次启动时生效。
 ## Agent 一键部署
 
 将下面的 Prompt 粘贴给 Cursor、Claude Code 或 Codex。代码部署时，也可以用
-`ULTRARAG_HOST`、`ULTRARAG_PORT` 和 `STAFFDECK_PUBLIC_URL` 覆盖启动参数：
+`ULTRARAG_HOST`、`ULTRARAG_PORT` 和 `MINDECK_PUBLIC_URL` 覆盖启动参数：
 
 ```text
-阅读 https://raw.githubusercontent.com/OpenBMB/StaffDeck/main/README.zh.md。
-克隆 OpenBMB/StaffDeck 私有仓库，准备 Python 3.11 或更高版本和 Node.js 20，创建
+阅读 https://raw.githubusercontent.com/OpenBMB/MindStaff/main/README.zh.md。
+克隆 OpenBMB/MindStaff 私有仓库，准备 Python 3.11 或更高版本和 Node.js 20，创建
 backend/.venv，安装前后端依赖，将 backend/.env.example 复制为
 backend/.env；缺少 OpenAI 兼容模型地址或 API Key 时向我询问，并严格使用当前
 系统对应的文档命令。macOS/Linux/WSL 运行 scripts/dev_up.sh --detach，Windows
@@ -81,7 +81,7 @@ PowerShell 运行 .\scripts\dev_up.ps1 --detach；验证 /api/health 和
 
 ## 目录
 
-- [💡 关于StaffDeck](#-关于staffdeck)
+- [💡 关于MindStaff](#-关于mindstaff)
   - [核心亮点](#核心亮点)
   - [客户端下载](#客户端下载)
   - [Agent 一键部署](#agent-一键部署)
@@ -120,8 +120,8 @@ PowerShell 运行 .\scripts\dev_up.ps1 --detach；验证 /api/health 和
 首先克隆仓库：
 
 ```bash
-git clone https://github.com/OpenBMB/StaffDeck.git
-cd StaffDeck
+git clone https://github.com/OpenBMB/MindStaff.git
+cd MindStaff
 ```
 
 macOS、Linux 或 WSL：
@@ -162,7 +162,7 @@ API Key 用于创建初始模型配置，存入数据库前会被加密。请勿
 | macOS、Linux 或 WSL | `scripts/dev_up.sh --detach` |
 | Windows PowerShell | `.\scripts\dev_up.ps1 --detach` |
 
-两套包装脚本最终都会调用同一个跨平台 Python 生命周期入口 `scripts/dev.py`。启动过程会构建 StaffDeck 前端，并由一个 FastAPI 进程在 `5173` 端口同时提供 UI、API 与 Swagger 文档。默认管理员账号为 `admin` / `admin`，请在首次登录后通过账号配置修改密码。
+两套包装脚本最终都会调用同一个跨平台 Python 生命周期入口 `scripts/dev.py`。启动过程会构建 MindStaff 前端，并由一个 FastAPI 进程在 `5173` 端口同时提供 UI、API 与 Swagger 文档。默认管理员账号为 `admin` / `admin`，请在首次登录后通过账号配置修改密码。
 
 ### 4. 验证安装
 
@@ -213,7 +213,7 @@ curl.exe http://127.0.0.1:5173/api/health
 | 查看服务状态 | `status` |
 | 停止本地服务 | `down` |
 
-> 完整说明 → [StaffDeck 使用教程](https://staffdeck.openbmb.cn/#/docs/introduce?lang=zh)
+> 完整说明 → [MindStaff 使用教程](https://mindstaff.openbmb.cn/#/docs/introduce?lang=zh)
 
 
 
@@ -235,7 +235,7 @@ curl.exe http://127.0.0.1:5173/api/health
 
 - 一个渠道账号挂载多个数字员工；`/员工`、`/切换 <名字>`、`/当前`、`/帮助` 指令调度；
 - 意图自动分发：按用户消息意图（LLM 分类）自动路由到最合适的员工，SOP 进行中提高切换阈值，人工接管与手动切换保护窗内保持粘性；
-- 身份合并：微信/企微用户可通过 `/绑定 <一次性码>` 把渠道身份合并到既有 StaffDeck 账号，记忆与会话统一，`/解绑` 可逆；
+- 身份合并：微信/企微用户可通过 `/绑定 <一次性码>` 把渠道身份合并到既有 MindStaff 账号，记忆与会话统一，`/解绑` 可逆；
 - 对话记录与投递日志按天归纳分页；管理员与员工创建者可按权限查看全部渠道会话；
 - 可靠性：入站幂等去重、崩溃恢复、出站退避重试、token 失效自动告警与微信会话自愈。
 
@@ -258,16 +258,12 @@ curl.exe http://127.0.0.1:5173/api/health
 - 渠道凭证（bot token / secret)Fernet 加密落库，任何接口不回传明文；
 - 绑定管理权限：管理员或绑定创建者；员工挂载动作本身即"对该渠道全部用户开放该员工",请按需授权。
 
-## 开放 API
-
-外部业务系统可以通过员工级 API Key 调用数字员工、持续会话、Harness v2 Run、SOP、知识、技能、工具和定时任务。完整的鉴权边界、接口清单、SSE、Webhook 与调用示例见 [数字员工开放 API v1](docs/open-api-v1.md)。
-
 ## 项目结构
 
 ```text
-StaffDeck/
+MindStaff/
 ├── backend/                  # FastAPI 接口、Agent 运行时、存储与任务 Worker
-├── frontend-enterprise/      # React/TypeScript StaffDeck 工作台
+├── frontend-enterprise/      # React/TypeScript MindStaff 工作台
 ├── docs/                     # 教程、API、Schema 与示例流程
 ├── scripts/                  # 单端口服务生命周期与校验脚本
 ├── packaging/                # macOS、Linux 与 Windows 打包资源
@@ -302,10 +298,10 @@ StaffDeck/
 - [x] 更多企业连接器与经过审核的广场资源（已支持微信、企业微信渠道接入）
 - [ ] 面向高风险工具动作的细粒度审批策略
 
-路线优先级由真实部署需求驱动。请通过 [Issue](https://github.com/OpenBMB/StaffDeck/issues) 提供可复现的场景和预期行为。
+路线优先级由真实部署需求驱动。请通过 [Issue](https://github.com/OpenBMB/MindStaff/issues) 提供可复现的场景和预期行为。
 
 # 💬 联系我们
-- 关于技术问题及功能请求，请提交 [GitHub Issues](https://github.com/OpenBMB/StaffDeck/issues)。
+- 关于技术问题及功能请求，请提交 [GitHub Issues](https://github.com/OpenBMB/MindStaff/issues)。
 - 商业合作，请联系：
   ```
   business@modelbest.cn
@@ -347,23 +343,23 @@ StaffDeck/
 
 ## 引用
 
-在内部研究或经授权的公开材料中使用 StaffDeck 时，可引用：
+在内部研究或经授权的公开材料中使用 MindStaff 时，可引用：
 
 ```bibtex
-@software{StaffDeck2026,
-  title  = {StaffDeck: Build, Run, and Govern Enterprise Digital Employees},
+@software{MindStaff2026,
+  title  = {MindStaff: Build, Run, and Govern Enterprise Digital Employees},
   author = {OpenBMB},
   year   = {2026},
-  url    = {https://github.com/OpenBMB/StaffDeck}
+  url    = {https://github.com/OpenBMB/MindStaff}
 }
 ```
 ## Star 历史
 
-<a href="https://www.star-history.com/?repos=openbmb%2Fstaffdeck&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=openbmb%2Fmindstaff&type=date&legend=top-left">
  <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&theme=dark&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&theme=dark&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
  </picture>
 </a>
 
@@ -373,4 +369,4 @@ StaffDeck/
 
 ## 致谢
 
-StaffDeck 由 [OpenBMB](https://www.openbmb.cn/) 生态孵化。
+MindStaff 由 [OpenBMB](https://www.openbmb.cn/) 生态孵化。

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import StaffdeckIcon, { type StaffdeckIconName } from '../components/StaffdeckIcon';
+import MindStaffIcon, { type MindStaffIconName } from '../components/MindStaffIcon';
 
 type TocGroup = {
   title: string;
@@ -10,7 +10,7 @@ type Feature = {
   title: string;
   subtitle: string;
   body: string;
-  icon: StaffdeckIconName;
+  icon: MindStaffIconName;
   proof: string;
 };
 
@@ -217,10 +217,10 @@ export default function TutorialPage() {
     <main className="tutorial-doc-page">
       <section className="tutorial-doc-hero" id="intro">
         <div className="tutorial-doc-hero-copy">
-          <span className="ui-typography tutorial-doc-eyebrow">StaffDeck Docs</span>
+          <span className="ui-typography tutorial-doc-eyebrow">MindStaff Docs</span>
           <h1 className="ui-typography">企业数字员工运行时，从配置到持续运营</h1>
           <p className="ui-typography">
-            StaffDeck 把模型、数字员工、知识库、技能、SOP、工具、记忆、定时任务和 Trace 放到一条链路里，
+            MindStaff 把模型、数字员工、知识库、技能、SOP、工具、记忆、定时任务和 Trace 放到一条链路里，
             让企业拥有可配置、可验证、可复盘的业务流程对话系统。
           </p>
           <div className="tutorial-doc-actions">
@@ -233,12 +233,12 @@ export default function TutorialPage() {
             <span><strong>4</strong>推荐场景</span>
           </div>
         </div>
-        <div className="tutorial-doc-hero-map" aria-label="StaffDeck runtime map">
+        <div className="tutorial-doc-hero-map" aria-label="MindStaff runtime map">
           <span className="tutorial-doc-map-label">Agent-native business runtime</span>
           <div className="tutorial-doc-map-grid">
             {FEATURES.slice(0, 6).map((feature) => (
               <span key={feature.title}>
-                <StaffdeckIcon name={feature.icon} />
+                <MindStaffIcon name={feature.icon} />
                 <em>{feature.title}</em>
               </span>
             ))}
@@ -254,7 +254,7 @@ export default function TutorialPage() {
       </section>
 
       <div className="tutorial-doc-shell">
-        <aside className="tutorial-doc-nav" aria-label="StaffDeck 单页文档目录">
+        <aside className="tutorial-doc-nav" aria-label="MindStaff 单页文档目录">
           <div className="tutorial-doc-nav-title">
             <span>目录</span>
             <strong>页面章节</strong>
@@ -276,7 +276,7 @@ export default function TutorialPage() {
           <span className="ui-typography tutorial-doc-eyebrow">项目简介</span>
           <h2 className="ui-typography">不是通用 Agent 框架，而是面向业务流程的企业对话运行时</h2>
           <p className="ui-typography">
-            StaffDeck 的核心不是“能聊天”，而是让一个真实岗位拥有自己的配置、资源、执行规则和运营记录。
+            MindStaff 的核心不是“能聊天”，而是让一个真实岗位拥有自己的配置、资源、执行规则和运营记录。
             每个员工都可以有独立知识、SOP、工具和记忆；每次对话都能回看路由、工具调用、回复和反馈。
           </p>
         </div>
@@ -342,12 +342,12 @@ export default function TutorialPage() {
         <SectionHeading
           eyebrow="Core Features"
           title="核心功能不是散点，而是一套员工运行系统"
-          body="PilotDeck 把能力分成 WorkSpace、Router、Memory、Always On、Gateway；StaffDeck 对应到企业数字员工场景，重点是岗位边界、知识治理、流程执行、工具调用和运营复盘。"
+          body="PilotDeck 把能力分成 WorkSpace、Router、Memory、Always On、Gateway；MindStaff 对应到企业数字员工场景，重点是岗位边界、知识治理、流程执行、工具调用和运营复盘。"
         />
         <div className="tutorial-doc-feature-grid">
           {FEATURES.map((feature) => (
             <article key={feature.title} className="tutorial-doc-feature">
-              <span><StaffdeckIcon name={feature.icon} /></span>
+              <span><MindStaffIcon name={feature.icon} /></span>
               <em>{feature.subtitle}</em>
               <strong>{feature.title}</strong>
               <p>{feature.body}</p>
@@ -361,7 +361,7 @@ export default function TutorialPage() {
         <SectionHeading
           eyebrow="Runtime Loop"
           title="一条业务请求如何被推进"
-          body="StaffDeck 的对话不是单轮问答。它会在路由、知识、技能、SOP、工具和回复生成之间形成可追踪执行链路。"
+          body="MindStaff 的对话不是单轮问答。它会在路由、知识、技能、SOP、工具和回复生成之间形成可追踪执行链路。"
         />
         <div className="tutorial-doc-loop">
           {['用户消息', 'Router 判断', 'SOP / 技能推进', '知识与工具调用', '回复生成', 'Trace / 反馈 / 记忆'].map((item) => (
@@ -378,7 +378,7 @@ export default function TutorialPage() {
         />
         <div className="tutorial-doc-governance-grid">
           {['对话日志记录每轮输入输出', 'Trace 展示路由、槽位和工具调用', '反馈分析定位失败原因', '记忆沉淀长期偏好和复盘结论', '定时任务把周期工作常驻化', '开放广场让能力复制和复用'].map((item) => (
-            <span key={item}><StaffdeckIcon name="check" />{item}</span>
+            <span key={item}><MindStaffIcon name="check" />{item}</span>
           ))}
         </div>
       </section>

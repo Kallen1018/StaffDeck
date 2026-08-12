@@ -13,10 +13,10 @@ import { XIcon } from "lucide-react";
 import { EnterpriseRoute } from "@/enums/routes";
 import { OPEN_QUICK_START_EVENT } from "./OnboardingGuide";
 
-const ONBOARDING_SEEN_KEY = "staffdeck_onboarding_guide_seen";
-export const QUICK_START_SEEN_KEY = "staffdeck_quick_start_guide_seen";
-export const QUICK_START_COMPLETED_EVENT = "staffdeck-quick-start-completed";
-export const OPEN_MODEL_CREATE_EVENT = "staffdeck-open-model-create";
+const ONBOARDING_SEEN_KEY = "mindstaff_onboarding_guide_seen";
+export const QUICK_START_SEEN_KEY = "mindstaff_quick_start_guide_seen";
+export const QUICK_START_COMPLETED_EVENT = "mindstaff-quick-start-completed";
+export const OPEN_MODEL_CREATE_EVENT = "mindstaff-open-model-create";
 
 type QuickStartStep = {
   title: string;

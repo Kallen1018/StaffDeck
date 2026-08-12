@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import StaffdeckIcon from '@/components/StaffdeckIcon';
+import MindStaffIcon from '@/components/MindStaffIcon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -132,7 +132,7 @@ export default function ScheduledDraftCard({
       <div className={CHAT_DRAFT_HEADER_CLASS}>
         <div className={CHAT_DRAFT_IDENTITY_CLASS}>
           <div className={CHAT_DRAFT_ICON_CLASS}>
-            <StaffdeckIcon name={created ? 'check' : 'clock'} size={18} />
+            <MindStaffIcon name={created ? 'check' : 'clock'} size={18} />
           </div>
           <div className="grid min-w-0 gap-[2px]">
             <div className={CHAT_DRAFT_KICKER_CLASS}>{created ? '定时任务已创建' : '定时任务草案'}</div>
@@ -150,7 +150,7 @@ export default function ScheduledDraftCard({
         <div className={CHAT_DRAFT_TOP_ACTIONS_CLASS}>
           {created ? (
             <span className={CHAT_DRAFT_CREATED_BADGE_CLASS}>
-              <StaffdeckIcon name="check" size={13} />
+              <MindStaffIcon name="check" size={13} />
               已创建
             </span>
           ) : editing ? (
@@ -170,7 +170,7 @@ export default function ScheduledDraftCard({
           ) : (
             <>
               <Button size="sm" variant="ghost" onClick={() => setEditing(true)}>
-                <StaffdeckIcon name="edit" size={14} />
+                <MindStaffIcon name="edit" size={14} />
                 编辑
               </Button>
               <Button size="sm" variant="ghost" onClick={onDismiss}>忽略</Button>

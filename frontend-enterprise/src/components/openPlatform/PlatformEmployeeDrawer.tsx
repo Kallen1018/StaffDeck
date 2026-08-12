@@ -224,7 +224,7 @@ export default function PlatformEmployeeDrawer({
           <button
             type="button"
             onClick={onUse}
-            className="inline-flex h-[34px] w-[80px] items-center justify-center rounded-[10px] bg-[#18181a] text-[12px] text-white transition-colors hover:bg-[#2a2a2e]"
+            className="inline-flex h-[34px] w-[80px] items-center justify-center rounded-[10px] bg-[#2563EB] text-[12px] text-white transition-colors hover:bg-[#2a2a2e]"
           >
             使用员工
           </button>

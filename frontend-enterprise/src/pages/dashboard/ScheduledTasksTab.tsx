@@ -407,7 +407,7 @@ export default function ScheduledTasksTab() {
         data-guide-target="scheduled-task-create"
         onClick={() => navigate('/enterprise/scheduled-tasks/new')}
         disabled={createDisabled}
-        className="h-8 w-[100px] gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]"
+        className="dashboard-primary-action h-8 w-[100px] gap-1 px-5 text-[12px] font-normal"
       >
         <IconAdd className="size-3.5" />
         新增任务
@@ -474,7 +474,7 @@ export default function ScheduledTasksTab() {
     <>
       <section
         aria-busy={loading}
-        className="relative mt-[-2px] flex w-full min-w-0 max-w-full flex-col gap-[24px] overflow-hidden rounded-[18px] bg-white p-[14px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] *:min-w-0 min-[521px]:p-[18px]"
+        className="dashboard-panel dashboard-scheduled-tasks relative mt-[-2px] flex w-full min-w-0 max-w-full flex-col gap-[24px] overflow-hidden rounded-[18px] bg-white p-[14px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] *:min-w-0 min-[521px]:p-[18px]"
       >
         {actionButtons}
         {scheduledBody}
@@ -483,7 +483,7 @@ export default function ScheduledTasksTab() {
       <Dialog open={runsOpen} onOpenChange={setRunsOpen}>
         <DialogContent
           aria-describedby={undefined}
-          className="flex max-h-[calc(100dvh-4rem)] w-[calc(100%-2rem)] flex-col gap-[16px] overflow-hidden rounded-[14px] px-[20px] py-[16px] sm:max-w-[920px]"
+          className="dashboard-dialog flex max-h-[calc(100dvh-4rem)] w-[calc(100%-2rem)] flex-col gap-[16px] overflow-hidden rounded-[14px] px-[20px] py-[16px] sm:max-w-[920px]"
         >
           <div className="flex items-center gap-[6px] px-[12px] text-[#757f9c]">
             <IconAlignJustify className="size-[14px] shrink-0" />

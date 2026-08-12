@@ -242,7 +242,7 @@ export default function MemoriesTab({
     <>
       <section
         aria-busy={loading}
-        className="relative mt-[-2px] flex w-full min-w-0 max-w-full flex-col gap-[24px] overflow-hidden rounded-[18px] bg-white p-[14px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] min-[521px]:p-[18px]"
+        className="dashboard-panel dashboard-memories relative mt-[-2px] flex w-full min-w-0 max-w-full flex-col gap-[24px] overflow-hidden rounded-[18px] bg-white p-[14px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] min-[521px]:p-[18px]"
       >
         <div className="flex flex-col gap-[18px]">
           <div className="flex items-center gap-[6px] px-[12px] text-[#757f9c]">
@@ -308,7 +308,7 @@ export default function MemoriesTab({
             <UIButton
               type="submit"
               disabled={loading}
-              className="h-[34px] w-[80px] gap-[4px] rounded-[10px] bg-[#18181a] px-[20px] text-[12px] font-normal text-white hover:bg-[#303030]"
+              className="dashboard-primary-action h-[34px] w-[80px] gap-[4px] px-[20px] text-[12px] font-normal"
             >
               <IconSearch className="size-[14px]" />
               查询
@@ -425,7 +425,7 @@ function MemoryDetailDialog({
     <Dialog open={Boolean(detail)} onOpenChange={(open) => !open && onClose()}>
       <DialogContent
         aria-describedby={undefined}
-        className="flex max-h-[calc(100dvh-4rem)] w-[calc(100%-2rem)] flex-col gap-[16px] overflow-hidden rounded-[14px] px-[20px] py-[16px] sm:max-w-[720px]"
+        className="dashboard-dialog flex max-h-[calc(100dvh-4rem)] w-[calc(100%-2rem)] flex-col gap-[16px] overflow-hidden rounded-[14px] px-[20px] py-[16px] sm:max-w-[720px]"
       >
         <div className="flex items-center gap-[6px] px-[12px] text-[#757f9c]">
           <IconListBulleted className="size-[14px] shrink-0" />

@@ -304,7 +304,7 @@ export default function AccountsPage({
         </UIButton>
         <UIButton
           onClick={openCreate}
-          className="h-[34px] gap-[4px] rounded-[10px] bg-[#18181a] px-[20px] text-[12px] font-normal text-white hover:bg-[#303030]"
+          className="h-[34px] gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white hover:bg-[#1D4ED8]"
         >
           <IconAdd className="size-[14px]" />
           新建账号
@@ -417,7 +417,6 @@ export default function AccountsPage({
         description="删除后该账号无法登录，但其创建的数字员工仍然保留。"
         onConfirm={() => void confirmDelete()}
       />
-
     </div>
   );
 }
@@ -524,7 +523,7 @@ function AccountDialog({
           <UIButton
             disabled={loading}
             onClick={onSubmit}
-            className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+            className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
           >
             {submitText}
           </UIButton>

@@ -11,7 +11,7 @@ import type { ChannelBindingRead } from '../../types';
 import { StatusBadge } from '../scheduled-tasks/StatusBadge';
 
 const PRIMARY_BUTTON_CLASS =
-  'h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]';
+  'h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]';
 const OUTLINE_BUTTON_CLASS =
   'h-8 gap-1 rounded-[10px] border-[#e3e7f1] px-5 text-[12px] font-normal text-[#464c5e] hover:bg-[#f6f6f6] hover:text-[#18181a]';
 

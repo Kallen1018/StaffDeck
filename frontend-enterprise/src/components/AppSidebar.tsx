@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +7,6 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -19,13 +17,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { ComponentType, SVGProps } from 'react';
 import { cn } from '@/lib/utils';
 import EmployeeAvatar from './EmployeeAvatar';
-import BrandLogo from './BrandLogo';
-import StaffdeckIcon from './StaffdeckIcon';
-import { employeeDisplayNameWithCreator, employeeProfile, staffdeckDisplayText } from '../employee';
+import MindStaffIcon from './MindStaffIcon';
+import { employeeDisplayNameWithCreator, employeeProfile, mindstaffDisplayText } from '../employee';
 import { EnterpriseRoute } from '../enums/routes';
 import type { AgentProfileRead, ChatSession } from '../types';
-import IconPlatform from '../assets/icons/nav-platform.svg?react';
-import IconAgents from '../assets/icons/nav-agents.svg?react';
 import IconFile from '../assets/icons/profile-file.svg?react';
 import IconAlarm from '../assets/icons/profile-alarm.svg?react';
 import IconHistory from '../assets/icons/profile-history.svg?react';
@@ -34,17 +29,11 @@ import IconFolder from '../assets/icons/cap-folder.svg?react';
 import IconMagicWand from '../assets/icons/cap-magicwand.svg?react';
 import IconClipboard from '../assets/icons/cap-clipboard.svg?react';
 import IconBriefcase from '../assets/icons/cap-briefcase.svg?react';
-import IconChat from '../assets/icons/action-chat.svg?react';
-import IconToggle from '../assets/icons/action-toggle.svg?react';
 import IconHeaderCollapse from '../assets/icons/header-collapse.svg?react';
-import IconAccounts from '../assets/icons/sys-accounts.svg?react';
-import IconModels from '../assets/icons/sys-models.svg?react';
-import IconSettings from '../assets/icons/action-toggle.svg?react';
 import IconChevronDown from '../assets/icons/chevron-down.svg?react';
 import IconAdd from '../assets/icons/add.svg?react';
 import IconSort from '../assets/icons/sort.svg?react';
 import IconGlobe from '../assets/icons/globe.svg?react';
-import IconViewMasonry from '../assets/icons/view-masonry.svg?react';
 import IconChatBubble from '../assets/icons/chat.svg?react';
 import IconEdit from '../assets/icons/edit.svg?react';
 import IconTrash from '../assets/icons/trash.svg?react';
@@ -56,12 +45,6 @@ type NavItem = {
   label: string;
   Icon: IconComponent;
 };
-
-const PRIMARY_NAV: NavItem[] = [
-  { route: EnterpriseRoute.Platform, label: '开放广场平台', Icon: IconPlatform },
-  { route: EnterpriseRoute.Agents, label: '我的数字员工', Icon: IconAgents },
-  { route: EnterpriseRoute.Channels, label: '渠道接入', Icon: IconGlobe },
-];
 
 const PROFILE_NAV: NavItem[] = [
   { route: EnterpriseRoute.Dashboard, label: '员工档案', Icon: IconFile },
@@ -77,27 +60,14 @@ const CAPABILITY_NAV: NavItem[] = [
   { route: EnterpriseRoute.Tools, label: '工具', Icon: IconBriefcase },
 ];
 
-const SYSTEM_NAV: NavItem[] = [
-  { route: EnterpriseRoute.Accounts, label: '账号管理', Icon: IconAccounts },
-  { route: EnterpriseRoute.Models, label: '模型配置', Icon: IconModels },
-  { route: EnterpriseRoute.RuntimeSettings, label: '运行设置', Icon: IconSettings },
-];
-
-function primaryNavItems(isAdmin: boolean): NavItem[] {
-  return isAdmin ? [...PRIMARY_NAV, ...SYSTEM_NAV] : PRIMARY_NAV;
-}
-
 export type AppSidebarManagementProps = {
   variant?: 'management';
   selected: string;
   onNavigate: (route: string) => void;
-  isAdmin: boolean;
   sidebarAgent?: AgentProfileRead;
   scopeAgents: AgentProfileRead[];
   selectedAgentId: string;
   onSelectAgent: (agentId: string) => void;
-  onOpenChat: () => void;
-  modelSetupAttention?: boolean;
 };
 
 export type ChatSessionFilterOption = { value: string; label: string };
@@ -124,7 +94,6 @@ export type AppSidebarChatProps = {
   onOpenHandoffs?: () => void;
   onRenameSession: (session: ChatSession) => void;
   onDeleteSession: (session: ChatSession) => void;
-  onOpenAdmin: () => void;
 };
 
 export type AppSidebarProps = AppSidebarManagementProps | AppSidebarChatProps;
@@ -132,42 +101,6 @@ export type AppSidebarProps = AppSidebarManagementProps | AppSidebarChatProps;
 // Shared shell classes so the management + chat sidebars share the same chrome.
 const SIDEBAR_SHELL_CLASS =
   'overflow-hidden border-r border-sidebar-border bg-sidebar backdrop-blur-[9.5px] **:data-[slot=sidebar-inner]:bg-sidebar';
-
-function PrimaryNavButton({
-  item,
-  selected,
-  onNavigate,
-  attention,
-}: {
-  item: NavItem;
-  selected: string;
-  onNavigate: (route: string) => void;
-  attention?: boolean;
-}) {
-  return (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        data-guide-target={`route-${item.route}`}
-        tooltip={item.label}
-        isActive={selected === item.route}
-        onClick={() => onNavigate(item.route)}
-        className={cn(
-          'h-[40px] gap-[10px] rounded-[14px] px-[20px] py-[10px] text-[14px] text-sidebar-foreground',
-          'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
-          'data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground data-active:font-normal',
-          attention && selected !== item.route && 'bg-[#fff7e8] text-[#8a4b00] ring-1 ring-[#ffd58a]',
-          'group-data-[collapsible=icon]:px-0!',
-        )}
-      >
-        <item.Icon className="size-[16px]!" />
-        <span className="text-[14px]">{item.label}</span>
-        {attention && (
-          <span className="ml-auto size-[6px] rounded-full bg-[#f59e0b] group-data-[collapsible=icon]:hidden" />
-        )}
-      </SidebarMenuButton>
-    </SidebarMenuItem>
-  );
-}
 
 function CardNavButton({
   item,
@@ -281,40 +214,6 @@ function AgentSwitcher({
   );
 }
 
-function SidebarFooterActions({ onOpenChat }: { onOpenChat: () => void }) {
-  return (
-    <div
-      className={cn(
-        'flex items-center justify-center gap-[10px]',
-        'group-data-[collapsible=icon]:flex-col',
-      )}
-    >
-      <button
-        type="button"
-        data-guide-target="open-chat"
-        onClick={onOpenChat}
-        title="对话端"
-        className={cn(
-          'flex h-[40px] w-[130px] items-center justify-center gap-[6px] rounded-[10px] border-[0.5px] border-[#E3E7F1] bg-[#F6F6F6] px-[20px] py-[4px] text-[14px] text-sidebar-accent-foreground transition-opacity hover:opacity-70',
-          'group-data-[collapsible=icon]:size-[40px] group-data-[collapsible=icon]:w-[40px] group-data-[collapsible=icon]:px-0',
-        )}
-      >
-        <IconChat className="size-[16px]!" />
-        <span className="group-data-[collapsible=icon]:hidden">对话端</span>
-      </button>
-      <button
-        type="button"
-        onClick={onOpenChat}
-        title="切换到对话端"
-        aria-label="切换到对话端"
-        className="flex size-[32px] shrink-0 items-center justify-center rounded-[8px] rotate-90 text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-      >
-        <IconToggle className="size-[16px]!" />
-      </button>
-    </div>
-  );
-}
-
 function CollapsedGroupLabel({ children }: { children: string }) {
   return (
     <span className="text-[10px] leading-none text-[#464c5e]">
@@ -329,14 +228,12 @@ function CollapsedNavButton({
   onNavigate,
   radius,
   iconSize,
-  attention,
 }: {
   item: NavItem;
   selected: string;
   onNavigate: (route: string) => void;
   radius: number;
   iconSize: number;
-  attention?: boolean;
 }) {
   const active = selected === item.route;
   return (
@@ -350,14 +247,10 @@ function CollapsedNavButton({
             'relative flex size-[32px] shrink-0 items-center justify-center text-sidebar-foreground transition-colors',
             'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
             active && 'bg-sidebar-accent text-sidebar-accent-foreground',
-            attention && !active && 'bg-[#fff7e8] text-[#8a4b00] ring-1 ring-[#ffd58a]',
           )}
           style={{ borderRadius: radius }}
         >
           <item.Icon style={{ width: iconSize, height: iconSize }} />
-          {attention && (
-            <span className="absolute mt-[-22px] ml-[22px] size-[6px] rounded-full bg-[#f59e0b]" />
-          )}
         </button>
       </TooltipTrigger>
       <TooltipContent side="right" align="center">
@@ -425,31 +318,24 @@ function CollapsedAgentSwitcher({
 function CollapsedSidebar({
   selected,
   onNavigate,
-  isAdmin,
   sidebarAgent,
   scopeAgents,
   selectedAgentId,
   onSelectAgent,
-  onOpenChat,
   onToggle,
-  modelSetupAttention,
 }: Pick<
   AppSidebarManagementProps,
-  'selected' | 'onNavigate' | 'isAdmin' | 'sidebarAgent' | 'scopeAgents' | 'selectedAgentId' | 'onSelectAgent' | 'onOpenChat' | 'modelSetupAttention'
+  'selected' | 'onNavigate' | 'sidebarAgent' | 'scopeAgents' | 'selectedAgentId' | 'onSelectAgent'
 > & { onToggle: () => void }) {
   const nameLabel = sidebarAgent
     ? sidebarAgent.is_overall
       ? '未选择'
       : employeeDisplayNameWithCreator(sidebarAgent)
     : '未选择';
-  const primaryItems = primaryNavItems(isAdmin);
-
   return (
     <div className="flex h-full w-(--sidebar-width-icon) shrink-0 flex-col items-center gap-[32px] px-[16px] py-[10px]">
       <div className="flex w-full flex-col items-center gap-[10px]">
-        <button type="button" title="开放广场" className="flex items-center justify-center p-[10px]">
-          <BrandLogo markOnly />
-        </button>
+        <span className="text-[12px] font-semibold leading-none text-[#1f2329]">管理端</span>
         <Tooltip>
           <TooltipTrigger asChild>
             <button
@@ -465,21 +351,6 @@ function CollapsedSidebar({
             展开边栏
           </TooltipContent>
         </Tooltip>
-      </div>
-
-      <div className="flex w-full flex-col items-center gap-[12px]">
-        {primaryItems.map((item) => (
-          <CollapsedNavButton
-            key={item.route}
-            item={item}
-            selected={selected}
-            onNavigate={onNavigate}
-            radius={10}
-            iconSize={16}
-            attention={modelSetupAttention && item.route === EnterpriseRoute.Models}
-          />
-        ))}
-        <div className="h-px w-full bg-sidebar-border" />
       </div>
 
       <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-between">
@@ -520,24 +391,6 @@ function CollapsedSidebar({
             ))}
           </div>
         </div>
-
-        <div className="flex items-center justify-center pb-[20px]">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                onClick={onOpenChat}
-                aria-label="切换到对话端"
-                className="flex size-[32px] shrink-0 items-center justify-center rounded-[10px] border-[0.5px] border-[#E3E7F1] bg-[#F6F6F6] text-sidebar-accent-foreground transition-opacity hover:opacity-70"
-              >
-                <IconChat className="size-[16px]!" />
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="right" align="center">
-              切换到对话端
-            </TooltipContent>
-          </Tooltip>
-        </div>
       </div>
     </div>
   );
@@ -546,17 +399,13 @@ function CollapsedSidebar({
 function ManagementSidebar({
   selected,
   onNavigate,
-  isAdmin,
   sidebarAgent,
   scopeAgents,
   selectedAgentId,
   onSelectAgent,
-  onOpenChat,
-  modelSetupAttention,
 }: AppSidebarManagementProps) {
   const { toggleSidebar, state } = useSidebar();
-  const brandCollapsed = useMemo(() => state === 'collapsed', [state]);
-  const primaryItems = useMemo(() => primaryNavItems(isAdmin), [isAdmin]);
+  const brandCollapsed = state === 'collapsed';
 
   if (brandCollapsed) {
     return (
@@ -564,14 +413,11 @@ function ManagementSidebar({
         <CollapsedSidebar
           selected={selected}
           onNavigate={onNavigate}
-          isAdmin={isAdmin}
           sidebarAgent={sidebarAgent}
           scopeAgents={scopeAgents}
           selectedAgentId={selectedAgentId}
           onSelectAgent={onSelectAgent}
-          onOpenChat={onOpenChat}
           onToggle={toggleSidebar}
-          modelSetupAttention={modelSetupAttention}
         />
       </Sidebar>
     );
@@ -582,9 +428,7 @@ function ManagementSidebar({
       <div className="flex h-full w-(--sidebar-width) shrink-0 flex-col">
       <SidebarHeader className="gap-[24px] px-[20px] pt-[10px] group-data-[collapsible=icon]:px-[20px]">
         <div className="flex items-center justify-between">
-          <button type="button" title="开放广场">
-            <BrandLogo wordmarkClassName="group-data-[collapsible=icon]:hidden" />
-          </button>
+          <span className="text-[16px] font-semibold leading-none text-[#1f2329]">管理端</span>
           {!brandCollapsed && (
             <button
               type="button"
@@ -598,20 +442,6 @@ function ManagementSidebar({
           )}
         </div>
 
-        <div className="flex flex-col gap-[18px]">
-          <SidebarMenu className="gap-[10px]">
-            {primaryItems.map((item) => (
-              <PrimaryNavButton
-                key={item.route}
-                item={item}
-                selected={selected}
-                onNavigate={onNavigate}
-                attention={modelSetupAttention && item.route === EnterpriseRoute.Models}
-              />
-            ))}
-          </SidebarMenu>
-          <div className="h-px w-full bg-sidebar-border group-data-[collapsible=icon]:hidden" />
-        </div>
       </SidebarHeader>
 
       <SidebarContent className="px-[20px] group-data-[collapsible=icon]:px-[20px]">
@@ -646,10 +476,6 @@ function ManagementSidebar({
           </div>
         </div>
       </SidebarContent>
-
-      <SidebarFooter className="px-[20px] pb-[20px] group-data-[collapsible=icon]:px-[20px]">
-        <SidebarFooterActions onOpenChat={onOpenChat} />
-      </SidebarFooter>
       </div>
     </Sidebar>
   );
@@ -666,13 +492,13 @@ function sessionAgentFor(session: ChatSession, agents: AgentProfileRead[]): Agen
 }
 
 function sessionTitleFor(session: ChatSession, _agent: AgentProfileRead | null): string {
-  if (session.title) return staffdeckDisplayText(session.title);
+  if (session.title) return mindstaffDisplayText(session.title);
   return session.id || '新对话';
 }
 
 function sessionSubtitleFor(session: ChatSession, _agent: AgentProfileRead | null): string {
   const recent = (session.last_agent_question || session.summary || '').replace(/^最近回复[:：]\s*/, '');
-  return recent ? staffdeckDisplayText(recent) : '新对话';
+  return recent ? mindstaffDisplayText(recent) : '新对话';
 }
 
 function ChatSessionFilter({
@@ -697,7 +523,7 @@ function ChatSessionFilter({
             aria-label="筛选会话"
             className="flex h-[32px] w-full items-center justify-center rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-[#f6f6f6] transition-colors hover:border-[#c9d2e4]"
           >
-            <IconSort className="size-[14px]! shrink-0 text-[#858b9c]" />
+            <IconSort className="size-[14px]! shrink-0 text-[#1F5FEF]" />
           </button>
         ) : (
           <button
@@ -742,8 +568,8 @@ function ChatSessionFilter({
                 className={cn(
                   'truncate text-[12px] leading-none',
                   active
-                    ? 'text-[#18181a]!'
-                    : 'text-[#858b9c]!',
+                    ? 'text-[#1F5FEF]!'
+                    : 'text-[#858b9c] group-focus/filter:text-[#1F5FEF]!',
                 )}
               >
                 {optionName}
@@ -930,31 +756,6 @@ function ChatSessionSkeletonList({ rows = 5 }: { rows?: number }) {
   );
 }
 
-function ChatFooterActions({ onOpenAdmin }: { onOpenAdmin: () => void }) {
-  return (
-    <div className="flex items-center justify-center gap-[10px] pb-[20px]">
-      <button
-        type="button"
-        onClick={onOpenAdmin}
-        title="管理端"
-        className="flex h-[40px] w-[130px] items-center justify-center gap-[6px] rounded-[10px] border-[0.5px] border-[#E3E7F1] bg-[#F6F6F6] px-[20px] py-[4px] text-[14px] text-[#858b9c] transition-opacity hover:opacity-70"
-      >
-        <IconViewMasonry className="size-[16px]!" />
-        <span>管理端</span>
-      </button>
-      <button
-        type="button"
-        onClick={onOpenAdmin}
-        title="切换到管理端"
-        aria-label="切换到管理端"
-        className="flex size-[32px] shrink-0 items-center justify-center rounded-[8px] rotate-90 text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-      >
-        <IconToggle className="size-[16px]!" />
-      </button>
-    </div>
-  );
-}
-
 function CollapsedChatSidebar({
   sessions,
   sessionsLoading = false,
@@ -970,18 +771,15 @@ function CollapsedChatSidebar({
   galleryActive = false,
   handoffCount = 0,
   onOpenHandoffs,
-  onOpenAdmin,
   onToggle,
 }: Pick<
   AppSidebarChatProps,
-  'sessions' | 'sessionsLoading' | 'agents' | 'activeSessionId' | 'sessionFilter' | 'onSessionFilterChange' | 'sessionFilterOptions' | 'isSessionUnread' | 'onOpenSession' | 'onNewConversation' | 'onOpenGallery' | 'galleryActive' | 'handoffCount' | 'onOpenHandoffs' | 'onOpenAdmin'
+  'sessions' | 'sessionsLoading' | 'agents' | 'activeSessionId' | 'sessionFilter' | 'onSessionFilterChange' | 'sessionFilterOptions' | 'isSessionUnread' | 'onOpenSession' | 'onNewConversation' | 'onOpenGallery' | 'galleryActive' | 'handoffCount' | 'onOpenHandoffs'
 > & { onToggle: () => void }) {
   return (
     <div className="flex h-full w-(--sidebar-width-icon) shrink-0 flex-col items-center gap-[32px] px-[20px] py-[10px]">
       <div className="flex w-full flex-col items-center gap-[10px]">
-        <button type="button" title="数字员工广场" onClick={onOpenGallery} className="flex items-center justify-center p-[10px]">
-          <BrandLogo markOnly />
-        </button>
+        <span className="text-[12px] font-semibold leading-none text-[#1f2329]">对话端</span>
         <Tooltip>
           <TooltipTrigger asChild>
             <button
@@ -1040,7 +838,7 @@ function CollapsedChatSidebar({
                 type="button"
                 onClick={onNewConversation}
                 aria-label="新建对话"
-                className="flex h-[32px] w-full items-center justify-center rounded-[8px] bg-[#18181a] text-white transition-colors hover:bg-[#303030]"
+                className="flex h-[32px] w-full items-center justify-center rounded-[8px] bg-[#2563EB] text-white transition-colors hover:bg-[#1D4ED8]"
               >
                 <IconAdd className="size-[16px]!" />
               </button>
@@ -1095,24 +893,6 @@ function CollapsedChatSidebar({
               })}
         </div>
       </div>
-
-      <div className="flex items-center justify-center pb-[20px]">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              onClick={onOpenAdmin}
-              aria-label="切换到管理端"
-              className="flex size-[32px] shrink-0 items-center justify-center rounded-[10px] border-[0.5px] border-[#E3E7F1] bg-[#F6F6F6] text-[#858b9c] transition-opacity hover:opacity-70"
-            >
-              <IconViewMasonry className="size-[16px]!" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="right" align="center">
-            切换到管理端
-          </TooltipContent>
-        </Tooltip>
-      </div>
     </div>
   );
 }
@@ -1134,7 +914,6 @@ function ChatSidebarVariant({
   onOpenHandoffs,
   onRenameSession,
   onDeleteSession,
-  onOpenAdmin,
 }: AppSidebarChatProps) {
   const { toggleSidebar, state } = useSidebar();
   const collapsed = state === 'collapsed';
@@ -1158,7 +937,6 @@ function ChatSidebarVariant({
           galleryActive={galleryActive}
           handoffCount={handoffCount}
           onOpenHandoffs={onOpenHandoffs}
-          onOpenAdmin={onOpenAdmin}
           onToggle={toggleSidebar}
         />
       </Sidebar>
@@ -1170,9 +948,7 @@ function ChatSidebarVariant({
       <div className="flex h-full w-(--sidebar-width) shrink-0 flex-col">
         <SidebarHeader className="gap-[24px] px-[20px] pt-[10px]">
           <div className="flex items-center justify-between">
-            <button type="button" title="数字员工广场" onClick={onOpenGallery}>
-              <BrandLogo />
-            </button>
+            <span className="text-[16px] font-semibold leading-none text-[#1f2329]">对话端</span>
             <button
               type="button"
               onClick={toggleSidebar}
@@ -1210,7 +986,7 @@ function ChatSidebarVariant({
               <button
                 type="button"
                 onClick={onNewConversation}
-                className="flex h-[40px] w-full items-center justify-center gap-[8px] rounded-[10px] bg-[#18181a] px-[16px] text-[14px] font-medium text-white transition-colors hover:bg-[#303030]"
+                className="flex h-[40px] w-full items-center justify-center gap-[8px] rounded-[10px] bg-[#2563EB] px-[16px] text-[14px] font-medium text-white transition-colors hover:bg-[#1D4ED8]"
               >
                 <IconAdd className="size-[16px]! shrink-0" />
                 <span>新建对话</span>
@@ -1226,7 +1002,7 @@ function ChatSidebarVariant({
               <ChatSessionSkeletonList />
             ) : sessions.length === 0 ? (
               <div className="flex flex-col items-center gap-[8px] py-[28px] text-center text-[12px] text-[#a2a8b8]">
-                <StaffdeckIcon name="inbox" size={22} />
+                <MindStaffIcon name="inbox" size={22} />
                 <span>暂无历史会话</span>
               </div>
             ) : (
@@ -1247,10 +1023,6 @@ function ChatSidebarVariant({
             )}
           </div>
         </SidebarContent>
-
-        <SidebarFooter className="px-[20px]">
-          <ChatFooterActions onOpenAdmin={onOpenAdmin} />
-        </SidebarFooter>
       </div>
     </Sidebar>
   );

@@ -6,14 +6,14 @@ import {
   type EnterpriseAuthUser,
 } from './auth';
 
-import avatarAfterSales from './assets/staffdeck/staffdeck-avatar-after-sales.png';
-import avatarCommerce from './assets/staffdeck/staffdeck-avatar-commerce.png';
-import avatarDefault from './assets/staffdeck/staffdeck-avatar-default.png';
-import avatarKnowledge from './assets/staffdeck/staffdeck-avatar-knowledge.png';
-import avatarOps from './assets/staffdeck/staffdeck-avatar-ops.png';
-import avatarOverall from './assets/staffdeck/staffdeck-avatar-overall.png';
-import avatarQuality from './assets/staffdeck/staffdeck-avatar-quality.png';
-import avatarService from './assets/staffdeck/staffdeck-avatar-service.png';
+import avatarAfterSales from './assets/mindstaff/mindstaff-avatar-after-sales.png';
+import avatarCommerce from './assets/mindstaff/mindstaff-avatar-commerce.png';
+import avatarDefault from './assets/mindstaff/mindstaff-avatar-default.png';
+import avatarKnowledge from './assets/mindstaff/mindstaff-avatar-knowledge.png';
+import avatarOps from './assets/mindstaff/mindstaff-avatar-ops.png';
+import avatarOverall from './assets/mindstaff/mindstaff-avatar-overall.png';
+import avatarQuality from './assets/mindstaff/mindstaff-avatar-quality.png';
+import avatarService from './assets/mindstaff/mindstaff-avatar-service.png';
 
 export type EmployeeProfile = {
   roleKey: string;
@@ -135,7 +135,7 @@ export const EMPLOYEE_TEMPLATES: EmployeeTemplate[] = [
   },
 ];
 
-export function staffdeckDisplayText(value: string): string {
+export function mindstaffDisplayText(value: string): string {
   return value;
 }
 

@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { api } from '@/api/client';
 import { useI18n } from '@/i18n';
 
-export const REMINDED_VERSION_KEY = 'staffdeck_update_reminded_version';
+export const REMINDED_VERSION_KEY = 'mindstaff_update_reminded_version';
 
 type AppVersion = {
   current_version: string;
@@ -40,7 +40,7 @@ export function UpdateNotice({
       </span>
       <div className="min-w-0 flex-1">
         <p className="text-[14px] font-medium leading-[20px] text-[#18181a]">
-          {t('StaffDeck 有新版本')}
+          {t('MindStaff 有新版本')}
         </p>
         <p className="mt-[1px] text-[12px] leading-[18px] text-[#757f9c]">
           {t('v{1} 已发布，你正在使用 v{2}', { 1: latestVersion, 2: currentVersion })}

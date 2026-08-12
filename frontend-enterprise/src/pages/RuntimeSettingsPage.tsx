@@ -116,7 +116,7 @@ export default function RuntimeSettingsPage() {
             </select>
           </LabeledField>
           {form.sandbox_network_mode === 'allowlist' && <LabeledField label="允许的域名" hint="每行一个域名，也支持 *.example.com。"><Textarea rows={4} value={form.sandbox_allowed_domains} onChange={(e) => update({ sandbox_allowed_domains: e.target.value })} placeholder="api.example.com\n*.internal.example.com" /></LabeledField>}
-          <p className="text-[11px] leading-[16px] text-muted-foreground">策略由运行 StaffDeck 后端的主机执行。Windows 首次安装 SRT 需要在该主机的 PowerShell 或 CMD 中以管理员身份运行一次安装命令。</p>
+          <p className="text-[11px] leading-[16px] text-muted-foreground">策略由运行 MindStaff 后端的主机执行。Windows 首次安装 SRT 需要在该主机的 PowerShell 或 CMD 中以管理员身份运行一次安装命令。</p>
           {updatedAt && <span className="text-[12px] text-muted-foreground">最后更新：{formatDateOnly(updatedAt)}</span>}
         </CardContent>
       </Card>

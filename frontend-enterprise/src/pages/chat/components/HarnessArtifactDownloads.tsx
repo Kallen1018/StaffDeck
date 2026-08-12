@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import StaffdeckIcon from '@/components/StaffdeckIcon';
+import MindStaffIcon from '@/components/MindStaffIcon';
 import { notify } from '@/components/ui/app-toast';
 import { api } from '@/api/client';
 import type { HarnessWorkspaceArtifact } from '@/types';
@@ -63,7 +63,7 @@ export default function HarnessArtifactDownloads({
   return (
     <div className={CHAT_ARTIFACTS_CLASS} aria-label="生成文件">
       <div className={CHAT_ARTIFACT_HEADING_CLASS}>
-        <StaffdeckIcon name="folder" size={14} />
+        <MindStaffIcon name="folder" size={14} />
         <span>生成文件</span>
       </div>
       <div className={CHAT_ARTIFACT_LIST_CLASS}>
@@ -82,7 +82,7 @@ export default function HarnessArtifactDownloads({
               onClick={() => void downloadArtifact(artifact)}
             >
               <span className={CHAT_ARTIFACT_ICON_CLASS}>
-                <StaffdeckIcon name="file" size={17} />
+                <MindStaffIcon name="file" size={17} />
               </span>
               <span className={CHAT_ARTIFACT_COPY_CLASS}>
                 <span className={CHAT_ARTIFACT_NAME_CLASS} data-i18n-ignore>
@@ -92,7 +92,7 @@ export default function HarnessArtifactDownloads({
                   {isDownloading ? '下载中' : artifactMeta(artifact)}
                 </span>
               </span>
-              <StaffdeckIcon name="download" size={16} />
+              <MindStaffIcon name="download" size={16} />
             </button>
           );
         })}

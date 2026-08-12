@@ -284,7 +284,7 @@ export default function EmployeeProfileEditor({
           <UIButton
             disabled={saving}
             onClick={() => void save()}
-            className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] text-[14px] font-normal text-white hover:bg-[#303030]"
+            className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
           >
             保存
           </UIButton>

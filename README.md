@@ -1,11 +1,11 @@
 <div align="center">
 
-<img src="packaging/assets/staffdeck_banner_en.png" alt="StaffDeck logo" />
+<img src="packaging/assets/mindstaff_banner_en.png" alt="MindStaff logo" />
 
 <p align="center">
-  <a href="https://staffdeck.openbmb.cn/"><img src="https://img.shields.io/badge/Website-staffdeck.openbmb.cn-FF6B35?style=flat-square&logo=googlechrome&logoColor=white" alt="Official Website"/></a>
+  <a href="https://mindstaff.openbmb.cn/"><img src="https://img.shields.io/badge/Website-mindstaff.openbmb.cn-FF6B35?style=flat-square&logo=googlechrome&logoColor=white" alt="Official Website"/></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-AGPL_3.0-blue.svg?style=flat-square" alt="License"/></a>
-  <a href="https://github.com/OpenBMB/StaffDeck/stargazers"><img src="https://img.shields.io/github/stars/OpenBMB/StaffDeck?style=flat-square" alt="Stars"/></a>
+  <a href="https://github.com/OpenBMB/MindStaff/stargazers"><img src="https://img.shields.io/github/stars/OpenBMB/MindStaff?style=flat-square" alt="Stars"/></a>
   <br/>
   <a href="#-Community"><img src="https://img.shields.io/badge/Discord-Join_Community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"/></a>
   &nbsp;
@@ -20,11 +20,11 @@
 
 ## News
 
-- 📌 **Pinned · 2026-07-15**: StaffDeck is now open source! We welcome your feedback and support with a Star.
+- 📌 **Pinned · 2026-07-15**: MindStaff is now open source! We welcome your feedback and support with a Star.
 
-# 💡 About StaffDeck
+# 💡 About MindStaff
 
-StaffDeck is an enterprise platform for building and managing digital employees. It helps professionals turn their work experience, business processes, and decision criteria into digital employees that can operate continuously, take over repetitive tasks, and preserve individual expertise as reusable, evolvable, and traceable organizational assets. StaffDeck is jointly developed by the [ModelBest](https://modelbest.cn/), [NEU-ModelBest Data Intelligence Joint Lab](https://neuir.github.io/), [THUNLP](https://nlp.csai.tsinghua.edu.cn/), [OpenBMB](https://www.openbmb.cn/home), and [AI9Stars](https://github.com/AI9Stars) for enterprises and institutions seeking to advance AI from a personal productivity tool to an organizational capability.
+MindStaff is an enterprise platform for building and managing digital employees. It helps professionals turn their work experience, business processes, and decision criteria into digital employees that can operate continuously, take over repetitive tasks, and preserve individual expertise as reusable, evolvable, and traceable organizational assets. MindStaff is jointly developed by the [ModelBest](https://modelbest.cn/), [NEU-ModelBest Data Intelligence Joint Lab](https://neuir.github.io/), [THUNLP](https://nlp.csai.tsinghua.edu.cn/), [OpenBMB](https://www.openbmb.cn/home), and [AI9Stars](https://github.com/AI9Stars) for enterprises and institutions seeking to advance AI from a personal productivity tool to an organizational capability.
 
 ## Core Features
 
@@ -35,23 +35,23 @@ StaffDeck is an enterprise platform for building and managing digital employees.
 
 ## Desktop Downloads
 
-Visit the [StaffDeck official website](https://staffdeck.openbmb.cn/) or download the latest desktop release directly:
+Visit the [MindStaff official website](https://mindstaff.openbmb.cn/) or download the latest desktop release directly:
 
 | Platform | Architecture | Download |
 | --- | --- | --- |
-| macOS | Apple Silicon (arm64) | [Download `.dmg`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-macos-arm64.dmg) |
-| macOS | Intel (x86_64) | [Download `.dmg`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-macos-x86_64.dmg) |
-| Windows | x64 | [Download installer `.exe`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-windows-x64-setup.exe) |
-| Linux | x86_64 (Debian/Ubuntu) | [Download `.deb`](https://github.com/OpenBMB/StaffDeck/releases/latest/download/StaffDeck-linux-x86_64.deb) |
+| macOS | Apple Silicon (arm64) | [Download `.dmg`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-macos-arm64.dmg) |
+| macOS | Intel (x86_64) | [Download `.dmg`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-macos-x86_64.dmg) |
+| Windows | x64 | [Download installer `.exe`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-windows-x64-setup.exe) |
+| Linux | x86_64 (Debian/Ubuntu) | [Download `.deb`](https://github.com/OpenBMB/MindStaff/releases/latest/download/MindStaff-linux-x86_64.deb) |
 
-Linux packages listen on `127.0.0.1` by default. Use `staffdeck setup` from a
+Linux packages listen on `127.0.0.1` by default. Use `mindstaff setup` from a
 terminal to choose the listening mode and port, including on a headless host:
 
 ```bash
-staffdeck setup
-staffdeck setup --mode local --port 5173
-staffdeck setup --mode lan --port 5173
-staffdeck setup --mode public --port 5173 --public-url https://staff.example.com
+mindstaff setup
+mindstaff setup --mode local --port 5173
+mindstaff setup --mode lan --port 5173
+mindstaff setup --mode public --port 5173 --public-url https://staff.example.com
 ```
 
 `local` listens only on the machine; `lan` and `public` listen on `0.0.0.0`.
@@ -65,11 +65,11 @@ setup is saved per user and applied on the next launch.
 
 Paste the prompt below into Cursor, Claude Code, or Codex. For code-based
 deployments, you can also override the launch at runtime with
-`ULTRARAG_HOST`, `ULTRARAG_PORT`, and `STAFFDECK_PUBLIC_URL`:
+`ULTRARAG_HOST`, `ULTRARAG_PORT`, and `MINDECK_PUBLIC_URL`:
 
 ```text
-Read https://raw.githubusercontent.com/OpenBMB/StaffDeck/main/README.md.
-Clone the OpenBMB/StaffDeck repository, prepare Python 3.11 or newer and Node.js 20,
+Read https://raw.githubusercontent.com/OpenBMB/MindStaff/main/README.md.
+Clone the OpenBMB/MindStaff repository, prepare Python 3.11 or newer and Node.js 20,
 create backend/.venv, install the backend and frontend dependencies, copy
 backend/.env.example to backend/.env, ask me for the OpenAI-compatible model
 endpoint and API key if they are missing, and use the commands documented for
@@ -81,7 +81,7 @@ plus /workspace/gallery before reporting success.
 
 ## Table of Contents
 
-- [💡 About StaffDeck](#-about-staffdeck)
+- [💡 About MindStaff](#-about-mindstaff)
   - [Core Features](#core-features)
   - [Desktop Downloads](#desktop-downloads)
   - [Agent-Friendly Quick Deploy](#agent-friendly-quick-deploy)
@@ -120,8 +120,8 @@ plus /workspace/gallery before reporting success.
 Clone the repository first:
 
 ```bash
-git clone https://github.com/OpenBMB/StaffDeck.git
-cd StaffDeck
+git clone https://github.com/OpenBMB/MindStaff.git
+cd MindStaff
 ```
 
 On macOS, Linux, or WSL:
@@ -162,7 +162,7 @@ The API key is used to create the initial model configuration and is encrypted b
 | macOS, Linux, or WSL | `scripts/dev_up.sh --detach` |
 | Windows PowerShell | `.\scripts\dev_up.ps1 --detach` |
 
-Both wrappers call the same cross-platform Python lifecycle entry, `scripts/dev.py`. The startup process builds the StaffDeck frontend and serves the UI, API, and Swagger documentation from one FastAPI process on port `5173`.
+Both wrappers call the same cross-platform Python lifecycle entry, `scripts/dev.py`. The startup process builds the MindStaff frontend and serves the UI, API, and Swagger documentation from one FastAPI process on port `5173`.
 
 Initial administrator credentials: username `admin`, password `admin`. Please change the password after first login.
 
@@ -215,7 +215,7 @@ Replace `up --detach` with another lifecycle argument when needed:
 | Inspect service status | `status` |
 | Stop the local service | `down` |
 
-> Full guide → [StaffDeck Tutorial](https://staffdeck.openbmb.cn/#/docs/introduce?lang=en)
+> Full guide → [MindStaff Tutorial](https://mindstaff.openbmb.cn/#/docs/introduce?lang=en)
 
 
 
@@ -237,7 +237,7 @@ Digital employees can serve users directly over IM channels: users chat with emp
 
 - Mount multiple digital employees on one channel account; dispatch with `/员工`, `/切换 <name>`, `/当前`, `/帮助`;
 - Intent auto-routing: each message is classified by an LLM and routed to the best-matching employee (stricter threshold during SOPs; sticky during human handoff and after manual switches);
-- Identity merge: channel users run `/绑定 <one-time code>` to merge their channel identity into an existing StaffDeck account (memory and sessions unified; `/解绑` to revert);
+- Identity merge: channel users run `/绑定 <one-time code>` to merge their channel identity into an existing MindStaff account (memory and sessions unified; `/解绑` to revert);
 - Conversation history and delivery logs grouped by day with pagination; admins and employee creators can review all channel conversations per permission;
 - Reliability: inbound idempotency, crash recovery, outbound retry with backoff, token-expiry alerts, and WeChat session self-healing.
 
@@ -263,9 +263,9 @@ Digital employees can serve users directly over IM channels: users chat with emp
 ## Project Structure
 
 ```text
-StaffDeck/
+MindStaff/
 ├── backend/                  # FastAPI APIs, agent runtime, storage, and task workers
-├── frontend-enterprise/      # React/TypeScript StaffDeck workspace
+├── frontend-enterprise/      # React/TypeScript MindStaff workspace
 ├── docs/                     # Tutorials, APIs, schemas, and example flows
 ├── scripts/                  # Single-port service lifecycle and validation scripts
 ├── packaging/                # macOS, Linux, and Windows packaging assets
@@ -283,7 +283,7 @@ Check the selected model configuration, API key, model name, and model service n
 </details>
 
 <details>
-<summary><strong>Can StaffDeck run without a local GPU?</strong></summary>
+<summary><strong>Can MindStaff run without a local GPU?</strong></summary>
 
 Yes. The application calls an OpenAI-compatible model endpoint, so GPU requirements depend on the model service you deploy or use.
 </details>
@@ -300,10 +300,10 @@ Marketplace resources are reusable templates. Regular users can copy or bind aut
 - [x] More enterprise connectors and reviewed marketplace resources (WeChat and WeCom channel integration shipped)
 - [ ] Fine-grained approval policies for high-risk tool actions
 
-Roadmap priorities are driven by real deployment needs. Please open an [Issue](https://github.com/OpenBMB/StaffDeck/issues) with a reproducible scenario and expected behavior.
+Roadmap priorities are driven by real deployment needs. Please open an [Issue](https://github.com/OpenBMB/MindStaff/issues) with a reproducible scenario and expected behavior.
 
 # 💬 Community
-- For bugs and feature requests, please open a [GitHub Issues](https://github.com/OpenBMB/StaffDeck/issues)。
+- For bugs and feature requests, please open a [GitHub Issues](https://github.com/OpenBMB/MindStaff/issues)。
 - For business corporation, please contact:
   ```
   business@modelbest.cn
@@ -346,23 +346,23 @@ Keep unrelated worktree changes intact, add tests proportional to the affected b
 
 ## Citation
 
-When using StaffDeck in internal research or authorized public materials, cite:
+When using MindStaff in internal research or authorized public materials, cite:
 
 ```bibtex
-@software{StaffDeck2026,
-  title  = {StaffDeck: Build, Run, and Govern Enterprise Digital Employees},
+@software{MindStaff2026,
+  title  = {MindStaff: Build, Run, and Govern Enterprise Digital Employees},
   author = {OpenBMB},
   year   = {2026},
-  url    = {https://github.com/OpenBMB/StaffDeck}
+  url    = {https://github.com/OpenBMB/MindStaff}
 }
 ```
 ## Star History
 
-<a href="https://www.star-history.com/?repos=openbmb%2Fstaffdeck&type=date&legend=top-left">
+<a href="https://www.star-history.com/?repos=openbmb%2Fmindstaff&type=date&legend=top-left">
  <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&theme=dark&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=openbmb/staffdeck&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&theme=dark&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=openbmb/mindstaff&type=date&legend=top-left&sealed_token=lLohLC57bGAPh4lrzSYu2xW6Fmkavbj5r-T25GGt-jA10veIrv9OBPs0wiE5A98VIxP0NyxjbloW1t5OnPdVn6RT_L6Dmsp5EnfiWsGirs6G3Bv5_l_zUw" />
  </picture>
 </a>
 
@@ -372,4 +372,4 @@ This project is open source under the GNU Affero General Public License v3.0.
 
 ## Acknowledgments
 
-StaffDeck is incubated by the [OpenBMB](https://www.openbmb.cn/) ecosystem.
+MindStaff is incubated by the [OpenBMB](https://www.openbmb.cn/) ecosystem.

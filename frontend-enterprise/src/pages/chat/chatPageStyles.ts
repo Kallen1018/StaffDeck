@@ -229,7 +229,7 @@ export const CHAT_COMPOSER_HINT_CLASS = 'truncate text-[11px] text-[#b3b8c4] max
 export const CHAT_COMPOSER_MODEL_BTN_CLASS =
   'inline-flex h-[32px] max-w-[200px] items-center gap-[5px] rounded-[9px] border border-[#e3e7f1] bg-white px-[12px] text-[12px] font-normal text-[#757f9c] shadow-none transition-colors hover:border-[#c9d2e4] hover:text-[#18181a] disabled:cursor-not-allowed disabled:opacity-45 aria-expanded:border-[#c9d2e4] aria-expanded:text-[#18181a] [&>span:first-child]:min-w-0 [&>span:first-child]:truncate';
 export const CHAT_COMPOSER_SEND_BTN_CLASS =
-  'inline-grid size-[36px] place-items-center rounded-[10px] bg-[#18181a] p-0 text-white transition-colors hover:bg-[#303030] disabled:cursor-not-allowed disabled:opacity-40';
+  'inline-grid size-[36px] place-items-center rounded-[10px] bg-[#2563EB] p-0 text-white transition-colors hover:bg-[#1D4ED8] disabled:cursor-not-allowed disabled:opacity-40';
 export const CHAT_COMPOSER_STOP_BTN_CLASS = 'bg-[#d20b0b] hover:bg-[#b40a0a]';
 
 export const CHAT_MENU_CONTENT_CLASS =

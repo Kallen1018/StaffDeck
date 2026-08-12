@@ -56,6 +56,12 @@ export type AppHeaderProps = {
   right?: ReactNode;
   /** Called when the logout menu item is clicked. */
   onLogout?: () => void;
+  /** Global navigation rendered between the left content and account controls. */
+  navigation?: ReactNode;
+  /** Content displayed immediately before the language switcher. */
+  beforeLanguage?: ReactNode;
+  /** Show the standard language and account controls for the application shell. */
+  showControls?: boolean;
   /** Current user's display name, used for the avatar initial. */
   userName?: string;
   className?: string;
@@ -74,6 +80,9 @@ export default function AppHeader({
   description,
   right,
   onLogout,
+  navigation,
+  beforeLanguage,
+  showControls = false,
   userName,
   className,
 }: AppHeaderProps) {
@@ -225,10 +234,13 @@ export default function AppHeader({
 
   return (
     <header className={cn('flex w-full items-start gap-[16px]', className)}>
-      <div className="min-w-0 flex-1">{leftContent}</div>
-      <div className="flex h-[32px] shrink-0 items-center gap-[8px]">
-        <LanguageSwitcher />
-        {right !== undefined ? right : (
+      <div className={cn('min-w-0', navigation === undefined && 'flex-1')}>{leftContent}</div>
+      {navigation !== undefined && <div className="min-w-0 flex-1">{navigation}</div>}
+      {(showControls || right !== undefined || beforeLanguage !== undefined) && (
+        <div className="flex h-[32px] shrink-0 items-center gap-[8px]">
+          {beforeLanguage}
+          {showControls && <LanguageSwitcher />}
+          {right !== undefined ? right : showControls ? (
           <DropdownMenu>
             <DropdownMenuTrigger
               aria-label="账户菜单"
@@ -351,8 +363,9 @@ export default function AppHeader({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        )}
-      </div>
+          ) : null}
+        </div>
+      )}
       {/* 文件 input 常驻在 header 根部(不在下拉菜单内),菜单关闭也不会被卸载;
           选图即传:本地预览乐观渲染,上传成功刷新会话,失败回滚 */}
       <input

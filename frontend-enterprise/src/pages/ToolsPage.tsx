@@ -676,7 +676,7 @@ export default function ToolsPage({ currentUser, onLogout }: ToolPageProps = {})
         </UIButton>
         {canOpenCreateMenu && (
           <DropdownMenu>
-            <DropdownMenuTrigger data-guide-target="tools-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#18181a] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#303030]">
+            <DropdownMenuTrigger data-guide-target="tools-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
               <IconAdd className="size-[14px]" />
               新增
               <IconChevronDown className="size-[12px]" />
@@ -974,7 +974,7 @@ function ToolTypeSwitcher({ active }: { active: 'http' | 'mcp' }) {
               className={cn(
                 'relative flex min-w-[200px] flex-1 items-start gap-[10px] rounded-[12px] border px-[16px] py-[12px] text-left transition-all',
                 isActive
-                  ? 'border-[#18181a] bg-[#18181a] shadow-[0_4px_12px_0_rgba(24,24,26,0.18)]'
+                  ? 'border-[#18181a] bg-[#2563EB] shadow-[0_4px_12px_0_rgba(24,24,26,0.18)]'
                   : 'border-[#e3e7f1] bg-white hover:border-[#cbd3e6] hover:bg-[#fafbfc]',
               )}
               aria-pressed={isActive}
@@ -1128,7 +1128,7 @@ const MONO_INPUT_CLASS = 'font-mono text-[12px] leading-[1.65]';
 const RETURN_BUTTON_CLASS =
   'h-8 gap-1 rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-5 text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6] hover:bg-white hover:text-[#18181a]';
 const PRIMARY_BUTTON_CLASS =
-  'h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]';
+  'h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]';
 
 function SectionCard({
   title,
@@ -1264,10 +1264,7 @@ export function ToolTestPage({ currentUser, onLogout }: ToolPageProps = {}) {
                     className="flex min-h-[78px] flex-col gap-[8px] rounded-[12px] border border-[#eceef1] bg-white px-[14px] py-[13px]"
                   >
                     <span className="text-[12px] font-semibold text-[#858b9c]">{item.label}</span>
-                    <strong
-                      className="min-w-0 truncate text-[14px] leading-[1.35] text-[#18181a]"
-                      title={String(item.value)}
-                    >
+                    <strong className="text-[14px] leading-[1.35] wrap-break-word text-[#18181a]" title={String(item.value)}>
                       {item.value}
                     </strong>
                   </div>
@@ -1701,11 +1698,7 @@ function McpServerEditorPage({ mode, currentUser, onLogout }: { mode: 'new' | 'e
                     onChange={(event) => setField('env', event.target.value)}
                   />
                 </Field>
-                <Field
-                  label="工作目录（cwd）"
-                  htmlFor="mcp-cwd"
-                  hint="Args 中的相对路径以此目录为基准，建议填写绝对路径。"
-                >
+                <Field label="工作目录（cwd）" htmlFor="mcp-cwd" hint="Args 中的相对路径以此目录为基准，建议填写绝对路径。">
                   <Input
                     id="mcp-cwd"
                     placeholder={'C:\\mcp\\server 或 /opt/mcp/server'}

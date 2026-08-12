@@ -2,7 +2,7 @@ import type { FormEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import EmployeeAvatar from '@/components/EmployeeAvatar';
-import StaffdeckIcon from '@/components/StaffdeckIcon';
+import MindStaffIcon from '@/components/MindStaffIcon';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -122,7 +122,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
           <div className="mb-[10px] flex flex-col items-start justify-between gap-[10px] rounded-[12px] border border-[#f3d28b] bg-[#fff8e8] px-[14px] py-[10px] text-[#6f4500] shadow-[0_8px_24px_rgba(92,62,0,0.08)] sm:flex-row sm:items-center">
             <div className="flex min-w-0 items-center gap-[9px]">
               <span className="flex size-[26px] shrink-0 items-center justify-center rounded-[8px] bg-[#ffe7ad] text-[#8a4b00]">
-                <StaffdeckIcon name="model" size={14} />
+                <MindStaffIcon name="model" size={14} />
               </span>
               <span className="min-w-0 text-[12px] leading-[18px]">{modelSetupNoticeText}</span>
             </div>
@@ -130,7 +130,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
               <button
                 type="button"
                 onClick={() => setModelSetupOpen(true)}
-                className="h-[30px] shrink-0 rounded-[8px] bg-[#18181a] px-[12px] text-[12px] text-white transition-colors hover:bg-[#303030]"
+                className="h-[30px] shrink-0 rounded-[8px] bg-[#2563EB] px-[12px] text-[12px] text-white transition-colors hover:bg-[#1D4ED8]"
               >
                 {t('配置模型')}
               </button>
@@ -247,7 +247,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                   {attachment.kind === 'image' && attachment.data_url ? (
                     <img className={CHAT_COMPOSER_ATTACHMENT_IMG_CLASS} src={attachment.data_url} alt={attachment.filename} />
                   ) : (
-                    <StaffdeckIcon name={attachment.kind === 'pdf' ? 'file' : 'folder'} size={16} />
+                    <MindStaffIcon name={attachment.kind === 'pdf' ? 'file' : 'folder'} size={16} />
                   )}
                   <span className={CHAT_COMPOSER_ATTACHMENT_COPY_CLASS}>
                     <span className={CHAT_COMPOSER_ATTACHMENT_NAME_CLASS}>{attachment.filename}</span>
@@ -305,16 +305,16 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                     aria-label="添加"
                     title="添加"
                   >
-                    <StaffdeckIcon name="plus" size={16} />
+                    <MindStaffIcon name="plus" size={16} />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" side="top" className={cn(CHAT_MENU_CONTENT_CLASS, 'min-w-[160px]')}>
                   <DropdownMenuItem className={CHAT_MENU_ITEM_CLASS} onSelect={() => handleComposerPlusAction('upload')}>
-                    <StaffdeckIcon name="upload" size={16} />
+                    <MindStaffIcon name="upload" size={16} />
                     <span>上传文件</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className={CHAT_MENU_ITEM_CLASS} onSelect={() => handleComposerPlusAction('scheduled_task')}>
-                    <StaffdeckIcon name="clock" size={16} />
+                    <MindStaffIcon name="clock" size={16} />
                     <span>定时任务</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -336,12 +336,12 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                     scheduleIntentHovered ? 'text-[#18181a]' : 'text-[#858b9c]',
                   )}
                   >
-                    <StaffdeckIcon
+                    <MindStaffIcon
                       name="clock"
                       size={14}
                       className={cn('transition-opacity', scheduleIntentHovered ? 'opacity-0' : 'opacity-100')}
                     />
-                    <StaffdeckIcon
+                    <MindStaffIcon
                       name="close"
                       size={9}
                       className={cn('absolute transition-opacity', scheduleIntentHovered ? 'opacity-100' : 'opacity-0')}
@@ -362,7 +362,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                     disabled={!enabledModelConfigs.length}
                   >
                     <span>{selectedModelConfig ? modelDisplayName(selectedModelConfig) : '默认模型'}</span>
-                    <StaffdeckIcon name="arrow" size={14} style={{ transform: 'rotate(90deg)' }} />
+                    <MindStaffIcon name="arrow" size={14} style={{ transform: 'rotate(90deg)' }} />
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" side="top" className={cn(CHAT_MENU_CONTENT_CLASS, 'max-h-[360px] min-w-[240px] overflow-y-auto')}>
@@ -379,7 +379,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                           <span className={CHAT_MODEL_MENU_NAME_CLASS}>{modelDisplayName(model)}</span>
                           <span className={CHAT_MODEL_MENU_DETAIL_CLASS}>{modelDetailText(model)}</span>
                         </span>
-                        {selectedModelConfig?.id === model.id && <StaffdeckIcon name="check" size={15} />}
+                        {selectedModelConfig?.id === model.id && <MindStaffIcon name="check" size={15} />}
                       </DropdownMenuItem>
                     ))
                   )}
@@ -393,7 +393,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                   aria-label="停止生成"
                   title="停止生成"
                 >
-                  <StaffdeckIcon name="stop" size={18} />
+                  <MindStaffIcon name="stop" size={18} />
                 </button>
               )}
               <button
@@ -403,7 +403,7 @@ export default function Composer({ chat }: { chat: UseChatSession }) {
                 aria-label={currentSessionRunning ? '加入发送队列' : '发送'}
                 title={currentSessionRunning ? '加入发送队列' : '发送'}
               >
-                <StaffdeckIcon name="send" size={18} />
+                <MindStaffIcon name="send" size={18} />
               </button>
             </div>
           </div>

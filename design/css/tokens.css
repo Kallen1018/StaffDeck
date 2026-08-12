@@ -1,0 +1,104 @@
+/* =========================================================================
+   MindStaff 设计系统 · Design Tokens
+   所有数值均由 Ardot 画布节点数据精确提取（RGB 0~1 → HEX）
+   ========================================================================= */
+:root {
+  /* ---- 品牌主色 ---------------------------------------------------------- */
+  --color-primary:        #2563EB; /* r:0.145 g:0.388 b:0.922  主色 */
+  --color-primary-hover:  #1D4ED8; /* 悬停 / 按压 */
+  --color-primary-active: #1E40AF;
+  --color-primary-text:   #1F5FEF; /* r:0.122 g:0.373 b:0.937 浅底上的主色文字 */
+  --color-primary-50:     #EFF4FF; /* r:0.937 g:0.957 b:1.0  选中项浅底 */
+  --color-primary-100:    #DBE7FF;
+  --color-primary-weak:   #F0F5FF; /* 会话选中浅底 */
+
+  /* ---- 中性色 ------------------------------------------------------------ */
+  --color-page:           #F7F8FA; /* r:0.969 g:0.973 b:0.980 页面底色 */
+  --color-page-cool:      #F5F7FA; /* 智能广场底色 r:0.96 0.97 0.98 */
+  --color-surface:        #FFFFFF;
+  --color-surface-2:      #F2F5FA; /* 次级填充 / 分页按钮底 r:0.95 0.96 0.98 */
+  --color-border:         #E5E6EB; /* r:0.898 g:0.902 b:0.922 常规描边 */
+  --color-border-strong:  #D0D3D9; /* r:0.816 g:0.827 b:0.851 输入框描边 */
+  --color-border-cool:    #D1D9E6; /* 冷调描边 r:0.82 0.85 0.90 */
+  --color-border-faint:   #EFEFF2; /* 极浅分隔 r:0.94 0.94 0.95 */
+
+  --color-text:           #1F2329; /* r:0.122 g:0.137 b:0.161 主文本 */
+  --color-text-strong:    #10182B; /* 深标题 r:0.063 0.094 0.169 */
+  --color-text-slate:     #1E293B; /* r:0.118 0.161 0.231 */
+  --color-text-secondary: #646A73; /* r:0.392 0.416 0.451 侧栏未选文字 */
+  --color-text-muted:     #6F7E95; /* r:0.435 0.494 0.584 次要说明 */
+  --color-text-caption:   #8F959E; /* r:0.561 0.584 0.620 说明 / 面包屑 */
+  --color-text-slate-2:   #54657E; /* r:0.329 0.396 0.494 卡片描述 */
+  --color-text-slate-3:   #526477; /* r:0.322 0.392 0.467 标签未选 */
+  --color-text-chip:      #2E405B; /* r:0.180 0.251 0.357 chip 文字 */
+  --color-text-placeholder:#7B8A9E;/* r:0.482 0.541 0.620 占位符 */
+  --color-text-disabled:  #AAB2BD; /* r:0.667 0.698 0.741 禁用 */
+  --color-text-334155:    #334155; /* 分页第2页文字 */
+  --color-icon-ghost:     #B0C2D6; /* 占位图标 r:0.69 0.76 0.84 */
+
+  /* ---- 语义色 ------------------------------------------------------------ */
+  --color-success:        #18A058; /* Naive UI 成功 */
+  --color-success-text:   #18A058;
+  --color-success-bg:     #E8F5EE; /* r:0.910 0.961 0.933 */
+  --color-warning:        #F0A020; /* Naive UI 警告 */
+  --color-warning-text:   #B3770A; /* 标签内文字 r:0.702 0.467 0.039 */
+  --color-warning-bg:     #FCF3E6; /* r:0.988 0.953 0.902 */
+  --color-error:          #D03050; /* Naive UI 错误 */
+  --color-error-bg:       #FCEBEF;
+  --color-info:           #2080F0; /* Naive UI 信息 */
+  --color-info-bg:        #E8F2FE;
+
+  /* ---- 登录品牌渐变 ------------------------------------------------------ */
+  --brand-grad-from:      #1A66BF; /* r:0.10 0.40 0.75 */
+  --brand-grad-to:        #5CBAF5; /* r:0.36 0.73 0.96 */
+
+  /* ---- 深色模式参考色（设计系统展示用） -------------------------------- */
+  --dark-bg:              #181B1F;
+  --dark-surface:         #1F2329;
+  --dark-border:          #2E333A;
+  --dark-primary:         #3B82F6;
+  --dark-text:            #E8E8E8;
+
+  /* ---- 圆角 -------------------------------------------------------------- */
+  --radius-sm:   4px;
+  --radius-base: 6px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ---- 间距（4px 基准） -------------------------------------------------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- 阴影 -------------------------------------------------------------- */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.12);
+
+  /* ---- 字体 -------------------------------------------------------------- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+    "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+
+  /* 字号层级 */
+  --fs-display: 36px;
+  --fs-h1: 28px;
+  --fs-h2: 22px;
+  --fs-h3: 18px;
+  --fs-body-lg: 16px;
+  --fs-body: 14px;
+  --fs-caption: 12px;
+
+  /* 字重 */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}

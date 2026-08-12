@@ -93,7 +93,7 @@ export function ConfirmDialog({
                 'h-[32px] w-[80px] rounded-[10px] px-[12px] py-[8px] text-[14px] font-normal',
                 destructive
                   ? 'bg-[#d20b0b] text-white hover:bg-[#b80909]'
-                  : 'bg-[#18181a] text-white hover:bg-[#303030]',
+                  : 'bg-[#2563EB] text-white hover:bg-[#1D4ED8]',
               )}
               onClick={(event) => {
                 event.preventDefault();

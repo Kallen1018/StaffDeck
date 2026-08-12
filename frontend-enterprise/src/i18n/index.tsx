@@ -25,7 +25,7 @@ type CompiledTemplate = {
   target: string;
 };
 
-const STORAGE_KEY = 'staffdeck_locale';
+const STORAGE_KEY = 'mindstaff_locale';
 const CATALOG = englishCatalog as Record<string, string>;
 const SAFE_ATTRIBUTES = ['placeholder', 'aria-label', 'title', 'alt', 'data-placeholder'] as const;
 const TEMPLATE_TOKEN = /\{(\d+)\}/g;

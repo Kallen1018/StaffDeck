@@ -1,0 +1,388 @@
+/* Dashboard-only design tokens and component overrides. */
+.dashboard-scope {
+  --dash-primary: #2563eb;
+  --dash-primary-hover: #1d4ed8;
+  --dash-primary-text: #1f5fef;
+  --dash-primary-50: #eff4ff;
+  --dash-page: #f7f8fa;
+  --dash-surface: #ffffff;
+  --dash-surface-2: #f2f5fa;
+  --dash-border: #e5e6eb;
+  --dash-border-strong: #d0d3d9;
+  --dash-text: #1f2329;
+  --dash-text-strong: #10182b;
+  --dash-secondary: #646a73;
+  --dash-caption: #8f959e;
+  --dash-success: #18a058;
+  --dash-success-bg: #e8f5ee;
+  --dash-warning: #f0a020;
+  --dash-warning-bg: #fcf3e6;
+  --dash-error: #d03050;
+  --dash-error-bg: #fcebef;
+  --dash-info: #2080f0;
+  --dash-info-bg: #e8f2fe;
+  --dash-radius-sm: 4px;
+  --dash-radius: 8px;
+  --dash-radius-lg: 12px;
+  --dash-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --dash-shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  background: var(--dash-page);
+  color: var(--dash-text);
+  font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+}
+
+.dashboard-scope.dashboard-page {
+  min-height: 100%;
+  background: var(--dash-page);
+}
+
+.dashboard-scope .page-title,
+.dashboard-scope .employee-hero,
+.dashboard-scope .dashboard-panel,
+.dashboard-scope .org-dashboard-card,
+.dashboard-scope .empty-workspace-card {
+  border-color: var(--dash-border);
+  border-radius: var(--dash-radius-lg);
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.dashboard-scope .employee-hero,
+.dashboard-scope .dashboard-panel,
+.dashboard-scope .empty-workspace-card,
+.dashboard-scope .org-dashboard-card {
+  background: var(--dash-surface);
+}
+
+.dashboard-scope .employee-hero {
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: var(--dash-surface);
+}
+
+.dashboard-scope .employee-hero h2.ui-typography,
+.dashboard-scope .employee-hero h2 {
+  color: var(--dash-text-strong);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.dashboard-scope .employee-hero p,
+.dashboard-scope .employee-hero .text-\[12px\],
+.dashboard-scope .employee-hero .text-\[13px\],
+.dashboard-scope .employee-hero .text-\[14px\] {
+  color: var(--dash-secondary);
+}
+
+.dashboard-scope .dashboard-action-button {
+  min-height: 40px;
+  border: 1px solid var(--dash-border-strong);
+  border-radius: var(--dash-radius);
+  color: var(--dash-secondary);
+  box-shadow: none;
+}
+
+.dashboard-scope .dashboard-action-button:hover {
+  border-color: var(--dash-primary);
+  background: var(--dash-primary-50);
+  color: var(--dash-primary-text);
+}
+
+.dashboard-scope .dashboard-primary-action {
+  border: 1px solid var(--dash-primary);
+  border-radius: var(--dash-radius);
+  background: var(--dash-primary);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+.dashboard-scope .dashboard-primary-action:hover:not(:disabled) {
+  border-color: var(--dash-primary-hover);
+  background: var(--dash-primary-hover);
+  color: #ffffff;
+}
+
+.dashboard-scope .dashboard-primary-action:focus-visible {
+  box-shadow: 0 0 0 3px var(--dash-primary-50);
+  outline: none;
+}
+
+.dashboard-scope .dashboard-primary-action:disabled {
+  border-color: var(--dash-border);
+  background: var(--dash-border);
+  color: var(--dash-caption);
+}
+
+.dashboard-scope .dashboard-hero-metric,
+.dashboard-scope .employee-metric-tile {
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  background: var(--dash-surface-2);
+  color: var(--dash-text);
+  box-shadow: none;
+}
+
+.dashboard-scope .dashboard-hero-metric strong,
+.dashboard-scope .employee-metric-tile strong {
+  color: var(--dash-text-strong);
+}
+
+.dashboard-scope .dashboard-profile-tabs {
+  border-bottom: 1px solid var(--dash-border);
+}
+
+.dashboard-scope .dashboard-profile-tab {
+  border-radius: var(--dash-radius) var(--dash-radius) 0 0;
+  color: var(--dash-secondary);
+  font-weight: 500;
+}
+
+.dashboard-scope .dashboard-profile-tab:hover,
+.dashboard-scope .dashboard-profile-tab[data-state='active'] {
+  color: var(--dash-primary-text);
+}
+
+.dashboard-scope .dashboard-profile-tab[data-state='active'] {
+  background: var(--dash-primary-50);
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.dashboard-scope .employee-hero-metrics,
+.dashboard-scope .org-dashboard-grid {
+  gap: 16px;
+}
+
+.dashboard-scope .org-dashboard-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.dashboard-scope .org-dashboard-card .ui-card-body {
+  min-height: 128px;
+  padding: 20px;
+  gap: 8px;
+}
+
+.dashboard-scope .org-dashboard-card strong {
+  color: var(--dash-text-strong);
+  font-size: 28px;
+}
+
+.dashboard-scope .org-dashboard-icon {
+  color: var(--dash-primary);
+}
+
+.dashboard-scope .dashboard-panel {
+  gap: 24px;
+  border: 1px solid var(--dash-border);
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.dashboard-scope .dashboard-panel > .flex.items-center:first-child,
+.dashboard-scope .dashboard-panel > .flex.items-center:first-child span {
+  color: var(--dash-text-strong);
+  font-weight: 600;
+}
+
+.dashboard-scope .dashboard-panel input,
+.dashboard-scope .dashboard-panel select,
+.dashboard-scope .dashboard-panel [data-radix-select-trigger] {
+  border-color: var(--dash-border-strong);
+  border-radius: var(--dash-radius);
+  color: var(--dash-text);
+  background: var(--dash-surface);
+}
+
+.dashboard-scope .dashboard-panel input:focus,
+.dashboard-scope .dashboard-panel select:focus,
+.dashboard-scope .dashboard-panel [data-radix-select-trigger]:focus-visible {
+  border-color: var(--dash-primary);
+  box-shadow: 0 0 0 3px var(--dash-primary-50);
+  outline: none;
+}
+
+.dashboard-scope .dashboard-panel button:not([role='tab']):not(.dashboard-profile-tab) {
+  border-radius: var(--dash-radius);
+}
+
+.dashboard-scope .dashboard-panel .rounded-\[14px\],
+.dashboard-scope .dashboard-panel .rounded-\[18px\],
+.dashboard-scope .dashboard-panel .rounded-\[20px\] {
+  border-radius: var(--dash-radius-lg);
+}
+
+.dashboard-scope .dashboard-panel .bg-\[\#f6f6f6\],
+.dashboard-scope .dashboard-panel .bg-\[\#fafbfc\] {
+  background: var(--dash-surface-2);
+}
+
+.dashboard-scope .dashboard-panel .border-\[\#eef0f4\],
+.dashboard-scope .dashboard-panel .border-\[\#e3e7f1\],
+.dashboard-scope .dashboard-panel .border-\[\#eceef1\] {
+  border-color: var(--dash-border);
+}
+
+.dashboard-scope .dashboard-panel .text-\[\#18181a\],
+.dashboard-scope .dashboard-panel .text-\[\#202226\] {
+  color: var(--dash-text-strong);
+}
+
+.dashboard-scope .dashboard-panel .text-\[\#757f9c\],
+.dashboard-scope .dashboard-panel .text-\[\#858b9c\],
+.dashboard-scope .dashboard-panel .text-\[\#8b94aa\] {
+  color: var(--dash-secondary);
+}
+
+.dashboard-scope .dashboard-panel [class*='text-[#1a71ff]'] {
+  color: var(--dash-primary-text);
+}
+
+.dashboard-scope .dashboard-panel .bg-\[\#e9f7ef\] {
+  background: var(--dash-success-bg);
+}
+
+.dashboard-scope .dashboard-panel .bg-\[\#fce7e7\] {
+  background: var(--dash-error-bg);
+}
+
+.dashboard-scope .dashboard-panel [class*='shadow-[0_20px_42px'] {
+  box-shadow: var(--dash-shadow-sm);
+}
+
+.dashboard-scope .dashboard-panel [role='tab'][data-state='active'] {
+  color: var(--dash-primary-text);
+  border-color: var(--dash-primary);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button {
+  border: 1px solid var(--dash-border);
+  border-radius: var(--dash-radius);
+  background: var(--dash-surface-2);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button:hover {
+  border-color: var(--dash-primary);
+  background: var(--dash-primary-50);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button strong {
+  color: var(--dash-text-strong);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button:nth-child(3) {
+  background: var(--dash-success-bg);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button:nth-child(3) strong {
+  color: var(--dash-success);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button:nth-child(4) {
+  background: var(--dash-error-bg);
+}
+
+.dashboard-scope .dashboard-work-record > .flex:first-child > button:nth-child(4) strong {
+  color: var(--dash-error);
+}
+
+.dashboard-scope .dashboard-work-record [data-tone='dark'] {
+  border-color: var(--dash-border);
+  background: var(--dash-surface);
+  color: var(--dash-text);
+  box-shadow: none;
+}
+
+.dashboard-scope .dashboard-work-record [data-tone='dark'] .text-white,
+.dashboard-scope .dashboard-work-record [data-tone='dark'] .group-data-\[tone\=dark\]\:text-white {
+  color: var(--dash-text-strong);
+}
+
+.dashboard-scope .dashboard-work-record [data-tone='dark'] .group-data-\[tone\=dark\]\:bg-\[\#6a6a6a\] {
+  background: var(--dash-border);
+}
+
+.dashboard-scope .dashboard-work-record [data-tone='dark'] .group-data-\[tone\=dark\]\:text-\[\#f6f6f6\] {
+  color: var(--dash-secondary);
+}
+
+.dashboard-scope .dashboard-work-record [data-tone] {
+  border-color: var(--dash-border);
+  border-radius: var(--dash-radius-lg);
+  background: var(--dash-surface);
+  box-shadow: none;
+}
+
+.dashboard-scope .dashboard-work-record [data-tone]:hover {
+  border-color: var(--dash-border-strong);
+  box-shadow: var(--dash-shadow-md);
+  transform: translateY(-1px);
+}
+
+.dashboard-scope .dashboard-panel table thead th {
+  background: var(--dash-surface-2);
+  color: var(--dash-secondary);
+  border-color: var(--dash-border);
+  font-weight: 600;
+}
+
+.dashboard-scope .dashboard-panel table tbody td {
+  color: var(--dash-text);
+  border-color: var(--dash-border);
+}
+
+.dashboard-scope .dashboard-panel table tbody tr:hover {
+  background: var(--dash-primary-50);
+}
+
+.dashboard-scope .dashboard-panel .ui-pagination button,
+.dashboard-scope .dashboard-panel [aria-label*='分页'] button {
+  border-color: var(--dash-border);
+  border-radius: var(--dash-radius-sm);
+  color: var(--dash-secondary);
+  background: var(--dash-surface);
+}
+
+.dashboard-scope .dashboard-panel .ui-pagination button[aria-current='page'],
+.dashboard-scope .dashboard-panel [aria-label*='分页'] button[aria-current='page'] {
+  border-color: var(--dash-primary);
+  color: #ffffff;
+  background: var(--dash-primary);
+}
+
+.dashboard-scope .feedback-message-bubble,
+.dashboard-scope .feedback-trace-block,
+.dashboard-scope .feedback-analysis-box,
+.dashboard-scope .dashboard-panel .rounded-\[12px\] {
+  border-color: var(--dash-border);
+  border-radius: var(--dash-radius);
+}
+
+.dashboard-scope .feedback-message-bubble,
+.dashboard-scope .feedback-trace-block {
+  background: var(--dash-surface);
+}
+
+.dashboard-dialog {
+  border: 1px solid #e5e6eb;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 32px rgba(16, 24, 40, 0.12);
+}
+
+@media (max-width: 900px) {
+  .dashboard-scope .employee-hero {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-scope .dashboard-panel {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .dashboard-scope .dashboard-profile-tabs {
+    overflow-x: auto;
+  }
+}

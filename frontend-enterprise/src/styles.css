@@ -6,24 +6,25 @@
 }
 
 :root {
-  --background: #f7f5ef;
-  --foreground: #20201d;
+  --background: #f7f8fa;
+  --foreground: #1f2329;
   --surface: #ffffff;
   --surface-raised: #ffffff;
   --surface-muted: #eeece4;
   --surface-subtle: #fbfaf6;
-  --border: #ded7cc;
-  --border-strong: #cfc5b7;
-  --line: #e7dfd3;
+  --border: #e5e6eb;
+  --border-strong: #dcdde0;
+  --line: #e5e6eb;
   --muted: #eeece4;
-  --muted-soft: #9a9b95;
-  --accent: #0f766e;
-  --accent-soft: #e1f1ed;
+  --muted-soft: #8f959e;
+  --accent: #1f5fef;
+  --accent-soft: #eff4ff;
   --accent-foreground: #ffffff;
-  --danger: #dc2626;
-  --warning: #b45309;
-  --success: #138a55;
-  --ink-soft: #343633;
+  --danger: #d03050;
+  --warning: #f0a020;
+  --success: #18a058;
+  --info: #2080f0;
+  --ink-soft: #646a73;
   --copper: #a85d32;
   --olive: #6f7b42;
   --shadow-float: 0 20px 54px rgba(37, 32, 24, 0.1);
@@ -31,7 +32,7 @@
   --font-body: "Inter", "IBM Plex Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
   --font-display: "Inter", "IBM Plex Sans", "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --page-gradient-a: rgba(15, 118, 110, 0.055);
+  --page-gradient-a: rgba(37, 99, 235, 0.055);
   --page-gradient-top: #fbfaf6;
   --page-gradient-bottom: #f3f0e8;
   --panel-bg: rgba(249, 247, 241, 0.82);
@@ -56,29 +57,29 @@
   --thinking-focus: #2f3734;
   --thinking-flow-duration: 4.2s;
   --card: #ffffff;
-  --card-foreground: #20201d;
+  --card-foreground: #1f2329;
   --popover: #ffffff;
-  --popover-foreground: #20201d;
-  --primary: #0f766e;
+  --popover-foreground: #1f2329;
+  --primary: #2563eb;
   --primary-foreground: #ffffff;
   --secondary: #eeece4;
-  --secondary-foreground: #20201d;
-  --muted-foreground: #6d726e;
-  --destructive: #dc2626;
-  --input: #ded7cc;
-  --ring: #0f766e;
-  --chart-1: #0f766e;
+  --secondary-foreground: #1f2329;
+  --muted-foreground: #646a73;
+  --destructive: #d03050;
+  --input: #e5e6eb;
+  --ring: #2563eb;
+  --chart-1: #2563eb;
   --chart-2: #6f7b42;
   --chart-3: #a85d32;
-  --chart-4: #138a55;
-  --chart-5: #b45309;
+  --chart-4: #18a058;
+  --chart-5: #f0a020;
   --radius: 0.625rem;
   --sidebar: #ffffff;
   --sidebar-foreground: #858b9c;
   --sidebar-primary: #18181a;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #f6f6f6;
-  --sidebar-accent-foreground: #18181a;
+  --sidebar-accent-foreground: #1F5FEF;
   --sidebar-border: #f4f4f4;
   --sidebar-ring: #18181a;
 }html,
@@ -180,6 +181,20 @@ select,
   min-width: 0;
   background: var(--background);
   overflow: hidden;
+}
+
+/* The sidebar primitive is viewport-fixed. In the management shell it starts
+   below the persistent application header instead of covering it. */
+.management-shell > .app-top-header,
+.workspace-shell > .app-top-header {
+  position: relative;
+  z-index: 20;
+}
+
+.management-shell [data-slot="sidebar-container"],
+.workspace-shell [data-slot="sidebar-container"] {
+  top: 60px;
+  height: calc(100svh - 60px);
 }
 
 .enterprise-login-card h2.ui-typography {
@@ -4165,6 +4180,16 @@ pre {
   padding: 0 18px;
 }
 
+.knowledge-overview-panel .knowledge-mini-list {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(116px, auto));
+  grid-auto-rows: minmax(116px, auto);
+  align-content: start;
+  height: 100%;
+  overflow: hidden;
+  padding: 2px 0 0;
+}
+
 .knowledge-layer-explain {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4779,6 +4804,7 @@ pre {
 }
 
 @media (max-width: 820px) {
+
   .knowledge-pageindex-actions {
     justify-self: start;
   }
@@ -4811,7 +4837,7 @@ pre {
     width: 100%;
     flex-wrap: wrap;
   }
-
+  
   .knowledge-detail-header {
     flex-direction: column;
   }
@@ -4967,24 +4993,24 @@ pre {
   }
 }
 
-/* StaffDeck SD1 visual alignment */
+/* MindStaff SD1 visual alignment */
 :root {
   --background: #f7f8fa;
-  --foreground: #111111;
+  --foreground: #1f2329;
   --surface: #ffffff;
   --surface-raised: #ffffff;
   --surface-muted: #f3f4f6;
   --surface-subtle: #fafafa;
-  --border: #e5e7eb;
+  --border: #e5e6eb;
   --border-strong: #d4d4d8;
-  --line: #eceef1;
-  --muted: #6b7280;
-  --muted-soft: #9ca3af;
-  --accent: #111111;
-  --accent-soft: #f2f3f5;
+  --line: #e5e6eb;
+  --muted: #646a73;
+  --muted-soft: #8f959e;
+  --accent: #1f5fef;
+  --accent-soft: #eff4ff;
   --accent-foreground: #ffffff;
-  --shadow-float: 0 18px 48px rgba(17, 17, 17, 0.10);
-  --shadow-soft: 0 8px 24px rgba(17, 17, 17, 0.045);
+  --shadow-float: 0 18px 48px rgba(31, 35, 41, 0.10);
+  --shadow-soft: 0 8px 24px rgba(31, 35, 41, 0.045);
   --font-body: "Inter", "IBM Plex Sans", "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
   --font-display: var(--font-body);
   --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -5824,13 +5850,13 @@ body,
   left: 8px;
   top: 0;
   z-index: 1;
-  width: 80px !important;
+  width: 70px !important;
   height: 94px !important;
   overflow: visible !important;
 }
 
 .sd1-agents-page .employee-roster-head > .employee-avatar img {
-  width: 80px;
+  width: 70px;
   height: 94px;
   max-width: none;
   object-fit: contain;
@@ -6808,7 +6834,6 @@ body,
     width: auto !important;
     min-height: 58px;
     margin: 72px 28px 18px !important;
-    padding-right: 184px;
     align-items: flex-start;
   }
 

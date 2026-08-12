@@ -132,7 +132,7 @@ export default function PlatformKindDetailView({
           返回开放广场
         </UIButton>
         {onCreate && (
-          <UIButton onClick={onCreate} className="h-8 gap-1 rounded-[10px] bg-[#18181a] px-5 text-[12px] font-normal text-white hover:bg-[#303030]">
+          <UIButton onClick={onCreate} className="h-8 gap-1 rounded-[10px] bg-[#2563EB] px-5 text-[12px] font-normal text-white hover:bg-[#1D4ED8]">
             <IconAdd className="size-3.5" />
             创建开放 Skill
           </UIButton>

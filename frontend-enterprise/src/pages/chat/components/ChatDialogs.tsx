@@ -231,7 +231,7 @@ export default function ChatDialogs({ chat }: { chat: UseChatSession }) {
               取消
             </Button>
             <Button
-              className="h-[32px] w-[80px] rounded-[10px] bg-[#18181a] px-[12px] py-[8px] text-[14px] font-normal text-white hover:bg-[#303030]"
+              className="h-[32px] w-[80px] rounded-[10px] bg-[#2563EB] px-[12px] py-[8px] text-[14px] font-normal text-white hover:bg-[#1D4ED8]"
               onClick={() => void saveRename()}
             >
               保存

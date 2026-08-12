@@ -13,11 +13,11 @@ import IconCapClipboard from '../../assets/icons/cap-clipboard.svg?react';
 import IconCapBriefcase from '../../assets/icons/cap-briefcase.svg?react';
 import IconProfileAlarm from '../../assets/icons/profile-alarm.svg?react';
 import IconProfileCalendar from '../../assets/icons/profile-calendar.svg?react';
-import capabilityLogs from '../../assets/staffdeck/capabilityLogs.png';
-import capabilityTasks from '../../assets/staffdeck/capabilityTasks.png';
-import capabilityTools from '../../assets/staffdeck/capabilityTools.png';
-import StaffdeckIcon from '../../components/StaffdeckIcon';
-import { staffdeckDisplayText } from '../../employee';
+import capabilityLogs from '../../assets/mindstaff/capabilityLogs.png';
+import capabilityTasks from '../../assets/mindstaff/capabilityTasks.png';
+import capabilityTools from '../../assets/mindstaff/capabilityTools.png';
+import MindStaffIcon from '../../components/MindStaffIcon';
+import { mindstaffDisplayText } from '../../employee';
 import type {
   AgentProfileRead,
   AgentWorkRecordEventRead,
@@ -80,7 +80,7 @@ const capabilityArrowClass = 'pointer-events-none absolute top-[13px] right-[8px
 const capabilityGlyphClass = 'size-[14px] shrink-0 text-[#858b9c] group-data-[tone=dark]:text-white';
 const capabilityNameClass = 'min-w-0 truncate text-[14px] font-normal text-[#858b9c] group-data-[tone=dark]:text-white';
 const capabilityBarClass = 'block h-[4px] w-full overflow-hidden rounded-[90px] bg-[#e9e9e9] group-data-[tone=dark]:bg-[#6a6a6a]';
-const capabilityBarFillClass = 'block h-full w-[20px] rounded-[90px] bg-[#282931] group-data-[tone=dark]:bg-[#e9e9e9]';
+const capabilityBarFillClass = 'block h-full w-[20px] rounded-[90px] bg-[#1F5FEF] group-data-[tone=dark]:bg-[#e9e9e9]';
 const capabilityDescClass = 'line-clamp-5 min-w-0 overflow-hidden text-[10px] leading-[16px] font-normal text-[#757f9c] [overflow-wrap:anywhere] group-data-[tone=dark]:line-clamp-2 group-data-[tone=dark]:text-[#f6f6f6]';
 
 export default function WorkRecordTab({
@@ -105,7 +105,7 @@ export default function WorkRecordTab({
       title: '知识库',
       tone: 'knowledge',
       count: activeKnowledge.length,
-      body: activeKnowledge.slice(0, 3).map((item) => staffdeckDisplayText(item.name)).join(' / ') || '暂无知识库',
+      body: activeKnowledge.slice(0, 3).map((item) => mindstaffDisplayText(item.name)).join(' / ') || '暂无知识库',
       icon: <IconCapFolder className={capabilityGlyphClass} />,
       dark: false,
     },
@@ -114,7 +114,7 @@ export default function WorkRecordTab({
       title: '技能',
       tone: 'skill',
       count: activeGeneralSkills.length,
-      body: activeGeneralSkills.slice(0, 3).map((item) => staffdeckDisplayText(item.name)).join(' / ') || '暂无启用技能',
+      body: activeGeneralSkills.slice(0, 3).map((item) => mindstaffDisplayText(item.name)).join(' / ') || '暂无启用技能',
       icon: <IconCapMagicWand className={capabilityGlyphClass} />,
       dark: false,
     },
@@ -123,7 +123,7 @@ export default function WorkRecordTab({
       title: 'SOP',
       tone: 'sop',
       count: activeSkills.length,
-      body: activeSkills.slice(0, 3).map((item) => staffdeckDisplayText(item.name)).join(' / ') || '暂无启用 SOP',
+      body: activeSkills.slice(0, 3).map((item) => mindstaffDisplayText(item.name)).join(' / ') || '暂无启用 SOP',
       icon: <IconCapClipboard className={capabilityGlyphClass} />,
       dark: false,
     },
@@ -132,7 +132,7 @@ export default function WorkRecordTab({
       title: '工具',
       tone: 'tools',
       count: activeTools.length,
-      body: activeTools.slice(0, 3).map((item) => staffdeckDisplayText(item.display_name || item.name)).join(' / ') || '暂无启用工具',
+      body: activeTools.slice(0, 3).map((item) => mindstaffDisplayText(item.display_name || item.name)).join(' / ') || '暂无启用工具',
       icon: <IconCapBriefcase className={capabilityGlyphClass} />,
       dark: true,
       illustration: capabilityTools,
@@ -142,7 +142,7 @@ export default function WorkRecordTab({
       title: '定时任务',
       tone: 'tasks',
       count: activeScheduledTasks.length,
-      body: activeScheduledTasks.slice(0, 2).map((item) => staffdeckDisplayText(item.title)).join(' / ') || '暂无启用定时任务',
+      body: activeScheduledTasks.slice(0, 2).map((item) => mindstaffDisplayText(item.title)).join(' / ') || '暂无启用定时任务',
       icon: <IconProfileAlarm className={capabilityGlyphClass} />,
       dark: true,
       illustration: capabilityTasks,
@@ -152,7 +152,7 @@ export default function WorkRecordTab({
       title: '对话日志',
       tone: 'logs',
       count: replyStats.total,
-      body: staffdeckDisplayText(employeeSessions[0]?.summary || employeeSessions[0]?.last_agent_question || '暂无对话任务'),
+      body: mindstaffDisplayText(employeeSessions[0]?.summary || employeeSessions[0]?.last_agent_question || '暂无对话任务'),
       icon: <IconProfileCalendar className={capabilityGlyphClass} />,
       dark: true,
       illustration: capabilityLogs,
@@ -162,7 +162,7 @@ export default function WorkRecordTab({
   const growthItems = growthTimeline(activeSkills, activeGeneralSkills, activeTools);
 
   return (
-    <section className="relative flex w-full min-w-0 max-w-full mt-[-2px] flex-col gap-[24px] overflow-hidden rounded-[18px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] bg-white p-[14px] *:min-w-0 min-[521px]:p-[18px] in-data-[theme=dark]:border-[#343741] in-data-[theme=dark]:bg-[#202126] in-data-[theme=dark]:text-[#f0f2f6]">
+    <section className="dashboard-panel dashboard-work-record relative flex w-full min-w-0 max-w-full mt-[-2px] flex-col gap-[24px] overflow-hidden rounded-[18px] shadow-[0_20px_42px_rgba(21,26,38,0.045)] bg-white p-[14px] *:min-w-0 min-[521px]:p-[18px] in-data-[theme=dark]:border-[#343741] in-data-[theme=dark]:bg-[#202126] in-data-[theme=dark]:text-[#f0f2f6]">
       <div className="flex w-full items-stretch gap-[16px]">
         <ClickableMetric label="今日对话" value={replyStats.today} onClick={goToLogs} />
         <ClickableMetric label="累计对话" value={replyStats.total} onClick={goToLogs} />
@@ -184,12 +184,12 @@ export default function WorkRecordTab({
                   <p className="m-0 text-center text-[12px] font-medium leading-[16px] text-[#18181a] in-data-[theme=dark]:text-[#f0f2f6]">
                     {formatMonthDay(item.timestamp)}
                   </p>
-                  <span className="relative z-10 size-[8px] shrink-0 rounded-full bg-[#18181a] in-data-[theme=dark]:bg-[#f0f2f6]" />
+                  <span className="relative z-10 size-[8px] shrink-0 rounded-full bg-[#1F5FEF] in-data-[theme=dark]:bg-[#f0f2f6]" />
                   <div className="relative flex w-[136px] flex-col gap-[4px] rounded-[14px] bg-[#f6f6f6] px-[16px] py-[10px] in-data-[theme=dark]:bg-[#2b2d33]">
                     <span className="absolute top-[-8px] left-1/2 size-0 -translate-x-1/2 border-x-6 border-b-8 border-x-transparent border-b-[#f6f6f6] in-data-[theme=dark]:border-b-[#2b2d33]" />
                     <span className="truncate text-[10px] leading-none text-[#757f9c]">{item.kind}</span>
                     <span className="truncate text-[12px] leading-none text-[#464c5e] in-data-[theme=dark]:text-[#c9cede]">
-                      {staffdeckDisplayText(item.title)}
+                      {mindstaffDisplayText(item.title)}
                     </span>
                   </div>
                 </div>
@@ -361,7 +361,7 @@ function ActivityTimeline({ events }: ActivityTimelineProps) {
       grouped[track.key] = collect(
         events
           .filter((item) => item.kind === track.key)
-          .map((item) => ({ value: item.timestamp, name: staffdeckDisplayText(item.label) })),
+          .map((item) => ({ value: item.timestamp, name: mindstaffDisplayText(item.label) })),
       );
       return grouped;
     }, {});
@@ -1098,7 +1098,7 @@ function buildDayActivities(events: AgentWorkRecordEventRead[]): Record<string, 
           : item.kind === 'skill'
             ? '新增技能 '
             : '';
-    push(item, `${prefix}${staffdeckDisplayText(item.label)}`);
+    push(item, `${prefix}${mindstaffDisplayText(item.label)}`);
   });
 
   return map;
@@ -1128,7 +1128,7 @@ function growthTimeline(
         ? `本地版本从 ${item.branch_base_version || item.version} 进化到 ${item.branch_head_version || item.version}`
         : `新增 ${item.version} 版业务流程`,
       timestamp: stableGrowthTimestamp(item),
-      icon: <StaffdeckIcon name="filter" />,
+      icon: <MindStaffIcon name="filter" />,
       tone: 'mint',
     });
   });
@@ -1141,7 +1141,7 @@ function growthTimeline(
       title: item.name,
       description: upgraded ? '技能说明、权限或运行配置有更新' : `新增 ${item.slug} 通用能力`,
       timestamp: stableGrowthTimestamp(item),
-      icon: <StaffdeckIcon name="spark" />,
+      icon: <MindStaffIcon name="spark" />,
       tone: 'teal',
     });
   });
@@ -1153,7 +1153,7 @@ function growthTimeline(
       title: item.display_name || item.name,
       description: `${item.bucket || '工具'} · ${item.tool_type.toUpperCase()} 调用能力`,
       timestamp: stableGrowthTimestamp(item),
-      icon: <StaffdeckIcon name="tool" />,
+      icon: <MindStaffIcon name="tool" />,
       tone: 'green',
     });
   });

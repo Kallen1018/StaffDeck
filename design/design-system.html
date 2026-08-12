@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindStaff 设计系统规范 v1.0</title>
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+  <style>
+    /* 规范页专属排版 */
+    .spec-hero {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 8px;
+    }
+    .spec-hero .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-primary-text);
+      background: var(--color-primary-50);
+      padding: 6px 12px;
+      border-radius: 9999px;
+    }
+    .spec-hero h1 {
+      margin: 16px 0 8px;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--color-text-strong);
+    }
+    .spec-hero p {
+      margin: 0;
+      font-size: 16px;
+      color: var(--color-text-caption);
+      max-width: 640px;
+    }
+    .spec-body {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 24px 0 8px;
+    }
+    .toc a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      padding: 8px 14px;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .toc a:hover {
+      color: var(--color-primary-text);
+      border-color: var(--color-primary-100);
+      background: var(--color-primary-50);
+    }
+    .ds-section {
+      scroll-margin-top: 24px;
+    }
+    .spec-foot {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      color: var(--color-text-caption);
+      font-size: 13px;
+      border-top: 1px solid var(--color-border);
+    }
+    /* 导航规范章节：并排展示 */
+    .nav-spec {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .nav-demo {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+    }
+    .nav-demo .demo-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-caption);
+      margin-bottom: 12px;
+    }
+    .rule-list {
+      list-style: none;
+      margin: 12px 0 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rule-list li {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--color-text-slate-2);
+      line-height: 1.6;
+    }
+    .rule-list li code {
+      font-family: var(--font-sans);
+      font-size: 12px;
+      background: var(--color-surface-2);
+      color: var(--color-text-slate);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+    @media (max-width: 720px) {
+      .spec-hero { padding: 32px 16px 8px; }
+      .spec-hero h1 { font-size: 28px; }
+      .spec-body { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="spec-hero">
+    <span class="eyebrow">◆ Design System</span>
+    <h1>MindStaff 设计系统规范 v1.0</h1>
+    <p>面向知识管理与智能问答场景的统一视觉语言。所有 Token 数值均从设计画布节点精确提取,可直接作为设计与前端实现的单一数据源。</p>
+    <nav class="toc">
+      <a href="#sec-color">色彩体系</a>
+      <a href="#sec-type">字体层级</a>
+      <a href="#sec-space">间距与圆角</a>
+      <a href="#sec-nav">导航规范</a>
+      <a href="#sec-comp">基础组件</a>
+    </nav>
+  </div>
+
+  <div class="spec-body">
+    <div class="ds">
+      <!-- 色彩 -->
+      <div class="ds-section" id="sec-color">
+        <h2>色彩体系</h2>
+        <p class="lead">品牌主色、中性色与语义色(Naive UI 调性),数值取自画布 Token。</p>
+        <div class="swatch-grid">
+          <div class="swatch"><div class="chip-color" style="background:#2563EB"></div><div class="meta"><div class="n">主色 Primary</div><div class="h">#2563EB</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#1F5FEF"></div><div class="meta"><div class="n">主色文字</div><div class="h">#1F5FEF</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#EFF4FF"></div><div class="meta"><div class="n">主色浅底</div><div class="h">#EFF4FF</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#18A058"></div><div class="meta"><div class="n">成功 Success</div><div class="h">#18A058</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#F0A020"></div><div class="meta"><div class="n">警告 Warning</div><div class="h">#F0A020</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#D03050"></div><div class="meta"><div class="n">错误 Error</div><div class="h">#D03050</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#2080F0"></div><div class="meta"><div class="n">信息 Info</div><div class="h">#2080F0</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#1F2329"></div><div class="meta"><div class="n">主文本</div><div class="h">#1F2329</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#646A73"></div><div class="meta"><div class="n">次要文本</div><div class="h">#646A73</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#8F959E"></div><div class="meta"><div class="n">说明文本</div><div class="h">#8F959E</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#F7F8FA;border-bottom:1px solid var(--color-border)"></div><div class="meta"><div class="n">页面底色</div><div class="h">#F7F8FA</div></div></div>
+          <div class="swatch"><div class="chip-color" style="background:#E5E6EB"></div><div class="meta"><div class="n">描边 Border</div><div class="h">#E5E6EB</div></div></div>
+        </div>
+      </div>
+
+      <!-- 字体 -->
+      <div class="ds-section" id="sec-type">
+        <h2>字体层级</h2>
+        <p class="lead">系统字体栈,7 级字号规范。</p>
+        <div class="type-list">
+          <div class="type-row"><div class="label">Display 36</div><div class="sample" style="font-size:36px;font-weight:700;">释放文档价值</div></div>
+          <div class="type-row"><div class="label">H1 28</div><div class="sample" style="font-size:28px;font-weight:700;">知识库管理</div></div>
+          <div class="type-row"><div class="label">H2 22</div><div class="sample" style="font-size:22px;font-weight:700;">AI 智能问答</div></div>
+          <div class="type-row"><div class="label">H3 18</div><div class="sample" style="font-size:18px;font-weight:600;">Agent 市场</div></div>
+          <div class="type-row"><div class="label">Body-lg 16</div><div class="sample" style="font-size:16px;">正文大号 · 段落引导文字</div></div>
+          <div class="type-row"><div class="label">Body 14</div><div class="sample" style="font-size:14px;">正文常规 · 列表与表单默认字号</div></div>
+          <div class="type-row"><div class="label">Caption 12</div><div class="sample" style="font-size:12px;color:var(--color-text-caption);">辅助说明 · 面包屑 · 计数</div></div>
+        </div>
+      </div>
+
+      <!-- 间距与圆角 -->
+      <div class="ds-section" id="sec-space">
+        <h2>间距与圆角</h2>
+        <p class="lead">4px 基准间距体系;圆角 4 / 6 / 8 / 12 / 16。</p>
+        <div class="scale-row" style="margin-bottom:24px;">
+          <div class="scale-box"><div class="bar" style="width:4px;height:32px;"></div><div class="cap">4</div></div>
+          <div class="scale-box"><div class="bar" style="width:8px;height:32px;"></div><div class="cap">8</div></div>
+          <div class="scale-box"><div class="bar" style="width:12px;height:32px;"></div><div class="cap">12</div></div>
+          <div class="scale-box"><div class="bar" style="width:16px;height:32px;"></div><div class="cap">16</div></div>
+          <div class="scale-box"><div class="bar" style="width:24px;height:32px;"></div><div class="cap">24</div></div>
+          <div class="scale-box"><div class="bar" style="width:32px;height:32px;"></div><div class="cap">32</div></div>
+          <div class="scale-box"><div class="bar" style="width:48px;height:32px;"></div><div class="cap">48</div></div>
+        </div>
+        <div class="radius-row">
+          <div class="radius-box" style="border-radius:4px;">4</div>
+          <div class="radius-box" style="border-radius:6px;">6</div>
+          <div class="radius-box" style="border-radius:8px;">8</div>
+          <div class="radius-box" style="border-radius:12px;">12</div>
+          <div class="radius-box" style="border-radius:16px;">16</div>
+        </div>
+      </div>
+
+      <!-- 导航规范（本次决策沉淀） -->
+      <div class="ds-section" id="sec-nav">
+        <h2>导航规范</h2>
+        <p class="lead">功能模块导航(侧栏 + 顶部标签)采用统一处理:模块名代表核心功能入口,须使用主文本色以体现分量。</p>
+        <div class="nav-spec">
+          <div class="nav-demo">
+            <div class="demo-label">侧栏导航 Sidebar</div>
+            <a class="nav-item is-active"><span class="ic"></span>知识库管理</a>
+            <a class="nav-item"><span class="ic"></span>AI 智能问答</a>
+            <a class="nav-item"><span class="ic"></span>文档中心</a>
+          </div>
+          <div class="nav-demo">
+            <div class="demo-label">顶部标签 Tabs</div>
+            <div style="display:flex;gap:4px;flex-wrap:wrap;">
+              <button class="tab-btn is-active">知识库管理</button>
+              <button class="tab-btn">AI 智能问答</button>
+              <button class="tab-btn">登录</button>
+            </div>
+          </div>
+          <div class="nav-demo">
+            <div class="demo-label">规则 Rules</div>
+            <ul class="rule-list">
+              <li>未选中:主文本色 <code>#1F2329</code> + 字重 <code>500</code></li>
+              <li>选中态:主色文字 <code>#1F5FEF</code> + 字重 <code>600</code> + 浅底 <code>#EFF4FF</code></li>
+              <li>侧栏与顶部标签保持同一套配色,避免不一致</li>
+              <li>「分类筛选」等辅助标签用标签灰 <code>#526477</code>,与功能模块区分</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 组件 -->
+      <div class="ds-section" id="sec-comp">
+        <h2>基础组件</h2>
+        <p class="lead">按钮、输入框、标签、Chip、头像等原子组件示例。</p>
+        <div class="comp-grid">
+          <div class="comp-card">
+            <div class="ct">按钮 Button</div>
+            <div class="demo">
+              <button class="btn-primary sm">主要按钮</button>
+              <button class="btn-outline">次要按钮</button>
+            </div>
+          </div>
+          <div class="comp-card">
+            <div class="ct">输入框 Input</div>
+            <div class="demo"><input class="input" style="width:100%;height:40px;" placeholder="请输入内容…" /></div>
+          </div>
+          <div class="comp-card">
+            <div class="ct">标签 Tag</div>
+            <div class="demo">
+              <span class="tag success">已同步</span>
+              <span class="tag warning">索引中</span>
+              <span class="tag info">草稿</span>
+            </div>
+          </div>
+          <div class="comp-card">
+            <div class="ct">Chip</div>
+            <div class="demo">
+              <span class="chip is-active">全部</span>
+              <span class="chip">生产运维</span>
+            </div>
+          </div>
+          <div class="comp-card">
+            <div class="ct">头像 Avatar</div>
+            <div class="demo"><span class="avatar">管</span><span class="avatar" style="background:var(--color-primary-50);color:var(--color-primary);">AI</span></div>
+          </div>
+          <div class="comp-card">
+            <div class="ct">分页 Pagination</div>
+            <div class="demo"><span class="pg is-active" style="min-width:34px;height:34px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:var(--color-primary);color:#fff;">1</span><span class="pg" style="min-width:34px;height:34px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:var(--color-surface-2);color:var(--color-text-334155);">2</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="spec-foot">
+    MindStaff 设计系统规范 v1.0 · Token 源自设计画布 · 与《应用预览》共享 <code style="font-family:var(--font-sans);">css/tokens.css</code> 单一数据源
+  </footer>
+</body>
+</html>

@@ -18,13 +18,14 @@ import {
   type EnterpriseAuthUser,
 } from "./auth";
 import AppSidebar from "./components/AppSidebar";
+import AppTopHeader from "./components/AppTopHeader";
 import OnboardingGuide, { ONBOARDING_SEEN_KEY } from "./components/OnboardingGuide";
 import QuickStartGuide, {
   QUICK_START_COMPLETED_EVENT,
   QUICK_START_SEEN_KEY,
 } from "./components/QuickStartGuide";
 import UpdateReminder from "./components/UpdateReminder";
-import StaffdeckIcon from "./components/StaffdeckIcon";
+import MindStaffIcon from "./components/MindStaffIcon";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { EnterpriseRoute } from "./enums/routes";
 import {
@@ -459,33 +460,39 @@ function Shell({
           "--sidebar-width-icon": "72px",
         } as CSSProperties
       }
-      className={`app-shell ${sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"} ${isAgentRosterRoute ? "is-agent-roster" : ""}`}
+      className={`app-shell management-shell flex-col ${sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"} ${isAgentRosterRoute ? "is-agent-roster" : ""}`}
     >
-      <AppSidebar
+      <AppTopHeader
         selected={selected}
-        onNavigate={navigate}
         isAdmin={isAdmin}
-        sidebarAgent={sidebarAgent}
-        scopeAgents={scopeAgents}
-        selectedAgentId={selectedAgentId}
-        onSelectAgent={(agentId) => {
-          if (agentId !== selectedAgentId) changeAgentScope(agentId);
-          navigate(EnterpriseRoute.Dashboard);
-        }}
-        onOpenChat={() => {
-          navigate(EnterpriseRoute.Gallery);
-        }}
-        modelSetupAttention={isAdmin && showModelSetupNotice}
+        activeApp="management"
+        onNavigate={navigate}
+        onOpenChat={() => navigate(EnterpriseRoute.Gallery)}
+        onOpenManagement={() => navigate(EnterpriseRoute.Dashboard)}
+        onLogout={onLogout}
+        userName={auth.user.username}
       />
-      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-        <div
+      <div className="flex min-h-0 min-w-0 flex-1">
+        <AppSidebar
+          selected={selected}
+          onNavigate={navigate}
+          sidebarAgent={sidebarAgent}
+          scopeAgents={scopeAgents}
+          selectedAgentId={selectedAgentId}
+          onSelectAgent={(agentId) => {
+            if (agentId !== selectedAgentId) changeAgentScope(agentId);
+            navigate(EnterpriseRoute.Dashboard);
+          }}
+        />
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <div
           className={`content flex-1 ${isDistillRoute ? "flex min-h-0 flex-col overflow-hidden p-0!" : ""} ${selected === "/enterprise/dashboard" ? "sd1-dashboard-content" : ""} ${selected !== "/enterprise/dashboard" && !isDistillRoute ? "sd1-management-content" : ""}`}
         >
           {showModelSetupNotice && (
             <div className="mx-[24px] mt-[18px] mb-[10px] flex shrink-0 flex-col items-start justify-between gap-[12px] rounded-[12px] border border-[#f3d28b] bg-[#fff8e8] px-[18px] py-[12px] text-[#6f4500] shadow-[0_8px_24px_rgba(92,62,0,0.08)] sm:flex-row sm:items-center">
               <div className="flex min-w-0 items-center gap-[10px]">
                 <span className="flex size-[28px] shrink-0 items-center justify-center rounded-[8px] bg-[#ffe7ad] text-[#8a4b00]">
-                  <StaffdeckIcon name="model" className="size-[15px]" />
+                  <MindStaffIcon name="model" className="size-[15px]" />
                 </span>
                 <span className="min-w-0 text-[13px] leading-[20px]">{modelSetupNoticeText}</span>
               </div>
@@ -760,6 +767,7 @@ function Shell({
             </Routes>
           )}
         </div>
+      </div>
       </div>
       <Dialog open={agentCreateOpen} onOpenChange={setAgentCreateOpen}>
         <DialogContent className="flex max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] flex-col gap-0 overflow-hidden rounded-[16px] p-0 sm:max-w-[520px]">

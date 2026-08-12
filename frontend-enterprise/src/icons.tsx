@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import StaffdeckIcon, { type StaffdeckIconName } from './components/StaffdeckIcon';
+import MindStaffIcon, { type MindStaffIconName } from './components/MindStaffIcon';
 
 type IconProps = {
   className?: string;
@@ -9,10 +9,10 @@ type IconProps = {
   [key: string]: unknown;
 };
 
-function Sd1AntIcon({ name, rotate = 0, spin = false, className = '', style }: IconProps & { name: StaffdeckIconName }) {
+function Sd1AntIcon({ name, rotate = 0, spin = false, className = '', style }: IconProps & { name: MindStaffIconName }) {
   const transform = [style?.transform, rotate ? `rotate(${rotate}deg)` : ''].filter(Boolean).join(' ');
   return (
-    <StaffdeckIcon
+    <MindStaffIcon
       name={name}
       className={`${spin ? 'sd1-icon-spin ' : ''}${className}`.trim()}
       style={{ ...style, transform: transform || undefined }}
