@@ -183,18 +183,10 @@ select,
   overflow: hidden;
 }
 
-/* The sidebar primitive is viewport-fixed. In the management shell it starts
-   below the persistent application header instead of covering it. */
-.management-shell > .app-top-header,
-.workspace-shell > .app-top-header {
-  position: relative;
-  z-index: 20;
-}
-
 .management-shell [data-slot="sidebar-container"],
 .workspace-shell [data-slot="sidebar-container"] {
-  top: 60px;
-  height: calc(100svh - 60px);
+  top: 0;
+  height: 100svh;
 }
 
 .enterprise-login-card h2.ui-typography {

@@ -1,4 +1,3 @@
-import BrandLogo from '@/components/BrandLogo';
 import AppHeader from '@/components/AppHeader';
 import IconAgents from '@/assets/icons/nav-agents.svg?react';
 import IconGlobe from '@/assets/icons/globe.svg?react';
@@ -49,11 +48,6 @@ export default function AppTopHeader({
   return (
     <AppHeader
       className="app-top-header h-[60px] shrink-0 items-center border-b border-[#e5e6eb] bg-white px-[20px] shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
-      left={(
-        <div className="flex items-center">
-          <BrandLogo />
-        </div>
-      )}
       navigation={(
         <nav aria-label="主导航" className="flex min-w-0 items-center gap-[4px] overflow-x-auto">
           {navItems.map(({ route, label, Icon }) => (

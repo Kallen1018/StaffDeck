@@ -460,19 +460,9 @@ function Shell({
           "--sidebar-width-icon": "72px",
         } as CSSProperties
       }
-      className={`app-shell management-shell flex-col ${sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"} ${isAgentRosterRoute ? "is-agent-roster" : ""}`}
+      className={`app-shell management-shell ${sidebarExpanded ? "sidebar-expanded" : "sidebar-collapsed"} ${isAgentRosterRoute ? "is-agent-roster" : ""}`}
     >
-      <AppTopHeader
-        selected={selected}
-        isAdmin={isAdmin}
-        activeApp="management"
-        onNavigate={navigate}
-        onOpenChat={() => navigate(EnterpriseRoute.Gallery)}
-        onOpenManagement={() => navigate(EnterpriseRoute.Dashboard)}
-        onLogout={onLogout}
-        userName={auth.user.username}
-      />
-      <div className="flex min-h-0 min-w-0 flex-1">
+      <>
         <AppSidebar
           selected={selected}
           onNavigate={navigate}
@@ -485,6 +475,16 @@ function Shell({
           }}
         />
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+          <AppTopHeader
+            selected={selected}
+            isAdmin={isAdmin}
+            activeApp="management"
+            onNavigate={navigate}
+            onOpenChat={() => navigate(EnterpriseRoute.Gallery)}
+            onOpenManagement={() => navigate(EnterpriseRoute.Dashboard)}
+            onLogout={onLogout}
+            userName={auth.user.username}
+          />
           <div
           className={`content flex-1 ${isDistillRoute ? "flex min-h-0 flex-col overflow-hidden p-0!" : ""} ${selected === "/enterprise/dashboard" ? "sd1-dashboard-content" : ""} ${selected !== "/enterprise/dashboard" && !isDistillRoute ? "sd1-management-content" : ""}`}
         >
@@ -768,8 +768,7 @@ function Shell({
           )}
         </div>
       </div>
-      </div>
-      <Dialog open={agentCreateOpen} onOpenChange={setAgentCreateOpen}>
+        <Dialog open={agentCreateOpen} onOpenChange={setAgentCreateOpen}>
         <DialogContent className="flex max-h-[calc(100dvh-32px)] w-[calc(100%-32px)] flex-col gap-0 overflow-hidden rounded-[16px] p-0 sm:max-w-[520px]">
           <DialogTitle className="shrink-0 px-[24px] py-[16px] text-[16px] font-semibold text-foreground">
             新建数字员工
@@ -905,7 +904,8 @@ function Shell({
             </UIButton>
           </div>
         </DialogContent>
-      </Dialog>
+        </Dialog>
+      </>
     </SidebarProvider>
   );
 }

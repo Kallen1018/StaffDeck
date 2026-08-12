@@ -7,6 +7,7 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -17,6 +18,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { ComponentType, SVGProps } from 'react';
 import { cn } from '@/lib/utils';
 import EmployeeAvatar from './EmployeeAvatar';
+import BrandLogo from './BrandLogo';
 import MindStaffIcon from './MindStaffIcon';
 import { employeeDisplayNameWithCreator, employeeProfile, mindstaffDisplayText } from '../employee';
 import { EnterpriseRoute } from '../enums/routes';
@@ -101,6 +103,36 @@ export type AppSidebarProps = AppSidebarManagementProps | AppSidebarChatProps;
 // Shared shell classes so the management + chat sidebars share the same chrome.
 const SIDEBAR_SHELL_CLASS =
   'overflow-hidden border-r border-sidebar-border bg-sidebar backdrop-blur-[9.5px] **:data-[slot=sidebar-inner]:bg-sidebar';
+
+function SidebarBrand({ collapsed }: { collapsed: boolean }) {
+  return (
+    <div className="flex h-[60px] shrink-0 items-center justify-center border-b border-[#e5e6eb] px-[20px] group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+      <BrandLogo markOnly={collapsed} markSize={28} />
+    </div>
+  );
+}
+
+function SidebarCollapseControl({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => void }) {
+  const label = collapsed ? '展开边栏' : '收起边栏';
+  return (
+    <SidebarFooter className="mt-auto shrink-0 border-t border-[#e5e6eb] p-[12px] group-data-[collapsible=icon]:items-center">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={onToggle}
+            title={label}
+            aria-label={label}
+            className="flex h-[32px] w-full items-center justify-center rounded-[8px] text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:w-[32px]"
+          >
+            <IconHeaderCollapse className={cn('size-[16px]!', collapsed && '-rotate-180')} />
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="right" align="center">{label}</TooltipContent>
+      </Tooltip>
+    </SidebarFooter>
+  );
+}
 
 function CardNavButton({
   item,
@@ -322,38 +354,18 @@ function CollapsedSidebar({
   scopeAgents,
   selectedAgentId,
   onSelectAgent,
-  onToggle,
 }: Pick<
   AppSidebarManagementProps,
   'selected' | 'onNavigate' | 'sidebarAgent' | 'scopeAgents' | 'selectedAgentId' | 'onSelectAgent'
-> & { onToggle: () => void }) {
+>) {
   const nameLabel = sidebarAgent
     ? sidebarAgent.is_overall
       ? '未选择'
       : employeeDisplayNameWithCreator(sidebarAgent)
     : '未选择';
   return (
-    <div className="flex h-full w-(--sidebar-width-icon) shrink-0 flex-col items-center gap-[32px] px-[16px] py-[10px]">
-      <div className="flex w-full flex-col items-center gap-[10px]">
-        <span className="text-[12px] font-semibold leading-none text-[#1f2329]">管理端</span>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              onClick={onToggle}
-              aria-label="展开边栏"
-              className="flex size-[16px] items-center justify-center text-sidebar-foreground transition-colors hover:text-sidebar-accent-foreground"
-            >
-              <IconHeaderCollapse className="size-[16px]! -rotate-90" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="right" align="center">
-            展开边栏
-          </TooltipContent>
-        </Tooltip>
-      </div>
-
-      <div className="flex min-h-0 w-full flex-1 flex-col items-center justify-between">
+    <div className="flex min-h-0 min-w-0 flex-1 w-(--sidebar-width-icon) shrink-0 flex-col items-center px-[16px] py-[10px]">
+      <div className="flex min-h-0 w-full flex-1 flex-col items-center">
         <div className="flex w-[38px] flex-col items-center gap-[8px] rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-[2px] pt-[6px] pb-[8px]">
           <CollapsedAgentSwitcher
             sidebarAgent={sidebarAgent}
@@ -410,6 +422,7 @@ function ManagementSidebar({
   if (brandCollapsed) {
     return (
       <Sidebar collapsible="icon" className={SIDEBAR_SHELL_CLASS}>
+        <SidebarBrand collapsed />
         <CollapsedSidebar
           selected={selected}
           onNavigate={onNavigate}
@@ -417,8 +430,8 @@ function ManagementSidebar({
           scopeAgents={scopeAgents}
           selectedAgentId={selectedAgentId}
           onSelectAgent={onSelectAgent}
-          onToggle={toggleSidebar}
         />
+        <SidebarCollapseControl collapsed onToggle={toggleSidebar} />
       </Sidebar>
     );
   }
@@ -426,23 +439,7 @@ function ManagementSidebar({
   return (
     <Sidebar collapsible="icon" className={SIDEBAR_SHELL_CLASS}>
       <div className="flex h-full w-(--sidebar-width) shrink-0 flex-col">
-      <SidebarHeader className="gap-[24px] px-[20px] pt-[10px] group-data-[collapsible=icon]:px-[20px]">
-        <div className="flex items-center justify-between">
-          <span className="text-[16px] font-semibold leading-none text-[#1f2329]">管理端</span>
-          {!brandCollapsed && (
-            <button
-              type="button"
-              onClick={toggleSidebar}
-              title="收起边栏"
-              aria-label="收起边栏"
-              className="flex size-[28px] shrink-0 items-center justify-center rounded-[8px] text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-            >
-              <IconHeaderCollapse className="size-[14px]! -rotate-90" />
-            </button>
-          )}
-        </div>
-
-      </SidebarHeader>
+      <SidebarBrand collapsed={false} />
 
       <SidebarContent className="px-[20px] group-data-[collapsible=icon]:px-[20px]">
         <div
@@ -476,6 +473,7 @@ function ManagementSidebar({
           </div>
         </div>
       </SidebarContent>
+      <SidebarCollapseControl collapsed={false} onToggle={toggleSidebar} />
       </div>
     </Sidebar>
   );
@@ -771,32 +769,12 @@ function CollapsedChatSidebar({
   galleryActive = false,
   handoffCount = 0,
   onOpenHandoffs,
-  onToggle,
 }: Pick<
   AppSidebarChatProps,
   'sessions' | 'sessionsLoading' | 'agents' | 'activeSessionId' | 'sessionFilter' | 'onSessionFilterChange' | 'sessionFilterOptions' | 'isSessionUnread' | 'onOpenSession' | 'onNewConversation' | 'onOpenGallery' | 'galleryActive' | 'handoffCount' | 'onOpenHandoffs'
-> & { onToggle: () => void }) {
+>) {
   return (
-    <div className="flex h-full w-(--sidebar-width-icon) shrink-0 flex-col items-center gap-[32px] px-[20px] py-[10px]">
-      <div className="flex w-full flex-col items-center gap-[10px]">
-        <span className="text-[12px] font-semibold leading-none text-[#1f2329]">对话端</span>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              onClick={onToggle}
-              aria-label="展开边栏"
-              className="flex size-[16px] items-center justify-center text-sidebar-foreground transition-colors hover:text-sidebar-accent-foreground"
-            >
-              <IconHeaderCollapse className="size-[16px]! -rotate-90" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="right" align="center">
-            展开边栏
-          </TooltipContent>
-        </Tooltip>
-      </div>
-
+    <div className="flex min-h-0 min-w-0 flex-1 w-(--sidebar-width-icon) shrink-0 flex-col items-center gap-[32px] px-[20px] py-[10px]">
       <div className="flex min-h-0 w-full flex-1 flex-col items-center gap-[16px]">
         <Tooltip>
           <TooltipTrigger asChild>
@@ -922,6 +900,7 @@ function ChatSidebarVariant({
   if (collapsed) {
     return (
       <Sidebar collapsible="icon" className={SIDEBAR_SHELL_CLASS}>
+        <SidebarBrand collapsed />
         <CollapsedChatSidebar
           sessions={sessions}
           sessionsLoading={showSkeleton}
@@ -937,8 +916,8 @@ function ChatSidebarVariant({
           galleryActive={galleryActive}
           handoffCount={handoffCount}
           onOpenHandoffs={onOpenHandoffs}
-          onToggle={toggleSidebar}
         />
+        <SidebarCollapseControl collapsed onToggle={toggleSidebar} />
       </Sidebar>
     );
   }
@@ -946,19 +925,8 @@ function ChatSidebarVariant({
   return (
     <Sidebar collapsible="icon" className={SIDEBAR_SHELL_CLASS}>
       <div className="flex h-full w-(--sidebar-width) shrink-0 flex-col">
-        <SidebarHeader className="gap-[24px] px-[20px] pt-[10px]">
-          <div className="flex items-center justify-between">
-            <span className="text-[16px] font-semibold leading-none text-[#1f2329]">对话端</span>
-            <button
-              type="button"
-              onClick={toggleSidebar}
-              title="收起边栏"
-              aria-label="收起边栏"
-              className="flex size-[28px] shrink-0 items-center justify-center rounded-[8px] text-sidebar-foreground transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-            >
-              <IconHeaderCollapse className="size-[14px]! -rotate-90" />
-            </button>
-          </div>
+        <SidebarBrand collapsed={false} />
+        <SidebarHeader className="gap-[24px] px-[20px] pt-[16px]">
 
           <div className="flex flex-col gap-[16px]">
             <button
@@ -1023,6 +991,7 @@ function ChatSidebarVariant({
             )}
           </div>
         </SidebarContent>
+        <SidebarCollapseControl collapsed={false} onToggle={toggleSidebar} />
       </div>
     </Sidebar>
   );
