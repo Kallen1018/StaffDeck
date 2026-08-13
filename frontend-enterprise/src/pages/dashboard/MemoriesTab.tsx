@@ -511,6 +511,13 @@ function groupMemories(rows: MemoryRead[]): MemoryUserGroup[] {
         (a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
       );
       const kinds = Array.from(new Set(sorted.map((item) => item.kind))).sort();
+      const summaryRow = sorted.find((item) => item.kind === 'summary');
+      const latestText = (sorted[0]?.content || '').replace(/\s+/g, ' ').trim();
+      const preview = summaryRow
+        ? summaryRow.content.replace(/\s+/g, ' ').trim()
+        : latestText.length > 120
+          ? `${latestText.slice(0, 120)}…`
+          : latestText;
       return {
         key,
         username: sorted[0]?.username,
@@ -518,10 +525,7 @@ function groupMemories(rows: MemoryRead[]): MemoryUserGroup[] {
         memories: sorted,
         kinds,
         latest_at: sorted[0]?.updated_at,
-        preview: sorted
-          .map((item) => item.content.replace(/\s+/g, ' ').trim())
-          .filter(Boolean)
-          .join(' / '),
+        preview,
       };
     })
     .sort((a, b) => new Date(b.latest_at).getTime() - new Date(a.latest_at).getTime());

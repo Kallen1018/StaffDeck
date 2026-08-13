@@ -240,6 +240,7 @@ type SkillDirectoryEntry = SkillFileSystemEntry & {
 const PHASE_LABELS: Record<string, string> = {
   skill_loaded: '加载技能',
   planning: '生成执行方案',
+  still_generating: '生成执行方案中',
   plan_created: '生成代码',
   attempt_started: '开始运行',
   running_code: '运行代码',

@@ -164,6 +164,64 @@ select,
   }
 }
 
+.sd1-trace-icon-running {
+  animation: trace-icon-pulse 1.3s ease-in-out infinite;
+}
+
+.sd1-trace-waiting {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--thinking-base);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.sd1-trace-waiting-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.sd1-trace-waiting-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background-color: var(--thinking-base);
+  animation: trace-waiting-dot 1.2s ease-in-out infinite;
+}
+
+.sd1-trace-waiting-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.sd1-trace-waiting-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+@keyframes trace-icon-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes trace-waiting-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
 @keyframes trace-text-flow {
   0%,
   4% {

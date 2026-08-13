@@ -29,6 +29,18 @@ import type { AgentProfileRead } from '../types';
 
 const ENTERPRISE_AGENT_STORAGE_KEY = 'ultrarag_enterprise_agent_scope';
 
+// 置顶到员工列表第一排的数字员工（按展示顺序）。
+const PINNED_EMPLOYEE_AGENT_IDS = [
+  'agent_deb756d0319f4aef', // 王工
+  'agent_44816161cd604bce', // 张美丽
+  'agent_adcd6ca89f4f4fdd', // 郭经理
+];
+
+function pinnedEmployeeOrder(agentId: string): number {
+  const index = PINNED_EMPLOYEE_AGENT_IDS.indexOf(agentId);
+  return index === -1 ? PINNED_EMPLOYEE_AGENT_IDS.length : index;
+}
+
 export default function AgentsPage({
   currentUser,
   isAdmin = false,
@@ -81,7 +93,12 @@ export default function AgentsPage({
   }, []);
 
   const employees = useMemo(
-    () => agents.filter((item) => !item.is_overall && canManageEmployeeAgent(item, currentUser)),
+    () => agents
+      .filter((item) => !item.is_overall && canManageEmployeeAgent(item, currentUser))
+      .sort(
+        (a, b) =>
+          pinnedEmployeeOrder(a.id) - pinnedEmployeeOrder(b.id),
+      ),
     [agents, currentUser],
   );
   const offlineEmployees = employees.filter((item) => item.status !== 'active');

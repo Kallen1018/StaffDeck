@@ -118,7 +118,12 @@ export const CHAT_TRACE_LINE_CONTENT_CLASS = 'grid grid-cols-[minmax(0,1fr)] min
 export const CHAT_TRACE_LINE_TEXT_CLASS = 'text-[13px] leading-[1.5] text-[#464c5e] wrap-anywhere';
 export const CHAT_TRACE_FLOW_TEXT_CLASS = 'sd1-trace-flow-text';
 export const CHAT_TRACE_LINE_TEXT_FAILED_CLASS = 'text-[#d20b0b]';
+export const CHAT_TRACE_ICON_RUNNING_CLASS = 'sd1-trace-icon-running';
 export const CHAT_TRACE_LINE_DETAIL_CLASS = 'text-[12px] leading-[1.5] text-[#858b9c] wrap-anywhere';
+export const CHAT_TRACE_WAITING_CLASS = 'sd1-trace-waiting';
+export const CHAT_TRACE_WAITING_DOTS_CLASS = 'sd1-trace-waiting-dots';
+export const CHAT_TRACE_WAITING_DOT_CLASS = 'sd1-trace-waiting-dot';
+export const CHAT_TRACE_WAITING_TEXT_CLASS = 'sd1-trace-waiting-text';
 export const CHAT_TRACE_CODE_SUMMARY_CLASS =
   'cursor-pointer text-[12px] font-medium text-[#757f9c] hover:text-[#18181a]';
 export const CHAT_TRACE_CODE_DETAILS_CLASS = 'block min-w-0 max-w-full overflow-hidden';

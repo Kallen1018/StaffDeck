@@ -81,6 +81,25 @@ import {
 } from '../employee';
 import { useClientPagination } from '../hooks/useClientPagination';
 import { renderMarkdownBlocks } from './chat/chatHelpers';
+import {
+  buildGraphHasDeeperLayerCypher,
+  buildGraphLayerNodesCypher,
+  buildGraphLayerRelationshipsCypher,
+  buildGraphNodeOptionsCypher,
+  DEFAULT_GRAPH_DEPTH,
+  defaultGraphChildNode,
+  graphNodeAnchorKey,
+  graphNodeOptionLabel,
+  graphQueryItemLabel,
+  GRAPH_CATALOG_ENDPOINTS,
+  GRAPH_NODE_PAGE_SIZE,
+  GRAPH_QUERY_TYPES,
+  GRAPH_REL_PAGE_SIZE,
+  type GraphNode,
+  type GraphQueryType,
+  type GraphRelationship,
+} from './knowledgeGraph';
+import { GraphCanvas } from './knowledgeGraphCanvas';
 import { getDateLocale } from '@/i18n';
 import type {
   CapabilityScope,
@@ -2106,6 +2125,9 @@ type KnowledgeDetailView = 'document' | 'sections' | 'wiki' | 'evidence';
 type KnowledgeContentView = 'sections' | 'wiki' | 'evidence';
 const STRUCTURE_PREVIEW_LIMIT = 8;
 const OKF_PREVIEW_LIMIT = 8;
+const GRAPH_CONCEPT_SCREEN_SIZE = 6;
+const DEFAULT_GRAPH_QUERY_TYPE: GraphQueryType = 'labels';
+const DEFAULT_GRAPH_QUERY_VALUE = 'PROD_KG';
 
 type WikiIndexGroup = {
   key: string;
@@ -2145,7 +2167,16 @@ function 目录索引Overview({
   const [detailView, setDetailView] = useState<KnowledgeDetailView | null>(null);
   const [detailFocusKey, setDetailFocusKey] = useState<string | null>(null);
   const [activeContentView, setActiveContentView] = useState<KnowledgeContentView>('evidence');
-  const [wikiPresentation, setWikiPresentation] = useState<'graph' | 'cards'>('graph');
+   const [wikiPresentation, setWikiPresentation] = useState<'graph' | 'cards'>('graph');
+  const [graphQueryType, setGraphQueryType] = useState<GraphQueryType>(DEFAULT_GRAPH_QUERY_TYPE);
+  const [graphQueryValue, setGraphQueryValue] = useState(DEFAULT_GRAPH_QUERY_VALUE);
+  const [graphCatalogOptions, setGraphCatalogOptions] = useState<string[]>([]);
+  const [graphCatalogLoading, setGraphCatalogLoading] = useState(false);
+  const [graphCatalogError, setGraphCatalogError] = useState<string | null>(null);
+  const [graphNodes, setGraphNodes] = useState<GraphNode[]>([]);
+  const [graphNodesLoading, setGraphNodesLoading] = useState(false);
+  const [selectedGraphNode, setSelectedGraphNode] = useState<GraphNode | null>(null);
+  const [conceptVisibleCount, setConceptVisibleCount] = useState(GRAPH_CONCEPT_SCREEN_SIZE);
   const metadata = document.metadata || {};
   const documentCard = isRecord(metadata.document_card) ? metadata.document_card : {};
   const wikiStructureConcepts = useMemo(() => sortWikiConcepts(okfConcepts), [okfConcepts]);
@@ -2188,6 +2219,84 @@ function 目录索引Overview({
     }, 120);
     return () => window.clearTimeout(timer);
   }, [detailView, detailFocusKey]);
+
+  useEffect(() => {
+    setGraphQueryType(DEFAULT_GRAPH_QUERY_TYPE);
+    setGraphQueryValue(DEFAULT_GRAPH_QUERY_VALUE);
+    setSelectedGraphNode(null);
+    setConceptVisibleCount(GRAPH_CONCEPT_SCREEN_SIZE);
+    setGraphCatalogError(null);
+  }, [document.id]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadCatalog() {
+      setGraphCatalogLoading(true);
+      setGraphCatalogError(null);
+      try {
+        const endpoint = GRAPH_CATALOG_ENDPOINTS[graphQueryType];
+        const options = await api.get<string[]>(
+          `/api/enterprise/knowledge${endpoint}?tenant_id=${TENANT_ID}`,
+        );
+        if (cancelled) return;
+        const list = Array.isArray(options) ? options : [];
+        setGraphCatalogOptions(list);
+        setGraphCatalogError(null);
+        setGraphQueryValue((current) => {
+          if (list.includes(current)) return current;
+          return list[0] ?? (graphQueryType === 'labels' ? DEFAULT_GRAPH_QUERY_VALUE : '');
+        });
+      } catch (err) {
+        if (!cancelled) {
+          setGraphCatalogOptions([]);
+          const status = err instanceof ApiError ? `（HTTP ${err.status}）` : '';
+          setGraphCatalogError(`选项加载失败${status}，请确认后端已重启并检查 Neo4j 配置`);
+        }
+      } finally {
+        if (!cancelled) setGraphCatalogLoading(false);
+      }
+    }
+    void loadCatalog();
+    return () => {
+      cancelled = true;
+    };
+  }, [graphQueryType]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadGraphNodes() {
+      setGraphNodesLoading(true);
+      try {
+        if (!graphQueryValue.trim()) {
+          setGraphNodes([]);
+          setSelectedGraphNode(null);
+          return;
+        }
+        const cypher = buildGraphNodeOptionsCypher(graphQueryType, graphQueryValue);
+        const body = await api.post<{ nodes: GraphNode[]; relationships: GraphRelationship[] }>(
+          `/api/enterprise/knowledge/neo4j/query?tenant_id=${TENANT_ID}`,
+          { query: cypher },
+        );
+        if (cancelled) return;
+        const list = Array.isArray(body.nodes) ? body.nodes : [];
+        setGraphNodes(list);
+        setSelectedGraphNode((current) => {
+          if (current && list.some((node) => graphNodeAnchorKey(node) === graphNodeAnchorKey(current))) {
+            return current;
+          }
+          return defaultGraphChildNode(list, document.id);
+        });
+      } catch {
+        if (!cancelled) setGraphNodes([]);
+      } finally {
+        if (!cancelled) setGraphNodesLoading(false);
+      }
+    }
+    void loadGraphNodes();
+    return () => {
+      cancelled = true;
+    };
+  }, [graphQueryType, graphQueryValue, document.id]);
 
   const overviewContent: Record<
     KnowledgeContentView,
@@ -2237,17 +2346,95 @@ function 目录索引Overview({
     <div className="knowledge-pageindex">
       <div className="knowledge-pageindex-card">
         <div className="knowledge-document-card-body">
-          <span className="text-[13px] text-[#858b9c]">文档卡片</span>
+          <div className="flex items-center justify-between gap-[8px]">
+            <span className="text-[13px] text-[#858b9c]">推理图谱</span>
+            <UIButton
+              variant="outline"
+              className={OUTLINE_ACTION_BUTTON_SM_CLASS}
+              onClick={() => void setDetailView('wiki')}
+            >
+              查看图谱详情
+            </UIButton>
+          </div>
+          <div className="mt-[6px] mb-[12px] rounded-[14px] border border-[#d7e4ff] bg-[#f7fbff] p-[12px]">
+            <div>
+              <strong className="text-[14px]">关系图谱</strong>
+              <div className="text-[12px] text-[#858b9c]">从图知识库加载关系图谱，便于推理与关联分析。</div>
+            </div>
+            <div className="mt-[10px] grid gap-[8px] sm:grid-cols-[repeat(3,minmax(0,1fr))]">
+              <div className="rounded-[12px] border border-[#e6efff] bg-white p-[10px]">
+                <span className="text-[12px] text-[#858b9c]">查询类型</span>
+                <select
+                  value={graphQueryType}
+                  onChange={(event) => setGraphQueryType(event.target.value as GraphQueryType)}
+                  className="mt-[4px] w-full rounded-[8px] border border-[#d9dbe5] bg-white px-[10px] py-[7px] text-[13px] text-[#24292f]"
+                >
+                  {GRAPH_QUERY_TYPES.map((item) => (
+                    <option key={item.value} value={item.value}>{item.label}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="rounded-[12px] border border-[#e6efff] bg-white p-[10px]">
+                <span className="text-[12px] text-[#858b9c]">{graphQueryItemLabel(graphQueryType)}</span>
+                <select
+                  value={graphQueryValue}
+                  onChange={(event) => setGraphQueryValue(event.target.value)}
+                  className="mt-[4px] w-full rounded-[8px] border border-[#d9dbe5] bg-white px-[10px] py-[7px] text-[13px] text-[#24292f]"
+                >
+                  {graphQueryValue && !graphCatalogOptions.includes(graphQueryValue) ? (
+                    <option value={graphQueryValue}>{graphQueryValue}</option>
+                  ) : null}
+                  {graphCatalogOptions.map((item) => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+                {graphCatalogLoading ? (
+                  <div className="mt-[4px] text-[11px] text-[#858b9c]">加载选项中…</div>
+                ) : null}
+                {graphCatalogError ? (
+                  <div className="mt-[4px] text-[11px] text-[#a33]">{graphCatalogError}</div>
+                ) : null}
+              </div>
+              <div className="rounded-[12px] border border-[#e6efff] bg-white p-[10px]">
+                <span className="text-[12px] text-[#858b9c]">子节点</span>
+                <select
+                  value={selectedGraphNode ? graphNodeAnchorKey(selectedGraphNode) : ''}
+                  onChange={(event) => {
+                    const next = graphNodes.find((node) => graphNodeAnchorKey(node) === event.target.value);
+                    if (next) setSelectedGraphNode(next);
+                  }}
+                  className="mt-[4px] w-full rounded-[8px] border border-[#d9dbe5] bg-white px-[10px] py-[7px] text-[13px] text-[#24292f]"
+                >
+                  {graphNodes.length === 0 && !graphNodesLoading ? (
+                    <option value="">暂无子节点</option>
+                  ) : null}
+                  {graphNodes.map((node) => (
+                    <option key={graphNodeAnchorKey(node)} value={graphNodeAnchorKey(node)}>
+                      {graphNodeOptionLabel(node)}
+                    </option>
+                  ))}
+                </select>
+                {graphNodesLoading ? (
+                  <div className="mt-[4px] text-[11px] text-[#858b9c]">加载选项中…</div>
+                ) : null}
+              </div>
+            </div>
+          </div>
+          <div className="mt-[16px] flex items-center justify-between gap-[8px] border-t border-[#eceef1] pt-[14px]">
+            <span className="text-[13px] text-[#858b9c]">文档卡片</span>
+            <UIButton
+              variant="outline"
+              className={OUTLINE_ACTION_BUTTON_SM_CLASS}
+              onClick={() => openDetail('document')}
+            >
+              <EditOutlined />
+              详情
+            </UIButton>
+          </div>
           <h5 className="my-[4px] text-[15px] font-semibold text-foreground">{documentTitle}</h5>
           <div className="knowledge-document-card-markdown is-preview">
             <MarkdownPreview markdown={documentSummary} />
           </div>
-        </div>
-        <div className="knowledge-pageindex-actions">
-          <UIButton variant="outline" className={OUTLINE_ACTION_BUTTON_SM_CLASS} onClick={() => openDetail('document')}>
-            <EditOutlined />
-            详情
-          </UIButton>
         </div>
         <div className="knowledge-document-meta">
           <button type="button" className="knowledge-stat-pill" onClick={() => openDetail('document')}>
@@ -2390,8 +2577,14 @@ function 目录索引Overview({
       <KDialog
         open={Boolean(detailView)}
         title={knowledgeDetailTitle(detailView)}
-        width={detailView === 'sections' ? 'min(1240px, calc(100vw - 56px))' : 920}
-        className={`knowledge-detail-modal${detailView === 'sections' ? ' knowledge-detail-modal-sections' : ''}`}
+        width={
+          detailView === 'sections'
+            ? 'min(1240px, calc(100vw - 56px))'
+            : detailView === 'wiki'
+              ? 'min(1440px, calc(100vw - 48px))'
+              : 920
+        }
+        className={`knowledge-detail-modal${detailView === 'sections' ? ' knowledge-detail-modal-sections' : ''}${detailView === 'wiki' ? ' knowledge-detail-modal-wiki' : ''}`}
         onClose={() => setDetailView(null)}
       >
         {detailView === 'document' && (
@@ -2526,55 +2719,80 @@ function 目录索引Overview({
         )}
 
         {detailView === 'wiki' && (
-          <div className="knowledge-concept-list">
-            {okfConcepts.length === 0 ? (
-              <EmptyState description="暂无知识图谱" />
-            ) : (
-              okfConcepts.map((concept) => (
-                <div
-                  className="knowledge-concept-card knowledge-detail-target"
-                  key={concept.id}
-                  data-detail-key={concept.id}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => onViewConcept(concept)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      onViewConcept(concept);
-                    }
-                  }}
-                >
-                  <div className="knowledge-concept-card-head">
-                    <div>
-                      <div className="flex flex-wrap items-center gap-[8px]">
-                        <KTag color={conceptTypeColor(concept.concept_type)}>{conceptTypeLabel(concept.concept_type)}</KTag>
-                        {statusTag(concept.status)}
+          <div className="grid h-full min-h-[560px] gap-[16px] lg:grid-cols-[minmax(0,1fr)_minmax(340px,400px)]">
+            <div className="flex min-h-0 flex-col overflow-hidden rounded-[12px] border border-[#eceef1] bg-white">
+              <LogicReasoning
+                nodeOptions={graphNodes}
+                selectedNode={selectedGraphNode}
+                optionsLoading={graphNodesLoading}
+                queryType={graphQueryType}
+                queryValue={graphQueryValue}
+                onSelectNode={setSelectedGraphNode}
+              />
+            </div>
+            <div className="min-h-0 overflow-y-auto pr-[2px]">
+              <div className="knowledge-concept-list">
+                {okfConcepts.length === 0 ? (
+                  <EmptyState description="暂无知识图谱" />
+                ) : (
+                  <>
+                    {okfConcepts.slice(0, conceptVisibleCount).map((concept) => (
+                      <div
+                        className="knowledge-concept-card knowledge-detail-target"
+                        key={concept.id}
+                        data-detail-key={concept.id}
+                        role="button"
+                        tabIndex={0}
+                        onClick={() => onViewConcept(concept)}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            onViewConcept(concept);
+                          }
+                        }}
+                      >
+                        <div className="knowledge-concept-card-head">
+                          <div>
+                            <div className="flex flex-wrap items-center gap-[8px]">
+                              <KTag color={conceptTypeColor(concept.concept_type)}>{conceptTypeLabel(concept.concept_type)}</KTag>
+                              {statusTag(concept.status)}
+                            </div>
+                            <h5 className="mt-[6px] mb-0 text-[15px] font-semibold text-foreground">{concept.title || concept.concept_id}</h5>
+                          </div>
+                          <UIButton
+                            variant="outline"
+                            size="sm"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onEditConcept(concept);
+                            }}
+                          >
+                            <EditOutlined />
+                            编辑
+                          </UIButton>
+                        </div>
+                        <p className="my-[6px] text-[13px] text-[#858b9c]">{concept.description || conceptSummary(concept)}</p>
+                        <div className="flex flex-wrap items-center gap-[6px]">
+                          <KTag>{concept.concept_id}</KTag>
+                          <KTag>{concept.links.length} 个链接</KTag>
+                          <KTag>{concept.citations.length} 个引用</KTag>
+                          {concept.document_id ? <KTag>来源文档 {concept.document_id}</KTag> : null}
+                        </div>
                       </div>
-                      <h5 className="mt-[6px] mb-0 text-[15px] font-semibold text-foreground">{concept.title || concept.concept_id}</h5>
-                    </div>
-                    <UIButton
-                      variant="outline"
-                      size="sm"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        onEditConcept(concept);
-                      }}
-                    >
-                      <EditOutlined />
-                      编辑
-                    </UIButton>
-                  </div>
-                  <p className="my-[6px] text-[13px] text-[#858b9c]">{concept.description || conceptSummary(concept)}</p>
-                  <div className="flex flex-wrap items-center gap-[6px]">
-                    <KTag>{concept.concept_id}</KTag>
-                    <KTag>{concept.links.length} 个链接</KTag>
-                    <KTag>{concept.citations.length} 个引用</KTag>
-                    {concept.document_id ? <KTag>来源文档 {concept.document_id}</KTag> : null}
-                  </div>
-                </div>
-              ))
-            )}
+                    ))}
+                    {conceptVisibleCount < okfConcepts.length ? (
+                      <button
+                        type="button"
+                        className="w-full rounded-[10px] border border-[#e3e7f1] bg-white py-[8px] text-[12px] text-[#1a71ff] transition-colors hover:text-[#4a8dff]"
+                        onClick={() => setConceptVisibleCount((count) => count + GRAPH_CONCEPT_SCREEN_SIZE)}
+                      >
+                        加载更多
+                      </button>
+                    ) : null}
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         )}
 
@@ -2670,6 +2888,152 @@ function WikiConceptViewer({ concept }: { concept: KnowledgeConceptRead }) {
           )}
         </section>
       )}
+    </div>
+  );
+}
+
+function LogicReasoning({
+  nodeOptions,
+  selectedNode,
+  optionsLoading,
+  queryType,
+  queryValue,
+  onSelectNode,
+}: {
+  nodeOptions: GraphNode[];
+  selectedNode: GraphNode | null;
+  optionsLoading: boolean;
+  queryType: GraphQueryType;
+  queryValue: string;
+  onSelectNode: (node: GraphNode) => void;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [displayNodes, setDisplayNodes] = useState<GraphNode[]>([]);
+  const [relationships, setRelationships] = useState<GraphRelationship[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [depth, setDepth] = useState(DEFAULT_GRAPH_DEPTH);
+  const [nodeLimit, setNodeLimit] = useState(GRAPH_NODE_PAGE_SIZE);
+  const [relLimit, setRelLimit] = useState(GRAPH_REL_PAGE_SIZE);
+  const [hasMoreNodes, setHasMoreNodes] = useState(false);
+  const [hasMoreRelationships, setHasMoreRelationships] = useState(false);
+  const [hasMoreLayers, setHasMoreLayers] = useState(false);
+  const requestIdRef = useRef(0);
+
+  useEffect(() => {
+    setDepth(DEFAULT_GRAPH_DEPTH);
+    setNodeLimit(GRAPH_NODE_PAGE_SIZE);
+    setRelLimit(GRAPH_REL_PAGE_SIZE);
+    void loadGraph(DEFAULT_GRAPH_DEPTH, GRAPH_NODE_PAGE_SIZE, GRAPH_REL_PAGE_SIZE);
+  }, [selectedNode, queryType, queryValue]);
+
+  useEffect(() => {
+    void loadGraph(depth, nodeLimit, relLimit);
+  }, [depth, nodeLimit, relLimit]);
+
+  async function loadGraph(nextDepth: number, nextNodeLimit: number, nextRelLimit: number) {
+    const requestId = ++requestIdRef.current;
+    setError(null);
+    setLoading(true);
+    try {
+      if (!selectedNode) {
+        setDisplayNodes([]);
+        setRelationships([]);
+        setHasMoreNodes(false);
+        setHasMoreRelationships(false);
+        setHasMoreLayers(false);
+        return;
+      }
+      const nodeCypher = buildGraphLayerNodesCypher(selectedNode, nextDepth, nextNodeLimit + 1);
+      const relCypher = buildGraphLayerRelationshipsCypher(
+        selectedNode,
+        nextDepth,
+        nextRelLimit + 1,
+      );
+      const probeCypher = buildGraphHasDeeperLayerCypher(selectedNode, nextDepth);
+      const query = (cypher: string) =>
+        api.post<{ nodes: GraphNode[]; relationships: GraphRelationship[] }>(
+          `/api/enterprise/knowledge/neo4j/query?tenant_id=${TENANT_ID}`,
+          { query: cypher },
+        );
+      const [nodeBody, relBody, probeBody] = await Promise.all([
+        query(nodeCypher),
+        query(relCypher),
+        query(probeCypher),
+      ]);
+      if (requestId !== requestIdRef.current) return;
+      const nodes = nodeBody.nodes || [];
+      const rels = relBody.relationships || [];
+      setDisplayNodes(nodes.slice(0, nextNodeLimit));
+      setRelationships(rels.slice(0, nextRelLimit));
+      setHasMoreNodes(nodes.length > nextNodeLimit);
+      setHasMoreRelationships(rels.length > nextRelLimit);
+      setHasMoreLayers((probeBody.nodes?.length ?? 0) > 0);
+    } catch (err) {
+      if (requestId !== requestIdRef.current) return;
+      setError(err instanceof Error ? err.message : String(err));
+      setHasMoreNodes(false);
+      setHasMoreRelationships(false);
+      setHasMoreLayers(false);
+    } finally {
+      if (requestId === requestIdRef.current) {
+        setLoading(false);
+      }
+    }
+  }
+
+  return (
+    <div className="flex h-full min-h-0 flex-col gap-[10px] p-[14px]">
+      <div className="flex flex-col gap-[10px] sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <strong className="text-[15px]">逻辑推理</strong>
+          <div className="text-[12px] text-[#858b9c]">从 Neo4j 加载关联图谱并展示节点/关系摘要</div>
+        </div>
+        <div className="flex flex-wrap items-end gap-[10px]">
+          <div className="flex flex-col gap-[4px]">
+            <label className="text-[12px] text-[#5b6878]">子节点 查看</label>
+            <select
+              value={selectedNode ? graphNodeAnchorKey(selectedNode) : ''}
+              onChange={(event) => {
+                const next = nodeOptions.find((node) => graphNodeAnchorKey(node) === event.target.value);
+                if (next) onSelectNode(next);
+              }}
+              className="min-w-[240px] rounded-[8px] border border-[#d9dbe5] bg-white px-[10px] py-[8px] text-[13px] text-[#24292f]"
+            >
+              {nodeOptions.length === 0 && !optionsLoading ? (
+                <option value="">暂无子节点</option>
+              ) : null}
+              {nodeOptions.map((node) => (
+                <option key={graphNodeAnchorKey(node)} value={graphNodeAnchorKey(node)}>
+                  {graphNodeOptionLabel(node)}
+                </option>
+              ))}
+            </select>
+            {optionsLoading ? (
+              <div className="mt-[4px] text-[11px] text-[#858b9c]">加载选项中…</div>
+            ) : null}
+          </div>
+        </div>
+      </div>
+      {error ? (
+        <div className="rounded-[10px] border border-[#ffe6e6] bg-[#fff6f6] p-[12px] text-[13px] text-[#a33]">{error}</div>
+      ) : null}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-[14px] border border-[#eceef1] bg-white p-[12px]">
+        {loading ? (
+          <div className="text-[13px] text-[#5b6878]">正在加载图谱…</div>
+        ) : (
+          <GraphCanvas
+            nodes={displayNodes}
+            relationships={relationships}
+            hasMoreNodes={hasMoreNodes}
+            hasMoreRelationships={hasMoreRelationships}
+            onLoadMoreNodes={() => setNodeLimit((current) => current + GRAPH_NODE_PAGE_SIZE)}
+            onLoadMoreRelationships={() => setRelLimit((current) => current + GRAPH_REL_PAGE_SIZE)}
+            depth={depth}
+            hasMoreLayers={hasMoreLayers}
+            onExpandDepth={() => setDepth((current) => current + 1)}
+          />
+        )}
+      </div>
     </div>
   );
 }

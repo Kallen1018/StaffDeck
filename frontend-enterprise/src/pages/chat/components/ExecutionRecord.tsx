@@ -21,6 +21,7 @@ import {
   CHAT_TRACE_DETAILS_CLASS,
   CHAT_TRACE_FLOW_TEXT_CLASS,
   CHAT_TRACE_ICON_CLASS,
+  CHAT_TRACE_ICON_RUNNING_CLASS,
   CHAT_TRACE_LINE_CLASS,
   CHAT_TRACE_LINE_CONTENT_CLASS,
   CHAT_TRACE_LINE_DETAIL_CLASS,
@@ -29,6 +30,10 @@ import {
   CHAT_TRACE_SUMMARY_CLASS,
   CHAT_TRACE_SUMMARY_FAILED_CLASS,
   CHAT_TRACE_SUMMARY_RUNNING_CLASS,
+  CHAT_TRACE_WAITING_CLASS,
+  CHAT_TRACE_WAITING_DOT_CLASS,
+  CHAT_TRACE_WAITING_DOTS_CLASS,
+  CHAT_TRACE_WAITING_TEXT_CLASS,
   CHAT_TRACE_WRAP_CLASS,
 } from '../chatPageStyles';
 import { traceLineIconName, traceSummaryIconName } from '../chatHelpers';
@@ -44,10 +49,10 @@ const COT_ICON_MAP: Record<CotTraceIconName, ComponentType<SVGProps<SVGSVGElemen
   tool: IconCotTool,
 };
 
-function CotTraceIcon({ name }: { name: CotTraceIconName }) {
+function CotTraceIcon({ name, className }: { name: CotTraceIconName; className?: string }) {
   const Icon = COT_ICON_MAP[name];
   return (
-    <span className={CHAT_TRACE_ICON_CLASS} aria-hidden="true">
+    <span className={cn(CHAT_TRACE_ICON_CLASS, className)} aria-hidden="true">
       <Icon />
     </span>
   );
@@ -69,6 +74,7 @@ export default function ExecutionRecord({
   onToggle,
 }: ExecutionRecordProps) {
   const { t } = useI18n();
+  const running = summary.state === 'running';
 
   return (
     <div className={CHAT_TRACE_WRAP_CLASS}>
@@ -81,8 +87,11 @@ export default function ExecutionRecord({
         )}
         onClick={() => onToggle(traceTurnId, expanded)}
       >
-        <CotTraceIcon name={traceSummaryIconName(summary)} />
-        <span className={cn(summary.state === 'running' && CHAT_TRACE_FLOW_TEXT_CLASS)}>{t(summary.text)}</span>
+        <CotTraceIcon
+          name={traceSummaryIconName(summary)}
+          className={running ? CHAT_TRACE_ICON_RUNNING_CLASS : undefined}
+        />
+        <span className={cn(running && CHAT_TRACE_FLOW_TEXT_CLASS)}>{t(summary.text)}</span>
         {details.length > 0 && (
           <MindStaffIcon
             name="arrow"
@@ -91,11 +100,14 @@ export default function ExecutionRecord({
           />
         )}
       </button>
-      {expanded && details.length > 0 && (
+      {expanded && (details.length > 0 || running) && (
         <div className={CHAT_TRACE_DETAILS_CLASS}>
           {details.map((line) => (
             <div key={line.id} className={CHAT_TRACE_LINE_CLASS}>
-              <CotTraceIcon name={traceLineIconName(line)} />
+              <CotTraceIcon
+                name={traceLineIconName(line)}
+                className={line.state === 'running' ? CHAT_TRACE_ICON_RUNNING_CLASS : undefined}
+              />
               <span className={CHAT_TRACE_LINE_CONTENT_CLASS}>
                 <span
                   className={cn(
@@ -122,6 +134,16 @@ export default function ExecutionRecord({
               </span>
             </div>
           ))}
+          {running && (
+            <div className={CHAT_TRACE_WAITING_CLASS} role="status">
+              <span className={CHAT_TRACE_WAITING_DOTS_CLASS}>
+                <span className={CHAT_TRACE_WAITING_DOT_CLASS} />
+                <span className={CHAT_TRACE_WAITING_DOT_CLASS} />
+                <span className={CHAT_TRACE_WAITING_DOT_CLASS} />
+              </span>
+              <span className={CHAT_TRACE_WAITING_TEXT_CLASS}>{t('处理中')}</span>
+            </div>
+          )}
         </div>
       )}
     </div>
