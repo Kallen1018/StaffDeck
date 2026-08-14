@@ -662,50 +662,55 @@ export default function ToolsPage({ currentUser, onLogout }: ToolPageProps = {})
 
   return (
     <div className="min-h-full box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]">
-      <AppHeader onLogout={onLogout} userName={currentUser?.username} title={pageTitle} />
-
-      <div className="mt-[20px] mb-[16px] flex items-center justify-end gap-[12px]">
-        <UIButton
-          variant="outline"
-          onClick={() => void load()}
-          disabled={loading}
-          className="h-[34px] gap-[4px] rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-[20px] text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6] hover:bg-white hover:text-[#18181a]"
-        >
-          <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
-          刷新
-        </UIButton>
-        {canOpenCreateMenu && (
-          <DropdownMenu>
-            <DropdownMenuTrigger data-guide-target="tools-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
-              <IconAdd className="size-[14px]" />
-              新增
-              <IconChevronDown className="size-[12px]" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
-              {canManageCurrentScope && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('blank')}>
-                  <IconAdd />
-                  新建空白工具
-                </DropdownMenuItem>
-              )}
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('plaza')}>
-                  <IconTool className="size-[14px]" />
-                  从广场复制
-                </DropdownMenuItem>
-              )}
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('employee')}>
-                  <FlaskConical />
-                  从数字员工复制
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <AppHeader
+        onLogout={onLogout}
+        userName={currentUser?.username}
+        title={pageTitle}
+        right={(
+          <div className="flex items-center gap-[12px]">
+            <UIButton
+              variant="outline"
+              onClick={() => void load()}
+              disabled={loading}
+              className="h-[34px] gap-[4px] rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-[20px] text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6] hover:bg-white hover:text-[#18181a]"
+            >
+              <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
+              刷新
+            </UIButton>
+            {canOpenCreateMenu && (
+              <DropdownMenu>
+                <DropdownMenuTrigger data-guide-target="tools-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
+                  <IconAdd className="size-[14px]" />
+                  新增
+                  <IconChevronDown className="size-[12px]" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
+                  {canManageCurrentScope && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('blank')}>
+                      <IconAdd />
+                      新建空白工具
+                    </DropdownMenuItem>
+                  )}
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('plaza')}>
+                      <IconTool className="size-[14px]" />
+                      从广场复制
+                    </DropdownMenuItem>
+                  )}
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('employee')}>
+                      <FlaskConical />
+                      从数字员工复制
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         )}
-      </div>
+      />
 
-      <div className="flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
+      <div className="mt-[20px] flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
         <div className="flex flex-wrap items-stretch gap-[20px]" aria-label="工具统计">
           <StatCard label="工具总数" value={stats.total} className="basis-[220px]" />
           <StatCard label="已启用" value={stats.enabled} tone="green" className="basis-[220px]" />

@@ -24,13 +24,13 @@ type AppTopHeaderProps = {
 const NAV_ITEMS = [
   { route: EnterpriseRoute.Platform, label: '数字广场', Icon: IconPlatform },
   { route: EnterpriseRoute.Agents, label: '我的数字员工', Icon: IconAgents },
-  { route: EnterpriseRoute.Channels, label: '渠道接入', Icon: IconGlobe },
+  { route: EnterpriseRoute.Models, label: '模型配置', Icon: IconModels },
 ] as const;
 
 const ADMIN_NAV_ITEMS = [
-  { route: EnterpriseRoute.Accounts, label: '账号管理', Icon: IconAccounts },
-  { route: EnterpriseRoute.Models, label: '模型配置', Icon: IconModels },
   { route: EnterpriseRoute.RuntimeSettings, label: '运行设置', Icon: IconSettings },
+  { route: EnterpriseRoute.Channels, label: '渠道接入', Icon: IconGlobe },
+  { route: EnterpriseRoute.Accounts, label: '账号管理', Icon: IconAccounts },
 ] as const;
 
 export default function AppTopHeader({

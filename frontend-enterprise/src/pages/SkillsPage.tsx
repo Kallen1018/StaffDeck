@@ -613,48 +613,53 @@ export default function SkillsPage({
 
   return (
     <div className="min-h-full box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]" aria-busy={loading}>
-      <AppHeader onLogout={onLogout} userName={currentUser?.username} title="SOP" />
-
-      <div className="mt-[20px] mb-[16px] flex items-center justify-end gap-[12px]">
-        <UIButton
-          variant="outline"
-          onClick={() => void load()}
-          disabled={loading}
-          className="h-[34px] gap-[4px] rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-[20px] text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6] hover:bg-white hover:text-[#18181a]"
-        >
-          <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
-          刷新
-        </UIButton>
-        {canManageCurrentScope && (
-          <DropdownMenu>
-            <DropdownMenuTrigger data-guide-target="sop-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
-              <IconAdd className="size-[14px]" />
-              新增
-              <IconChevronDown className="size-[12px]" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
-              <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => openCreate()}>
-                <IconAdd />
-                新建空白 SOP
-              </DropdownMenuItem>
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => void openImport('plaza')}>
-                  <Copy />
-                  从广场复制
-                </DropdownMenuItem>
-              )}
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => void openImport('employee')}>
-                  <Users />
-                  从数字员工复制
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <AppHeader
+        onLogout={onLogout}
+        userName={currentUser?.username}
+        title="SOP"
+        right={(
+          <div className="flex items-center gap-[12px]">
+            <UIButton
+              variant="outline"
+              onClick={() => void load()}
+              disabled={loading}
+              className="h-[34px] gap-[4px] rounded-[10px] border-[0.5px] border-[#e3e7f1] bg-white px-[20px] text-[12px] font-normal text-[#757f9c] hover:border-[#cbd3e6] hover:bg-white hover:text-[#18181a]"
+            >
+              <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
+              刷新
+            </UIButton>
+            {canManageCurrentScope && (
+              <DropdownMenu>
+                <DropdownMenuTrigger data-guide-target="sop-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
+                  <IconAdd className="size-[14px]" />
+                  新增
+                  <IconChevronDown className="size-[12px]" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
+                  <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => openCreate()}>
+                    <IconAdd />
+                    新建空白 SOP
+                  </DropdownMenuItem>
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => void openImport('plaza')}>
+                      <Copy />
+                      从广场复制
+                    </DropdownMenuItem>
+                  )}
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => void openImport('employee')}>
+                      <Users />
+                      从数字员工复制
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
         )}
-      </div>
+      />
 
-      <div className="flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
+      <div className="mt-[20px] flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
         <div className="flex flex-col gap-[18px]">
           <div className="flex items-center gap-[6px] px-[12px] text-[#757f9c]">
             <IconClipboard className="size-[14px] shrink-0" />

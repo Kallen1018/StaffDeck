@@ -1091,52 +1091,53 @@ export default function KnowledgeManagePage({ currentUser, onLogout }: Knowledge
         description={isOverallAgent
           ? '维护知识库广场中的知识库、知识图谱与检索调试。'
           : '维护当前数字员工的知识库、知识图谱与检索调试。'}
+        right={(
+          <div className="flex items-center gap-[12px]">
+            <UIButton
+              variant="outline"
+              onClick={() => void refresh()}
+              disabled={loading}
+              className={OUTLINE_ACTION_BUTTON_CLASS}
+            >
+              <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
+              刷新
+            </UIButton>
+            {canManageCurrentScope && (
+              <DropdownMenu>
+                <DropdownMenuTrigger data-guide-target="knowledge-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
+                  <IconAdd className="size-[14px]" />
+                  新增
+                  <IconChevronDown className="size-[12px]" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
+                  <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('blank')}>
+                    <FileAddOutlined />
+                    新建知识库
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('okf')}>
+                    <FileMarkdownOutlined />
+                    导入知识库备份包
+                  </DropdownMenuItem>
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('plaza')}>
+                      <DownloadOutlined />
+                      从广场复制
+                    </DropdownMenuItem>
+                  )}
+                  {!isOverallAgent && (
+                    <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('employee')}>
+                      <TeamOutlined />
+                      从数字员工复制
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+          </div>
+        )}
       />
 
-      <div className="mt-[20px] mb-[16px] flex flex-wrap items-center justify-end gap-[12px]">
-        <UIButton
-          variant="outline"
-          onClick={() => void refresh()}
-          disabled={loading}
-          className={OUTLINE_ACTION_BUTTON_CLASS}
-        >
-          <IconRefresh className={cn('size-[14px]', loading && 'animate-spin')} />
-          刷新
-        </UIButton>
-        {canManageCurrentScope && (
-          <DropdownMenu>
-            <DropdownMenuTrigger data-guide-target="knowledge-create" className="flex h-[34px] items-center gap-[4px] rounded-[10px] bg-[#2563EB] px-[20px] text-[12px] font-normal text-white outline-none transition-colors hover:bg-[#1D4ED8]">
-              <IconAdd className="size-[14px]" />
-              新增
-              <IconChevronDown className="size-[12px]" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className={MENU_CONTENT_CLASS}>
-              <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('blank')}>
-                <FileAddOutlined />
-                新建知识库
-              </DropdownMenuItem>
-              <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('okf')}>
-                <FileMarkdownOutlined />
-                导入知识库备份包
-              </DropdownMenuItem>
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('plaza')}>
-                  <DownloadOutlined />
-                  从广场复制
-                </DropdownMenuItem>
-              )}
-              {!isOverallAgent && (
-                <DropdownMenuItem className={MENU_ITEM_CLASS} onSelect={() => handleCreateAction('employee')}>
-                  <TeamOutlined />
-                  从数字员工复制
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
-      </div>
-
-      <div className="flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
+      <div className="mt-[20px] flex flex-col gap-[24px] rounded-[20px_20px_0_0] bg-white p-[18px_18px_24px_18px] shadow-[0_-4px_16px_0_rgba(0,0,0,0.05)]">
         <div className="flex flex-wrap items-stretch gap-[20px]" aria-label="知识库统计">
           <StatCard label="知识库总数" value={stats.total} />
           <StatCard label="已上线" value={stats.active} tone="green" />
