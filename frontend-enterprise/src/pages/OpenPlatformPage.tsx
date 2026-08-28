@@ -32,8 +32,9 @@ import {
 import type { AgentProfileRead, GeneralSkillRead, KnowledgeBaseRead, SkillRead, ToolRead } from '../types';
 
 import AppHeader from '@/components/AppHeader';
+import { Paginator } from '@/components/Paginator';
+import { useClientPagination } from '@/hooks/useClientPagination';
 import {
-  PlatformColumn,
   PlatformEmployeeCard,
   PlatformEmployeeDrawer,
   PlatformKindDetailView,
@@ -44,6 +45,7 @@ import {
 } from '@/components/openPlatform';
 
 const ENTERPRISE_AGENT_STORAGE_KEY = 'ultrarag_enterprise_agent_scope';
+const PLATFORM_PAGE_SIZE = 20;
 
 type PlatformKind = 'agents' | 'knowledge' | 'general-skills' | 'skills' | 'tools';
 
@@ -190,6 +192,7 @@ export default function OpenPlatformPage({
   const [loading, setLoading] = useState(false);
   const [deletingItemKey, setDeletingItemKey] = useState('');
   const [agentId, setAgentId] = useState(() => window.localStorage.getItem(ENTERPRISE_AGENT_STORAGE_KEY) || '');
+  const [activeKind, setActiveKind] = useState<PlatformKind>('agents');
   const [detailItem, setDetailItem] = useState<{ kind: PlatformKind; item: PlatformItem } | null>(null);
   const [confirmTarget, setConfirmTarget] = useState<{ kind: PlatformKind; item: PlatformItem } | null>(null);
 
@@ -308,6 +311,9 @@ export default function OpenPlatformPage({
     ...config,
     count: platformItems[config.kind].length,
   }));
+  const activePlatform = PLATFORM_BY_KIND.get(activeKind) || PLATFORM_CONFIGS[0];
+  const activeItems = platformItems[activeKind];
+  const pagination = useClientPagination(activeItems, PLATFORM_PAGE_SIZE, activeKind);
 
   function ensureTargetEmployee(): boolean {
     if (!targetEmployee) {
@@ -550,69 +556,122 @@ export default function OpenPlatformPage({
   }
 
   return (
-    <div className="flex min-h-full flex-col box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px] xl:h-full xl:min-h-0 xl:overflow-hidden">
+    <div className="flex min-h-full flex-col box-border px-[48px] pt-[32px] pb-[24px] max-[900px]:px-[16px] xl:h-full xl:min-h-0 xl:overflow-hidden">
       <AppHeader
-        className="mb-[24px]"
+        className="mb-[20px] shrink-0"
         onLogout={onLogout}
         userName={currentUser?.username}
         title="数字广场"
       />
-      <div className="mx-auto grid w-full grid-cols-1 gap-[12px] sm:grid-cols-2 xl:min-h-0 xl:flex-1 xl:grid-cols-5 xl:grid-rows-1">
-        {platformStats.map((platform) => {
-          const items = platformItems[platform.kind];
-          const previews = items;
-          const PlatformIcon = PLATFORM_ICON[platform.kind];
-          return (
-            <PlatformColumn
-              key={platform.kind}
-              icon={<PlatformIcon className="size-[14px]" />}
-              title={platform.title}
-              count={platform.count}
-              countLabel={platformCountLabel(platform.kind)}
-              filters={platform.signals}
-              loading={loading}
-              isEmpty={previews.length === 0}
-              onViewAll={() => navigate(`/enterprise/platform/${platform.kind}`)}
+      <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden rounded-[16px] border border-[#e5e6eb] bg-white">
+        <div className="shrink-0 border-b border-[#e5e6eb] px-[20px] pt-[16px]">
+          <div className="flex gap-[8px] overflow-x-auto pb-[12px]" role="tablist" aria-label="数字广场分类">
+            {platformStats.map((platform) => {
+              const PlatformIcon = PLATFORM_ICON[platform.kind];
+              const isActive = activeKind === platform.kind;
+              return (
+                <button
+                  key={platform.kind}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveKind(platform.kind)}
+                  className={[
+                    'flex h-[36px] shrink-0 items-center gap-[8px] rounded-[8px] px-[12px] text-[14px] font-medium transition-colors',
+                    isActive
+                      ? 'bg-[var(--color-primary-50)] text-[var(--color-primary-text)]'
+                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface-2)] hover:text-[var(--color-text)]',
+                  ].join(' ')}
+                >
+                  <PlatformIcon className="size-[16px]" />
+                  <span>{platform.title}</span>
+                  <span className={isActive ? 'text-[var(--color-primary-text)]' : 'text-[var(--color-text-caption)]'}>
+                    {platform.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex shrink-0 flex-wrap items-center gap-[8px] px-[20px] py-[16px]">
+          <span className="text-[14px] font-medium text-[var(--color-text)]">{activePlatform.title}</span>
+          {activePlatform.signals.map((signal) => (
+            <span
+              key={signal}
+              className="rounded-full border border-[var(--color-border)] bg-white px-[8px] py-[2px] text-[12px] text-[var(--color-text-caption)]"
             >
-              {previews.map((item) => (
-                platform.kind === 'agents' && item.agent ? (
-                  <PlatformEmployeeCard
-                    key={item.id}
-                    avatar={(
-                      <EmployeeAvatar
-                        agent={item.agent}
-                        width={50}
-                        height={59}
-                        fit="contain"
-                        objectPosition="center bottom"
-                        className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden! block!"
-                      />
-                    )}
-                    name={item.title}
-                    role={item.meta}
-                    online={item.agent.status === 'active'}
-                    description={item.description}
-                    stats={employeeStats(item.agent)}
-                    onOpen={() => setDetailItem({ kind: platform.kind, item })}
-                  />
-                ) : (
-                  <PlatformResourceCard
-                    key={item.id}
-                    icon={PLATFORM_RESOURCE_ICON[platform.kind]
-                      ? <img src={PLATFORM_RESOURCE_ICON[platform.kind]} alt="" className="size-[32px] shrink-0 object-contain" />
-                      : undefined}
-                    accent={PLATFORM_ACCENT[platform.kind]}
-                    title={item.title}
-                    meta={item.meta}
-                    description={item.description}
-                    tags={item.tags.slice(0, 2)}
-                    onClick={() => setDetailItem({ kind: platform.kind, item })}
-                  />
-                )
+              {signal}
+            </span>
+          ))}
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto px-[20px] pb-[20px]" role="tabpanel">
+          {loading ? (
+            <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {Array.from({ length: 10 }, (_, index) => (
+                <div key={index} className="h-[140px] animate-pulse rounded-[16px] bg-[var(--color-surface-2)]" />
               ))}
-            </PlatformColumn>
-          );
-        })}
+            </div>
+          ) : activeItems.length === 0 ? (
+            <div className="grid min-h-[240px] place-items-center rounded-[12px] border border-dashed border-[var(--color-border)] bg-[var(--color-page)] text-[14px] text-[var(--color-text-caption)]">
+              暂无开放内容
+            </div>
+          ) : activeKind === 'agents' ? (
+            <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {pagination.pagedItems.map((item) => item.agent && (
+                <PlatformEmployeeCard
+                  key={item.id}
+                  avatar={(
+                    <EmployeeAvatar
+                      agent={item.agent}
+                      width={50}
+                      height={59}
+                      fit="contain"
+                      objectPosition="center bottom"
+                      className="overflow-visible! rounded-none! border-0! bg-transparent! bg-none! shadow-none! after:hidden! block!"
+                    />
+                  )}
+                  name={item.title}
+                  role={item.meta}
+                  online={item.agent.status === 'active'}
+                  description={item.description}
+                  stats={employeeStats(item.agent)}
+                  onOpen={() => setDetailItem({ kind: activeKind, item })}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {pagination.pagedItems.map((item) => (
+                <PlatformResourceCard
+                  key={item.id}
+                  icon={PLATFORM_RESOURCE_ICON[activeKind]
+                    ? <img src={PLATFORM_RESOURCE_ICON[activeKind]} alt="" className="size-[32px] shrink-0 object-contain" />
+                    : undefined}
+                  accent={PLATFORM_ACCENT[activeKind]}
+                  title={item.title}
+                  meta={item.meta}
+                  description={item.description}
+                  tags={item.tags.slice(0, 2)}
+                  onClick={() => setDetailItem({ kind: activeKind, item })}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex h-[64px] shrink-0 items-center justify-center border-t border-[var(--color-border)] bg-white px-[20px]">
+          {activeItems.length > 0 && (
+            <Paginator
+              aria-label={`${activePlatform.title}分页`}
+              className="m-0"
+              page={pagination.page}
+              pageCount={pagination.pageCount}
+              onChange={pagination.setPage}
+            />
+          )}
+        </div>
       </div>
       {renderItemDrawer()}
       {renderConfirm()}

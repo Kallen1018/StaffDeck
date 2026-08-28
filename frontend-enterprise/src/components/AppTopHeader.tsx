@@ -2,8 +2,6 @@ import AppHeader from '@/components/AppHeader';
 import IconAgents from '@/assets/icons/nav-agents.svg?react';
 import IconGlobe from '@/assets/icons/globe.svg?react';
 import IconPlatform from '@/assets/icons/nav-platform.svg?react';
-import IconAccounts from '@/assets/icons/sys-accounts.svg?react';
-import IconModels from '@/assets/icons/sys-models.svg?react';
 import IconSettings from '@/assets/icons/action-toggle.svg?react';
 import IconChat from '@/assets/icons/action-chat.svg?react';
 import IconViewMasonry from '@/assets/icons/view-masonry.svg?react';
@@ -24,13 +22,12 @@ type AppTopHeaderProps = {
 const NAV_ITEMS = [
   { route: EnterpriseRoute.Platform, label: '数字广场', Icon: IconPlatform },
   { route: EnterpriseRoute.Agents, label: '我的数字员工', Icon: IconAgents },
-  { route: EnterpriseRoute.Models, label: '模型配置', Icon: IconModels },
 ] as const;
 
 const ADMIN_NAV_ITEMS = [
   { route: EnterpriseRoute.RuntimeSettings, label: '运行设置', Icon: IconSettings },
   { route: EnterpriseRoute.Channels, label: '渠道接入', Icon: IconGlobe },
-  { route: EnterpriseRoute.Accounts, label: '账号管理', Icon: IconAccounts },
+  { route: EnterpriseRoute.SystemManagement, label: '系统管理', Icon: IconSettings },
 ] as const;
 
 export default function AppTopHeader({

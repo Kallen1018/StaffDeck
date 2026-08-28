@@ -38,7 +38,6 @@ import {
   employeeProfile,
   preferredEmployeeAgent,
 } from "./employee";
-import AccountsPage from "./pages/AccountsPage";
 import AgentsPage from "./pages/AgentsPage";
 import ChannelsPage from "./pages/ChannelsPage";
 import ChatPage from "./pages/chat/ChatPage";
@@ -52,8 +51,8 @@ import GeneralSkillsPage, {
 } from "./pages/GeneralSkillsPage";
 import KnowledgeManagePage, { KnowledgeAddPage } from "./pages/KnowledgePage";
 import LoginPage from "./pages/LoginPage";
-import ModelsPage from "./pages/ModelsPage";
 import RuntimeSettingsPage from "./pages/RuntimeSettingsPage";
+import SystemManagementPage from "./pages/SystemManagementPage";
 import OpenPlatformPage from "./pages/OpenPlatformPage";
 import PersonaPage from "./pages/PersonaPage";
 import SkillsPage from "./pages/SkillsPage";
@@ -155,6 +154,8 @@ function Shell({
       ? "/enterprise/dashboard"
       : location.pathname.startsWith("/enterprise/platform")
         ? "/enterprise/platform"
+        : location.pathname.startsWith("/enterprise/system-management")
+          ? EnterpriseRoute.SystemManagement
         : location.pathname.startsWith("/enterprise/knowledge")
           ? "/enterprise/knowledge"
           : location.pathname.startsWith("/enterprise/general-skills")
@@ -685,25 +686,37 @@ function Shell({
                 }
               />
               <Route
-                path="/enterprise/accounts"
+                path="/enterprise/system-management"
                 element={
                   isAdmin ? (
-                    <AccountsPage currentUser={auth.user} onLogout={onLogout} />
+                    <Navigate to={EnterpriseRoute.Models} replace />
                   ) : (
                     <Navigate to={EnterpriseRoute.Gallery} replace />
                   )
                 }
               />
               <Route
-                path="/enterprise/models"
+                path="/enterprise/system-management/models"
                 element={
                   isAdmin ? (
-                    <ModelsPage currentUser={auth.user} onLogout={onLogout} />
+                    <SystemManagementPage tab="models" currentUser={auth.user} onLogout={onLogout} />
                   ) : (
                     <Navigate to={EnterpriseRoute.Gallery} replace />
                   )
                 }
               />
+              <Route
+                path="/enterprise/system-management/accounts"
+                element={
+                  isAdmin ? (
+                    <SystemManagementPage tab="accounts" currentUser={auth.user} onLogout={onLogout} />
+                  ) : (
+                    <Navigate to={EnterpriseRoute.Gallery} replace />
+                  )
+                }
+              />
+              <Route path="/enterprise/accounts" element={<Navigate to={EnterpriseRoute.Accounts} replace />} />
+              <Route path="/enterprise/models" element={<Navigate to={EnterpriseRoute.Models} replace />} />
               <Route
                 path="/enterprise/runtime-settings"
                 element={

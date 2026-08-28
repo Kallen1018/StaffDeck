@@ -76,9 +76,12 @@ export function AccountRoleBadge({ role }: { role: EmployeeAccount['role'] }) {
 export default function AccountsPage({
   currentUser,
   onLogout,
+  embedded = false,
 }: {
   currentUser?: EnterpriseAuthUser;
   onLogout?: () => void;
+  /** Render inside the 系统管理 tab shell rather than as a standalone route. */
+  embedded?: boolean;
 } = {}) {
   const [rows, setRows] = useState<EmployeeAccount[]>([]);
   const [loading, setLoading] = useState(false);
@@ -289,8 +292,8 @@ export default function AccountsPage({
   );
 
   return (
-    <div className="min-h-full box-border px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]" aria-busy={loading}>
-      <AppHeader onLogout={onLogout} userName={currentUser?.username} title="账号管理" />
+    <div className={cn('box-border', embedded ? 'min-h-0' : 'min-h-full px-[48px] pt-[32px] pb-[43px] max-[900px]:px-[16px]')} aria-busy={loading}>
+      {!embedded && <AppHeader onLogout={onLogout} userName={currentUser?.username} title="账号管理" />}
 
       <div className="mt-[20px] mb-[16px] flex items-center justify-end gap-[12px]">
         <UIButton

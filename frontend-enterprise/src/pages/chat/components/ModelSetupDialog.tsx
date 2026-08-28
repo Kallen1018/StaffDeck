@@ -246,7 +246,7 @@ export default function ModelSetupDialog({
             <Button
               type="button"
               variant="outline"
-              onClick={() => window.open('/enterprise/models', '_blank', 'noopener,noreferrer')}
+              onClick={() => window.open('/enterprise/system-management/models', '_blank', 'noopener,noreferrer')}
             >
               <ExternalLink className="size-[15px]" />
               打开模型管理
